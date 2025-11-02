@@ -1181,315 +1181,6 @@
         </div>
     </div>
 
-    <!-- Rider Dashboard -->
-    <div id="rider-dashboard" class="page">
-        <div class="customer-dashboard">
-            <div class="customer-nav">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo">
-                            <i class="fas fa-truck-fast logo-icon"></i>
-                            <div class="logo-text">IPATE<span>Deliveries</span></div>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-avatar" id="rider-avatar">RJ</div>
-                            <span id="rider-name">Rider James</span>
-                            <button class="btn btn-outline" id="rider-logout">Logout</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="dashboard-content">
-                    <h2 class="section-title">🚴‍♂️ Rider Dashboard</h2>
-                    
-                    <div class="dashboard-nav-links">
-                        <a href="#" class="dashboard-nav-link active" onclick="showRiderSection('dashboard')">Dashboard</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('deliveries')">My Deliveries</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('earnings')">Earnings</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('schedule')">Schedule</a>
-                    </div>
-                    
-                    <!-- Dashboard Section -->
-                    <div id="rider-dashboard-section" class="rider-section active">
-                        <!-- Availability Toggle -->
-                        <div class="status-toggle">
-                            <div class="toggle-container">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="availabilityToggle" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <div>
-                                    <h3>Available for Deliveries</h3>
-                                    <p style="color: var(--gray); font-size: 14px;">You will receive new delivery requests</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="stat-value" style="font-size: 24px; margin-bottom: 5px;">0 ⭐</div>
-                                <div class="stat-label">Your Rating</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Stats Grid -->
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">0</div>
-                                <div class="stat-label">Deliveries Today</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">Earnings Today</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">0</div>
-                                <div class="stat-label">Deliveries This Week</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">0%</div>
-                                <div class="stat-label">On-Time Rate</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Current Delivery -->
-                        <h3 style="margin: 30px 0 20px 0;">Current Delivery</h3>
-                        <div id="current-delivery">
-                            <div class="order-card">
-                                <p style="text-align: center; color: var(--gray);">No active delivery</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Available Deliveries -->
-                        <h3 style="margin: 30px 0 20px 0;">Available Deliveries</h3>
-                        <div id="available-deliveries">
-                            <!-- Available deliveries will load here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Deliveries Section -->
-                    <div id="rider-deliveries-section" class="rider-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>📦 My Deliveries</h2>
-                        </div>
-                        
-                        <div id="rider-deliveries-list">
-                            <!-- Deliveries will load here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Earnings Section -->
-                    <div id="rider-earnings-section" class="rider-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>💰 Earnings</h2>
-                        </div>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">Total Earnings</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">This Week</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">Today</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">0</div>
-                                <div class="stat-label">Total Deliveries</div>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-grid">
-                            <div class="chart-container">
-                                <h3>Earnings Overview</h3>
-                                <div class="chart-placeholder">Earnings Chart</div>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Performance Metrics</h3>
-                                <div class="chart-placeholder">Performance Chart</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Schedule Section -->
-                    <div id="rider-schedule-section" class="rider-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>📅 Schedule</h2>
-                        </div>
-                        
-                        <div class="map-container">
-                            <div class="map-overlay">
-                                <h3>Your Delivery Zone</h3>
-                                <p>Nairobi Central Business District</p>
-                                <div style="margin-top: 15px;">
-                                    <div class="stat-value" style="font-size: 18px;">0 Deliveries</div>
-                                    <div class="stat-label">Scheduled for today</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seller Dashboard -->
-    <div id="seller-dashboard" class="page">
-        <div class="customer-dashboard">
-            <div class="customer-nav">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo">
-                            <i class="fas fa-truck-fast logo-icon"></i>
-                            <div class="logo-text">IPATE<span>Deliveries</span></div>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-avatar" id="seller-avatar">SM</div>
-                            <span id="seller-name">Seller Mary</span>
-                            <button class="btn btn-outline" id="seller-logout">Logout</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="dashboard-content">
-                    <h2 class="section-title">🏪 Seller Dashboard</h2>
-                    
-                    <div class="dashboard-nav-links">
-                        <a href="#" class="dashboard-nav-link active" onclick="showSellerSection('dashboard')">Dashboard</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showSellerSection('products')">Products</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showSellerSection('orders')">Orders</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showSellerSection('analytics')">Analytics</a>
-                    </div>
-                    
-                    <!-- Dashboard Section -->
-                    <div id="seller-dashboard-section" class="seller-section active">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">Total Revenue</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">This Week</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
-                                <div class="stat-label">Today</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">0</div>
-                                <div class="stat-label">Total Orders</div>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-grid">
-                            <div class="chart-container">
-                                <h3>Sales Overview</h3>
-                                <div class="chart-placeholder">Sales Chart</div>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Product Performance</h3>
-                                <div class="chart-placeholder">Product Chart</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Products Section -->
-                    <div id="seller-products-section" class="seller-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>📦 Manage Products</h2>
-                            <button class="btn btn-primary" onclick="openAddProductModal()">Add New Product</button>
-                        </div>
-                        
-                        <div class="products-grid" id="seller-products-list">
-                            <!-- Seller products will load here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Orders Section -->
-                    <div id="seller-orders-section" class="seller-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>📋 Manage Orders</h2>
-                        </div>
-                        
-                        <div id="seller-orders-list">
-                            <!-- Seller orders will load here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Analytics Section -->
-                    <div id="seller-analytics-section" class="seller-section">
-                        <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                            <h2>📊 Analytics</h2>
-                        </div>
-                        
-                        <div class="analytics-grid">
-                            <div class="chart-container">
-                                <h3>Revenue Trends</h3>
-                                <div class="chart-placeholder">Revenue Chart</div>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Customer Insights</h3>
-                                <div class="chart-placeholder">Customer Chart</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Help Center Page -->
-    <div id="help-center" class="page">
-        <div class="customer-dashboard">
-            <div class="customer-nav">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo">
-                            <i class="fas fa-truck-fast logo-icon"></i>
-                            <div class="logo-text">IPATE<span>Deliveries</span></div>
-                        </div>
-                        <div class="user-info">
-                            <button class="btn btn-outline" onclick="showPage('landing-page')">Back to Home</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="dashboard-content">
-                    <h2 class="section-title">❓ Help Center</h2>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <i class="fas fa-question-circle feature-icon"></i>
-                            <h3>FAQs</h3>
-                            <p>Find answers to commonly asked questions about our services.</p>
-                            <button class="btn btn-primary" style="margin-top: 15px;">View FAQs</button>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-phone feature-icon"></i>
-                            <h3>Contact Support</h3>
-                            <p>Get in touch with our support team for personalized assistance.</p>
-                            <button class="btn btn-primary" style="margin-top: 15px;">Contact Us</button>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-book feature-icon"></i>
-                            <h3>User Guides</h3>
-                            <p>Learn how to make the most of our platform with detailed guides.</p>
-                            <button class="btn btn-primary" style="margin-top: 15px;">View Guides</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Authentication Modal -->
     <div class="modal" id="auth-modal">
         <div class="modal-content">
@@ -1502,138 +1193,50 @@
             </div>
             
             <!-- Login Form -->
-            <div id="login-form" class="auth-form active">
+            <form id="login-form" class="auth-form active" onsubmit="login(event)">
                 <div class="form-group">
                     <label for="login-email">Email</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
+                    <input type="email" id="login-email" class="form-control" placeholder="Enter your email" required>
                     <div class="error-message" id="login-email-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
                     <div class="error-message" id="login-password-error"></div>
                 </div>
-                <button class="btn btn-primary btn-block" onclick="login()">Login</button>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
                 <p style="text-align: center; margin-top: 15px;">
                     <a href="#" style="color: var(--primary);">Forgot your password?</a>
                 </p>
-            </div>
+            </form>
             
             <!-- Signup Form -->
-            <div id="signup-form" class="auth-form">
+            <form id="signup-form" class="auth-form" onsubmit="signup(event)">
                 <div class="form-group">
                     <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name">
+                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name" required>
                     <div class="error-message" id="signup-name-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" class="form-control" placeholder="Enter your email">
+                    <input type="email" id="signup-email" class="form-control" placeholder="Enter your email" required>
                     <div class="error-message" id="signup-email-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" class="form-control" placeholder="Create a password">
+                    <input type="password" id="signup-password" class="form-control" placeholder="Create a password" required minlength="6">
                     <div class="error-message" id="signup-password-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="signup-role">I want to:</label>
-                    <select id="signup-role" class="form-control">
+                    <select id="signup-role" class="form-control" required>
                         <option value="customer">Shop & Order</option>
                         <option value="seller">Sell Products</option>
                         <option value="rider">Deliver Orders</option>
                     </select>
                 </div>
-                <button class="btn btn-primary btn-block" onclick="signup()">Create Account</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Checkout Modal -->
-    <div class="modal" id="checkout-modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Checkout</h2>
-            
-            <div class="form-group">
-                <label for="delivery-address">Delivery Address</label>
-                <textarea id="delivery-address" class="form-control" placeholder="Enter your complete delivery address" rows="3"></textarea>
-                <div class="error-message" id="delivery-address-error"></div>
-            </div>
-            
-            <div class="form-group">
-                <label for="delivery-instructions">Delivery Instructions (Optional)</label>
-                <textarea id="delivery-instructions" class="form-control" placeholder="Any special instructions for the rider?" rows="2"></textarea>
-            </div>
-            
-            <div class="order-card" style="margin: 20px 0;">
-                <div class="order-header">
-                    <h3>Order Summary</h3>
-                </div>
-                <div class="order-items" id="checkout-items">
-                    <!-- Checkout items will load here -->
-                </div>
-                <div class="order-total">
-                    Total: <span id="checkout-total">KSh 0</span>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="placeOrder()">Place Order</button>
-        </div>
-    </div>
-
-    <!-- Add Product Modal -->
-    <div class="modal" id="add-product-modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAddProductModal()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Add New Product</h2>
-            
-            <div class="form-group">
-                <label for="product-name">Product Name</label>
-                <input type="text" id="product-name" class="form-control" placeholder="Enter product name">
-                <div class="error-message" id="product-name-error"></div>
-            </div>
-            
-            <div class="form-group">
-                <label for="product-description">Description</label>
-                <textarea id="product-description" class="form-control" placeholder="Enter product description" rows="3"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="product-price">Price (KSh)</label>
-                <input type="number" id="product-price" class="form-control" placeholder="Enter price" min="1">
-                <div class="error-message" id="product-price-error"></div>
-            </div>
-            
-            <div class="form-group">
-                <label for="product-category">Category</label>
-                <select id="product-category" class="form-control">
-                    <option value="Food">Food</option>
-                    <option value="Beverages">Beverages</option>
-                    <option value="Personal Care">Personal Care</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="product-stock">Stock Quantity</label>
-                <input type="number" id="product-stock" class="form-control" placeholder="Enter stock quantity" min="0">
-                <div class="error-message" id="product-stock-error"></div>
-            </div>
-            
-            <div class="form-group">
-                <label>Product Image</label>
-                <div class="file-upload-container" id="image-upload-container" onclick="document.getElementById('product-image').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 36px; color: var(--gray); margin-bottom: 10px;"></i>
-                    <p>Click to upload product image</p>
-                    <p style="font-size: 12px; color: var(--gray);">PNG, JPG, JPEG up to 5MB</p>
-                </div>
-                <input type="file" id="product-image" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                <div class="file-preview" id="image-preview"></div>
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="addProduct()">Add Product</button>
+                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
         </div>
     </div>
 
@@ -1712,159 +1315,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
             setupEventListeners();
-            initializeDatabase();
         });
-
-        // Initialize database tables
-        async function initializeDatabase() {
-            try {
-                // Check if users table exists, if not create it
-                const { error: usersError } = await supabase
-                    .from('users')
-                    .select('*')
-                    .limit(1);
-                
-                if (usersError && usersError.code === '42P01') {
-                    // Table doesn't exist, create it
-                    await createDatabaseTables();
-                }
-            } catch (error) {
-                console.error('Error initializing database:', error);
-            }
-        }
-
-        // Create database tables
-        async function createDatabaseTables() {
-            showNotification('Initializing database...', 'info');
-            
-            // Note: In a real application, you would use Supabase's SQL editor
-            // to run these SQL commands. For now, we'll handle it through the app.
-            
-            try {
-                // Create users table
-                const { error: usersError } = await supabase
-                    .from('users')
-                    .insert([
-                        {
-                            id: 'system',
-                            email: 'system@system.com',
-                            name: 'System',
-                            role: 'system'
-                        }
-                    ]);
-                
-                // If we can insert, the table exists
-                if (!usersError) {
-                    // Clean up the test record
-                    await supabase
-                        .from('users')
-                        .delete()
-                        .eq('id', 'system');
-                }
-                
-                // Create sample products if none exist
-                const { data: existingProducts } = await supabase
-                    .from('products')
-                    .select('*')
-                    .limit(1);
-                
-                if (!existingProducts || existingProducts.length === 0) {
-                    await createSampleProducts();
-                }
-                
-                showNotification('Database initialized successfully!', 'success');
-            } catch (error) {
-                console.error('Error creating database tables:', error);
-                showNotification('Error initializing database. Please check Supabase configuration.', 'error');
-            }
-        }
-
-        // Create sample products
-        async function createSampleProducts() {
-            const sampleProducts = [
-                {
-                    name: "Fresh Milk 1L",
-                    description: "Fresh pasteurized milk from local farms",
-                    price: 120,
-                    category: "Food",
-                    stock: 50,
-                    image_url: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    name: "Whole Wheat Bread",
-                    description: "Freshly baked whole wheat bread",
-                    price: 80,
-                    category: "Food",
-                    stock: 30,
-                    image_url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    name: "Mineral Water 500ml",
-                    description: "Pure mineral water bottle",
-                    price: 40,
-                    category: "Beverages",
-                    stock: 100,
-                    image_url: "https://images.unsplash.com/photo-1548839149-851a64d1d8d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    name: "Toothpaste",
-                    description: "Fluoride toothpaste for dental care",
-                    price: 150,
-                    category: "Personal Care",
-                    stock: 25,
-                    image_url: "https://images.unsplash.com/photo-1585435557343-3b092031d5ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    name: "Phone Charger",
-                    description: "Universal USB phone charger",
-                    price: 800,
-                    category: "Electronics",
-                    stock: 15,
-                    image_url: "https://images.unsplash.com/photo-1609592810793-abeb6c64b5c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                }
-            ];
-
-            for (const product of sampleProducts) {
-                const { error } = await supabase
-                    .from('products')
-                    .insert([{
-                        ...product,
-                        seller_id: 'system', // System products
-                        is_active: true
-                    }]);
-                
-                if (error) {
-                    console.error('Error creating sample product:', error);
-                }
-            }
-        }
-
-        // Initialize the application
-        async function initializeApp() {
-            showLoading();
-            
-            try {
-                // Check if user is already logged in
-                const { data: { session }, error } = await supabase.auth.getSession();
-                
-                if (error) {
-                    console.error('Error getting session:', error);
-                    showNotification('Error checking authentication status', 'error');
-                } else if (session) {
-                    // User is logged in
-                    currentUser = session.user;
-                    await loadUserProfile();
-                } else {
-                    // User is not logged in, show landing page
-                    showPage('landing-page');
-                }
-            } catch (error) {
-                console.error('Error initializing app:', error);
-                showNotification('Error initializing application', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
 
         // Set up event listeners
         function setupEventListeners() {
@@ -1875,169 +1326,13 @@
             
             // Logout buttons
             document.getElementById('customer-logout').addEventListener('click', logout);
-            document.getElementById('rider-logout').addEventListener('click', logout);
-            document.getElementById('seller-logout').addEventListener('click', logout);
             
             // Mobile menu
             document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
             
-            // Availability toggle
-            document.getElementById('availabilityToggle').addEventListener('change', toggleAvailability);
-            
-            // Search and filter
-            document.getElementById('searchProducts').addEventListener('input', filterProducts);
-            document.getElementById('categoryFilter').addEventListener('change', filterProducts);
-            document.getElementById('orderStatusFilter').addEventListener('change', filterOrders);
-            
-            // Form validation
-            setupFormValidation();
-            
             // Load cart from localStorage
             loadCartFromStorage();
             updateCartCount();
-        }
-
-        // Setup form validation
-        function setupFormValidation() {
-            // Login form validation
-            document.getElementById('login-email').addEventListener('blur', validateEmail);
-            document.getElementById('login-password').addEventListener('blur', validatePassword);
-            
-            // Signup form validation
-            document.getElementById('signup-name').addEventListener('blur', validateName);
-            document.getElementById('signup-email').addEventListener('blur', validateEmail);
-            document.getElementById('signup-password').addEventListener('blur', validatePassword);
-            
-            // Product form validation
-            document.getElementById('product-name').addEventListener('blur', validateProductName);
-            document.getElementById('product-price').addEventListener('blur', validateProductPrice);
-            document.getElementById('product-stock').addEventListener('blur', validateProductStock);
-            
-            // Checkout validation
-            document.getElementById('delivery-address').addEventListener('blur', validateDeliveryAddress);
-        }
-
-        // Validation functions
-        function validateEmail(e) {
-            const email = e.target.value;
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!email) {
-                showError(e.target, errorElement, 'Email is required');
-                return false;
-            }
-            
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError(e.target, errorElement, 'Please enter a valid email address');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validatePassword(e) {
-            const password = e.target.value;
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!password) {
-                showError(e.target, errorElement, 'Password is required');
-                return false;
-            }
-            
-            if (password.length < 6) {
-                showError(e.target, errorElement, 'Password must be at least 6 characters');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validateName(e) {
-            const name = e.target.value;
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!name) {
-                showError(e.target, errorElement, 'Full name is required');
-                return false;
-            }
-            
-            if (name.length < 2) {
-                showError(e.target, errorElement, 'Name must be at least 2 characters');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validateProductName(e) {
-            const name = e.target.value;
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!name) {
-                showError(e.target, errorElement, 'Product name is required');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validateProductPrice(e) {
-            const price = parseFloat(e.target.value);
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!price || price <= 0) {
-                showError(e.target, errorElement, 'Price must be greater than 0');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validateProductStock(e) {
-            const stock = parseInt(e.target.value);
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (stock < 0) {
-                showError(e.target, errorElement, 'Stock cannot be negative');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function validateDeliveryAddress(e) {
-            const address = e.target.value;
-            const errorElement = document.getElementById(e.target.id + '-error');
-            
-            if (!address) {
-                showError(e.target, errorElement, 'Delivery address is required');
-                return false;
-            }
-            
-            if (address.length < 10) {
-                showError(e.target, errorElement, 'Please provide a complete address');
-                return false;
-            }
-            
-            clearError(e.target, errorElement);
-            return true;
-        }
-
-        function showError(input, errorElement, message) {
-            input.classList.add('error');
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        function clearError(input, errorElement) {
-            input.classList.remove('error');
-            errorElement.style.display = 'none';
         }
 
         // Show notification
@@ -2125,13 +1420,14 @@
         }
 
         // Login function
-        async function login() {
+        async function login(event) {
+            if (event) event.preventDefault();
+            
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            // Validate form
-            if (!validateEmail({target: document.getElementById('login-email')}) || 
-                !validatePassword({target: document.getElementById('login-password')})) {
+            if (!email || !password) {
+                showNotification('Please fill in all fields', 'error');
                 return;
             }
             
@@ -2147,7 +1443,17 @@
                     showNotification(error.message, 'error');
                 } else {
                     currentUser = data.user;
-                    await loadUserProfile();
+                    userRole = data.user.user_metadata?.role || 'customer';
+                    
+                    // Update UI
+                    updateUserInfo({
+                        name: data.user.user_metadata?.name || data.user.email.split('@')[0],
+                        role: userRole
+                    });
+                    
+                    // Redirect to dashboard
+                    redirectToDashboard(userRole);
+                    
                     showNotification('Login successful!', 'success');
                     closeAuthModal();
                 }
@@ -2160,16 +1466,21 @@
         }
 
         // Signup function
-        async function signup() {
+        async function signup(event) {
+            if (event) event.preventDefault();
+            
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const role = document.getElementById('signup-role').value;
             
-            // Validate form
-            if (!validateName({target: document.getElementById('signup-name')}) || 
-                !validateEmail({target: document.getElementById('signup-email')}) || 
-                !validatePassword({target: document.getElementById('signup-password')})) {
+            if (!name || !email || !password) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
                 return;
             }
             
@@ -2195,39 +1506,6 @@
                 }
                 
                 if (data.user) {
-                    // Create user profile in database
-                    const { error: profileError } = await supabase
-                        .from('users')
-                        .insert([
-                            {
-                                id: data.user.id,
-                                email: email,
-                                name: name,
-                                role: role
-                            }
-                        ]);
-                    
-                    if (profileError) {
-                        console.error('Error creating user profile:', profileError);
-                        
-                        // If profile creation fails, try to update existing profile
-                        const { error: updateError } = await supabase
-                            .from('users')
-                            .upsert({
-                                id: data.user.id,
-                                email: email,
-                                name: name,
-                                role: role
-                            });
-                        
-                        if (updateError) {
-                            console.error('Error updating user profile:', updateError);
-                            showNotification('Error creating user profile', 'error');
-                            hideLoading();
-                            return;
-                        }
-                    }
-                    
                     currentUser = data.user;
                     userRole = role;
                     
@@ -2237,7 +1515,7 @@
                     // Redirect to dashboard
                     redirectToDashboard(role);
                     
-                    showNotification('Account created successfully!', 'success');
+                    showNotification('Account created successfully! Please check your email for verification.', 'success');
                     closeAuthModal();
                 }
                 
@@ -2249,75 +1527,6 @@
             hideLoading();
         }
 
-        // Load user profile
-        async function loadUserProfile() {
-            showLoading();
-            
-            try {
-                // Get user profile from database
-                const { data: profile, error } = await supabase
-                    .from('users')
-                    .select('*')
-                    .eq('id', currentUser.id)
-                    .single();
-                
-                if (error) {
-                    console.error('Error loading user profile:', error);
-                    
-                    // If profile doesn't exist, create it from auth metadata
-                    const userMetadata = currentUser.user_metadata;
-                    const { error: createError } = await supabase
-                        .from('users')
-                        .insert([
-                            {
-                                id: currentUser.id,
-                                email: currentUser.email,
-                                name: userMetadata?.name || currentUser.email.split('@')[0],
-                                role: userMetadata?.role || 'customer'
-                            }
-                        ]);
-                    
-                    if (createError) {
-                        console.error('Error creating user profile:', createError);
-                        showNotification('Error loading user data', 'error');
-                        await logout();
-                        return;
-                    }
-                    
-                    // Try to load profile again
-                    const { data: newProfile } = await supabase
-                        .from('users')
-                        .select('*')
-                        .eq('id', currentUser.id)
-                        .single();
-                    
-                    userRole = newProfile.role;
-                    updateUserInfo(newProfile);
-                } else {
-                    userRole = profile.role;
-                    updateUserInfo(profile);
-                }
-                
-                // Update UI based on role
-                if (userRole === 'customer') {
-                    showPage('customer-dashboard');
-                    await loadCustomerDashboard();
-                } else if (userRole === 'rider') {
-                    showPage('rider-dashboard');
-                    await loadRiderDashboard();
-                } else if (userRole === 'seller') {
-                    showPage('seller-dashboard');
-                    await loadSellerDashboard();
-                }
-                
-            } catch (error) {
-                console.error('Error loading user profile:', error);
-                showNotification('Error loading user profile', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
         // Update user info in UI
         function updateUserInfo(profile) {
             const avatar = profile.name ? profile.name.charAt(0).toUpperCase() : 'U';
@@ -2325,12 +1534,6 @@
             if (userRole === 'customer') {
                 document.getElementById('customer-avatar').textContent = avatar;
                 document.getElementById('customer-name').textContent = profile.name;
-            } else if (userRole === 'rider') {
-                document.getElementById('rider-avatar').textContent = avatar;
-                document.getElementById('rider-name').textContent = profile.name;
-            } else if (userRole === 'seller') {
-                document.getElementById('seller-avatar').textContent = avatar;
-                document.getElementById('seller-name').textContent = profile.name;
             }
         }
 
@@ -2339,12 +1542,12 @@
             if (role === 'customer') {
                 showPage('customer-dashboard');
                 loadCustomerDashboard();
-            } else if (role === 'rider') {
-                showPage('rider-dashboard');
-                loadRiderDashboard();
-            } else if (role === 'seller') {
-                showPage('seller-dashboard');
-                loadSellerDashboard();
+            } else {
+                // For seller and rider roles, show customer dashboard for now
+                // since we don't have those dashboards implemented yet
+                showPage('customer-dashboard');
+                loadCustomerDashboard();
+                showNotification(`Welcome! ${role.charAt(0).toUpperCase() + role.slice(1)} features coming soon.`, 'info');
             }
         }
 
@@ -2412,105 +1615,80 @@
             }
         }
 
-        // Show rider section
-        function showRiderSection(section) {
-            // Hide all sections
-            document.querySelectorAll('.rider-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            
-            // Update nav links
-            document.querySelectorAll('.dashboard-nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(`rider-${section}-section`).classList.add('active');
-            
-            // Activate nav link
-            document.querySelectorAll('.dashboard-nav-link').forEach(link => {
-                if (link.textContent.includes(section.charAt(0).toUpperCase() + section.slice(1))) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Load section data if needed
-            if (section === 'deliveries') {
-                loadRiderDeliveries();
-            } else if (section === 'earnings') {
-                loadRiderEarnings();
-            }
-        }
-
-        // Show seller section
-        function showSellerSection(section) {
-            // Hide all sections
-            document.querySelectorAll('.seller-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            
-            // Update nav links
-            document.querySelectorAll('.dashboard-nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(`seller-${section}-section`).classList.add('active');
-            
-            // Activate nav link
-            document.querySelectorAll('.dashboard-nav-link').forEach(link => {
-                if (link.textContent.includes(section.charAt(0).toUpperCase() + section.slice(1))) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Load section data if needed
-            if (section === 'products') {
-                loadSellerProducts();
-            } else if (section === 'orders') {
-                loadSellerOrders();
-            }
-        }
-
         // Load customer dashboard
         async function loadCustomerDashboard() {
             showLoading();
             
             try {
-                // Load customer stats
-                const { data: ordersData, error: ordersError } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('customer_id', currentUser.id);
+                // For demo purposes, we'll use mock data since database tables might not exist
+                await loadMockData();
                 
-                if (ordersError) {
-                    console.error('Error loading orders:', ordersError);
-                    showNotification('Error loading orders', 'error');
-                } else {
-                    userOrders = ordersData || [];
-                    
-                    // Update stats
-                    const totalOrders = userOrders.length;
-                    const pendingOrders = userOrders.filter(order => 
-                        ['pending', 'accepted', 'ready', 'assigned', 'picked'].includes(order.status)
-                    ).length;
-                    const deliveredOrders = userOrders.filter(order => 
-                        order.status === 'delivered'
-                    ).length;
-                    
-                    document.querySelector('#customer-stats .customer-stat-card:nth-child(1) .customer-stat-value').textContent = totalOrders;
-                    document.querySelector('#customer-stats .customer-stat-card:nth-child(2) .customer-stat-value').textContent = pendingOrders;
-                    document.querySelector('#customer-stats .customer-stat-card:nth-child(3) .customer-stat-value').textContent = deliveredOrders;
-                    
-                    // Load recent orders
-                    loadRecentOrders();
-                }
+                // Update stats with mock data
+                document.querySelector('#customer-stats .customer-stat-card:nth-child(1) .customer-stat-value').textContent = '0';
+                document.querySelector('#customer-stats .customer-stat-card:nth-child(2) .customer-stat-value').textContent = '0';
+                document.querySelector('#customer-stats .customer-stat-card:nth-child(3) .customer-stat-value').textContent = '0';
+                
+                // Load recent orders
+                loadRecentOrders();
+                
             } catch (error) {
                 console.error('Error loading customer dashboard:', error);
                 showNotification('Error loading dashboard', 'error');
             } finally {
                 hideLoading();
             }
+        }
+
+        // Load mock data for demo
+        async function loadMockData() {
+            // Mock products data
+            products = [
+                {
+                    id: '1',
+                    name: "Fresh Milk 1L",
+                    description: "Fresh pasteurized milk from local farms",
+                    price: 120,
+                    category: "Food",
+                    stock: 50,
+                    image_url: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    id: '2',
+                    name: "Whole Wheat Bread",
+                    description: "Freshly baked whole wheat bread",
+                    price: 80,
+                    category: "Food",
+                    stock: 30,
+                    image_url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    id: '3',
+                    name: "Mineral Water 500ml",
+                    description: "Pure mineral water bottle",
+                    price: 40,
+                    category: "Beverages",
+                    stock: 100,
+                    image_url: "https://images.unsplash.com/photo-1548839149-851a64d1d8d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    id: '4',
+                    name: "Toothpaste",
+                    description: "Fluoride toothpaste for dental care",
+                    price: 150,
+                    category: "Personal Care",
+                    stock: 25,
+                    image_url: "https://images.unsplash.com/photo-1585435557343-3b092031d5ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    id: '5',
+                    name: "Phone Charger",
+                    description: "Universal USB phone charger",
+                    price: 800,
+                    category: "Electronics",
+                    stock: 15,
+                    image_url: "https://images.unsplash.com/photo-1609592810793-abeb6c64b5c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                }
+            ];
         }
 
         // Load recent orders for customer
@@ -2530,32 +1708,6 @@
                 `;
                 return;
             }
-            
-            // Sort orders by creation date (newest first)
-            const sortedOrders = [...userOrders].sort((a, b) => 
-                new Date(b.created_at) - new Date(a.created_at)
-            ).slice(0, 5); // Show only 5 most recent
-            
-            let ordersHTML = '';
-            
-            sortedOrders.forEach(order => {
-                const statusClass = `status-${order.status}`;
-                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
-                
-                ordersHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <h3>Order #${order.id.slice(-6)}</h3>
-                            <div class="order-status ${statusClass}">${statusText}</div>
-                        </div>
-                        <p><strong>Delivery Address:</strong> ${order.delivery_address}</p>
-                        <p><strong>Total:</strong> KSh ${order.total_amount}</p>
-                        <p><strong>Date:</strong> ${new Date(order.created_at).toLocaleDateString()}</p>
-                    </div>
-                `;
-            });
-            
-            recentOrdersContainer.innerHTML = ordersHTML;
         }
 
         // Load products for customer
@@ -2563,18 +1715,8 @@
             showLoading();
             
             try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('is_active', true);
-                
-                if (error) {
-                    console.error('Error loading products:', error);
-                    showNotification('Error loading products', 'error');
-                } else {
-                    products = data || [];
-                    displayProducts(products);
-                }
+                // Use mock data since database might not be set up
+                displayProducts(products);
             } catch (error) {
                 console.error('Error loading products:', error);
                 showNotification('Error loading products', 'error');
@@ -2611,9 +1753,6 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                                 <span style="color: var(--gray); font-size: 14px;">Stock: ${product.stock}</span>
                                 <div class="customer-product-actions">
-                                    <button class="btn btn-outline btn-sm" onclick="viewProductDetails('${product.id}')">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
                                     <button class="btn btn-primary btn-sm" onclick="addToCart('${product.id}')" ${product.stock <= 0 ? 'disabled' : ''}>
                                         <i class="fas fa-cart-plus"></i> Add
                                     </button>
@@ -2650,34 +1789,6 @@
             }
             
             displayProducts(filteredProducts);
-        }
-
-        // View product details
-        function viewProductDetails(productId) {
-            const product = products.find(p => p.id === productId);
-            
-            if (product) {
-                Swal.fire({
-                    title: product.name,
-                    html: `
-                        <div style="text-align: left;">
-                            <img src="${product.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">
-                            <p><strong>Description:</strong> ${product.description || 'No description available'}</p>
-                            <p><strong>Price:</strong> KSh ${product.price}</p>
-                            <p><strong>Category:</strong> ${product.category}</p>
-                            <p><strong>Stock:</strong> ${product.stock} available</p>
-                        </div>
-                    `,
-                    showCancelButton: true,
-                    confirmButtonText: 'Add to Cart',
-                    cancelButtonText: 'Close',
-                    confirmButtonColor: '#FF6B00'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        addToCart(productId);
-                    }
-                });
-            }
         }
 
         // Add to cart
@@ -2865,176 +1976,14 @@
             document.getElementById('cart-count').textContent = totalItems;
         }
 
-        // Open checkout modal
-        function openCheckoutModal() {
-            if (cart.length === 0) {
-                showNotification('Your cart is empty', 'error');
-                return;
-            }
-            
-            // Validate cart items are still available
-            for (const item of cart) {
-                const product = products.find(p => p.id === item.productId);
-                if (!product || product.stock < item.quantity) {
-                    showNotification(`${item.name} is no longer available in the requested quantity`, 'error');
-                    return;
-                }
-            }
-            
-            // Load checkout items
-            const checkoutItemsContainer = document.getElementById('checkout-items');
-            const checkoutTotal = document.getElementById('checkout-total');
-            
-            let itemsHTML = '';
-            let subtotal = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                subtotal += itemTotal;
-                
-                itemsHTML += `
-                    <div class="order-item">
-                        <span>${item.name} x ${item.quantity}</span>
-                        <span>KSh ${itemTotal}</span>
-                    </div>
-                `;
-            });
-            
-            const deliveryFee = 150;
-            const total = subtotal + deliveryFee;
-            
-            checkoutItemsContainer.innerHTML = itemsHTML;
-            checkoutTotal.textContent = `KSh ${total}`;
-            
-            // Show modal
-            document.getElementById('checkout-modal').style.display = 'flex';
-        }
-
-        // Close checkout modal
-        function closeCheckoutModal() {
-            document.getElementById('checkout-modal').style.display = 'none';
-        }
-
-        // Place order
-        async function placeOrder() {
-            const deliveryAddress = document.getElementById('delivery-address').value;
-            const deliveryInstructions = document.getElementById('delivery-instructions').value;
-            
-            // Validate form
-            if (!validateDeliveryAddress({target: document.getElementById('delivery-address')})) {
-                return;
-            }
-            
-            if (cart.length === 0) {
-                showNotification('Your cart is empty', 'error');
-                return;
-            }
-            
-            showLoading();
-            
-            try {
-                // Calculate total
-                const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-                const deliveryFee = 150;
-                const totalAmount = subtotal + deliveryFee;
-                
-                // Create order
-                const { data: order, error: orderError } = await supabase
-                    .from('orders')
-                    .insert([
-                        {
-                            customer_id: currentUser.id,
-                            total_amount: totalAmount,
-                            delivery_address: deliveryAddress,
-                            delivery_instructions: deliveryInstructions,
-                            status: 'pending'
-                        }
-                    ])
-                    .select()
-                    .single();
-                
-                if (orderError) {
-                    console.error('Error creating order:', orderError);
-                    showNotification('Error creating order', 'error');
-                    return;
-                }
-                
-                // Create order items
-                const orderItems = cart.map(item => ({
-                    order_id: order.id,
-                    product_id: item.productId,
-                    quantity: item.quantity,
-                    price: item.price
-                }));
-                
-                const { error: itemsError } = await supabase
-                    .from('order_items')
-                    .insert(orderItems);
-                
-                if (itemsError) {
-                    console.error('Error creating order items:', itemsError);
-                    showNotification('Error creating order items', 'error');
-                    return;
-                }
-                
-                // Update product stock
-                for (const item of cart) {
-                    const product = products.find(p => p.id === item.productId);
-                    if (product) {
-                        const newStock = product.stock - item.quantity;
-                        
-                        const { error: stockError } = await supabase
-                            .from('products')
-                            .update({ stock: newStock })
-                            .eq('id', item.productId);
-                        
-                        if (stockError) {
-                            console.error('Error updating product stock:', stockError);
-                        }
-                    }
-                }
-                
-                // Clear cart
-                cart = [];
-                saveCartToStorage();
-                updateCartCount();
-                
-                // Close modal and show success
-                closeCheckoutModal();
-                showNotification('Order placed successfully!', 'success');
-                
-                // Refresh orders and dashboard
-                if (userRole === 'customer') {
-                    await loadCustomerDashboard();
-                    showCustomerSection('orders');
-                }
-                
-            } catch (error) {
-                console.error('Error placing order:', error);
-                showNotification('Error placing order', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
         // Load customer orders
         async function loadCustomerOrders() {
             showLoading();
             
             try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('customer_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('Error loading orders:', error);
-                    showNotification('Error loading orders', 'error');
-                } else {
-                    userOrders = data || [];
-                    displayCustomerOrders(userOrders);
-                }
+                // For demo, use empty orders array
+                userOrders = [];
+                displayCustomerOrders(userOrders);
             } catch (error) {
                 console.error('Error loading orders:', error);
                 showNotification('Error loading orders', 'error');
@@ -3060,38 +2009,6 @@
                 `;
                 return;
             }
-            
-            let ordersHTML = '';
-            
-            ordersToDisplay.forEach(order => {
-                const statusClass = `status-${order.status}`;
-                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
-                
-                ordersHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <h3>Order #${order.id.slice(-6)}</h3>
-                            <div class="order-status ${statusClass}">${statusText}</div>
-                        </div>
-                        <p><strong>Delivery Address:</strong> ${order.delivery_address}</p>
-                        <p><strong>Instructions:</strong> ${order.delivery_instructions || 'None'}</p>
-                        <p><strong>Total:</strong> KSh ${order.total_amount}</p>
-                        <p><strong>Date:</strong> ${new Date(order.created_at).toLocaleDateString()}</p>
-                        <div style="margin-top: 15px;">
-                            <button class="btn btn-outline btn-sm" onclick="viewOrderDetails('${order.id}')">
-                                <i class="fas fa-eye"></i> View Details
-                            </button>
-                            ${order.status === 'pending' ? `
-                                <button class="btn btn-danger btn-sm" onclick="cancelOrder('${order.id}')" style="margin-left: 10px;">
-                                    <i class="fas fa-times"></i> Cancel
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            ordersContainer.innerHTML = ordersHTML;
         }
 
         // Filter orders
@@ -3107,928 +2024,64 @@
             displayCustomerOrders(filteredOrders);
         }
 
-        // View order details
-        async function viewOrderDetails(orderId) {
+        // Initialize the application
+        async function initializeApp() {
             showLoading();
             
             try {
-                // Get order details
-                const { data: order, error: orderError } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('id', orderId)
-                    .single();
-                
-                if (orderError) {
-                    console.error('Error loading order details:', orderError);
-                    showNotification('Error loading order details', 'error');
-                    return;
-                }
-                
-                // Get order items
-                const { data: items, error: itemsError } = await supabase
-                    .from('order_items')
-                    .select(`
-                        *,
-                        products (name, image_url)
-                    `)
-                    .eq('order_id', orderId);
-                
-                if (itemsError) {
-                    console.error('Error loading order items:', itemsError);
-                    showNotification('Error loading order items', 'error');
-                    return;
-                }
-                
-                // Display order details
-                let itemsHTML = '';
-                
-                if (items && items.length > 0) {
-                    items.forEach(item => {
-                        itemsHTML += `
-                            <div class="order-item">
-                                <span>${item.products.name} x ${item.quantity}</span>
-                                <span>KSh ${item.price * item.quantity}</span>
-                            </div>
-                        `;
-                    });
-                }
-                
-                const statusClass = `status-${order.status}`;
-                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
-                
-                Swal.fire({
-                    title: `Order #${order.id.slice(-6)}`,
-                    html: `
-                        <div style="text-align: left;">
-                            <div class="order-header">
-                                <h3>Order Details</h3>
-                                <div class="order-status ${statusClass}">${statusText}</div>
-                            </div>
-                            <p><strong>Delivery Address:</strong> ${order.delivery_address}</p>
-                            <p><strong>Instructions:</strong> ${order.delivery_instructions || 'None'}</p>
-                            <p><strong>Date:</strong> ${new Date(order.created_at).toLocaleDateString()}</p>
-                            <h4 style="margin-top: 20px;">Items:</h4>
-                            <div class="order-items">
-                                ${itemsHTML}
-                            </div>
-                            <div class="order-total">
-                                Total: KSh ${order.total_amount}
-                            </div>
-                        </div>
-                    `,
-                    confirmButtonText: 'Close',
-                    confirmButtonColor: '#FF6B00'
-                });
-                
-            } catch (error) {
-                console.error('Error loading order details:', error);
-                showNotification('Error loading order details', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Cancel order
-        async function cancelOrder(orderId) {
-            Swal.fire({
-                title: 'Cancel Order?',
-                text: 'Are you sure you want to cancel this order?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, cancel it!',
-                cancelButtonText: 'No, keep it',
-                confirmButtonColor: '#FF6B00'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    showLoading();
-                    
-                    try {
-                        const { error } = await supabase
-                            .from('orders')
-                            .update({ status: 'cancelled' })
-                            .eq('id', orderId);
-                        
-                        if (error) {
-                            console.error('Error cancelling order:', error);
-                            showNotification('Error cancelling order', 'error');
-                        } else {
-                            showNotification('Order cancelled successfully', 'success');
-                            await loadCustomerOrders();
-                        }
-                    } catch (error) {
-                        console.error('Error cancelling order:', error);
-                        showNotification('Error cancelling order', 'error');
-                    } finally {
-                        hideLoading();
-                    }
-                }
-            });
-        }
-
-        // Load rider dashboard
-        async function loadRiderDashboard() {
-            showLoading();
-            
-            try {
-                // Load rider stats
-                const { data: deliveries, error: deliveriesError } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('rider_id', currentUser.id);
-                
-                if (deliveriesError) {
-                    console.error('Error loading deliveries:', deliveriesError);
-                    showNotification('Error loading deliveries', 'error');
-                } else {
-                    // Update stats
-                    const today = new Date().toISOString().split('T')[0];
-                    const deliveriesToday = deliveries.filter(d => 
-                        d.created_at.split('T')[0] === today
-                    ).length;
-                    
-                    const earningsToday = deliveries.filter(d => 
-                        d.created_at.split('T')[0] === today
-                    ).reduce((total, d) => total + (d.total_amount * 0.2), 0); // Assuming 20% commission
-                    
-                    const thisWeek = getWeekDates();
-                    const deliveriesThisWeek = deliveries.filter(d => 
-                        thisWeek.includes(d.created_at.split('T')[0])
-                    ).length;
-                    
-                    const onTimeRate = deliveries.length > 0 ? 
-                        Math.round((deliveries.filter(d => d.status === 'delivered').length / deliveries.length) * 100) : 0;
-                    
-                    document.querySelector('#rider-dashboard-section .stats-grid .stat-card:nth-child(1) .stat-value').textContent = deliveriesToday;
-                    document.querySelector('#rider-dashboard-section .stats-grid .stat-card:nth-child(2) .stat-value').textContent = `KSh ${earningsToday.toFixed(0)}`;
-                    document.querySelector('#rider-dashboard-section .stats-grid .stat-card:nth-child(3) .stat-value').textContent = deliveriesThisWeek;
-                    document.querySelector('#rider-dashboard-section .stats-grid .stat-card:nth-child(4) .stat-value').textContent = `${onTimeRate}%`;
-                    
-                    // Load current delivery
-                    const currentDelivery = deliveries.find(d => 
-                        ['assigned', 'picked'].includes(d.status)
-                    );
-                    
-                    if (currentDelivery) {
-                        displayCurrentDelivery(currentDelivery);
-                    }
-                    
-                    // Load available deliveries
-                    await loadAvailableDeliveries();
-                }
-            } catch (error) {
-                console.error('Error loading rider dashboard:', error);
-                showNotification('Error loading dashboard', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Get week dates for filtering
-        function getWeekDates() {
-            const today = new Date();
-            const weekDates = [];
-            
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() - i);
-                weekDates.push(date.toISOString().split('T')[0]);
-            }
-            
-            return weekDates;
-        }
-
-        // Display current delivery
-        function displayCurrentDelivery(delivery) {
-            const currentDeliveryContainer = document.getElementById('current-delivery');
-            const statusClass = `status-${delivery.status}`;
-            const statusText = delivery.status.charAt(0).toUpperCase() + delivery.status.slice(1);
-            
-            currentDeliveryContainer.innerHTML = `
-                <div class="order-card">
-                    <div class="order-header">
-                        <h3>Order #${delivery.id.slice(-6)}</h3>
-                        <div class="order-status ${statusClass}">${statusText}</div>
-                    </div>
-                    <p><strong>Pickup:</strong> Seller Location</p>
-                    <p><strong>Delivery:</strong> ${delivery.delivery_address}</p>
-                    <p><strong>Instructions:</strong> ${delivery.delivery_instructions || 'None'}</p>
-                    <p><strong>Earnings:</strong> KSh ${(delivery.total_amount * 0.2).toFixed(0)}</p>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                        ${delivery.status === 'assigned' ? `
-                            <button class="btn btn-primary" onclick="updateDeliveryStatus('${delivery.id}', 'picked')">
-                                <i class="fas fa-box"></i> Mark as Picked Up
-                            </button>
-                        ` : ''}
-                        ${delivery.status === 'picked' ? `
-                            <button class="btn btn-success" onclick="updateDeliveryStatus('${delivery.id}', 'delivered')">
-                                <i class="fas fa-check"></i> Mark as Delivered
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Load available deliveries
-        async function loadAvailableDeliveries() {
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('status', 'ready')
-                    .is('rider_id', null);
+                // Check if user is already logged in
+                const { data: { session }, error } = await supabase.auth.getSession();
                 
                 if (error) {
-                    console.error('Error loading available deliveries:', error);
-                    showNotification('Error loading available deliveries', 'error');
-                } else {
-                    availableDeliveries = data || [];
-                    displayAvailableDeliveries(availableDeliveries);
-                }
-            } catch (error) {
-                console.error('Error loading available deliveries:', error);
-                showNotification('Error loading available deliveries', 'error');
-            }
-        }
-
-        // Display available deliveries
-        function displayAvailableDeliveries(deliveries) {
-            const availableDeliveriesContainer = document.getElementById('available-deliveries');
-            
-            if (deliveries.length === 0) {
-                availableDeliveriesContainer.innerHTML = `
-                    <div class="order-card">
-                        <p style="text-align: center; color: var(--gray);">No available deliveries at the moment</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let deliveriesHTML = '';
-            
-            deliveries.forEach(delivery => {
-                const earnings = delivery.total_amount * 0.2; // 20% commission
-                
-                deliveriesHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <h3>Order #${delivery.id.slice(-6)}</h3>
-                            <div class="order-status status-ready">Ready</div>
-                        </div>
-                        <p><strong>Pickup:</strong> Seller Location</p>
-                        <p><strong>Delivery:</strong> ${delivery.delivery_address}</p>
-                        <p><strong>Instructions:</strong> ${delivery.delivery_instructions || 'None'}</p>
-                        <p><strong>Earnings:</strong> KSh ${earnings.toFixed(0)}</p>
-                        <div style="margin-top: 15px;">
-                            <button class="btn btn-primary" onclick="acceptDelivery('${delivery.id}')">
-                                <i class="fas fa-check"></i> Accept Delivery
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            availableDeliveriesContainer.innerHTML = deliveriesHTML;
-        }
-
-        // Accept delivery
-        async function acceptDelivery(orderId) {
-            showLoading();
-            
-            try {
-                const { error } = await supabase
-                    .from('orders')
-                    .update({ 
-                        rider_id: currentUser.id,
-                        status: 'assigned'
-                    })
-                    .eq('id', orderId);
-                
-                if (error) {
-                    console.error('Error accepting delivery:', error);
-                    showNotification('Error accepting delivery', 'error');
-                } else {
-                    showNotification('Delivery accepted successfully!', 'success');
-                    await loadRiderDashboard();
-                }
-            } catch (error) {
-                console.error('Error accepting delivery:', error);
-                showNotification('Error accepting delivery', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Update delivery status
-        async function updateDeliveryStatus(orderId, status) {
-            showLoading();
-            
-            try {
-                const { error } = await supabase
-                    .from('orders')
-                    .update({ status: status })
-                    .eq('id', orderId);
-                
-                if (error) {
-                    console.error('Error updating delivery status:', error);
-                    showNotification('Error updating delivery status', 'error');
-                } else {
-                    showNotification(`Delivery marked as ${status}`, 'success');
-                    await loadRiderDashboard();
-                }
-            } catch (error) {
-                console.error('Error updating delivery status:', error);
-                showNotification('Error updating delivery status', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Toggle rider availability
-        async function toggleAvailability() {
-            const isAvailable = document.getElementById('availabilityToggle').checked;
-            
-            try {
-                const { error } = await supabase
-                    .from('rider_profiles')
-                    .upsert({
-                        user_id: currentUser.id,
-                        is_available: isAvailable
-                    });
-                
-                if (error) {
-                    console.error('Error updating availability:', error);
-                    showNotification('Error updating availability', 'error');
-                } else {
-                    showNotification(`You are now ${isAvailable ? 'available' : 'unavailable'} for deliveries`, 'success');
-                }
-            } catch (error) {
-                console.error('Error updating availability:', error);
-                showNotification('Error updating availability', 'error');
-            }
-        }
-
-        // Load rider deliveries
-        async function loadRiderDeliveries() {
-            showLoading();
-            
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('rider_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('Error loading rider deliveries:', error);
-                    showNotification('Error loading deliveries', 'error');
-                } else {
-                    displayRiderDeliveries(data || []);
-                }
-            } catch (error) {
-                console.error('Error loading rider deliveries:', error);
-                showNotification('Error loading deliveries', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Display rider deliveries
-        function displayRiderDeliveries(deliveries) {
-            const deliveriesContainer = document.getElementById('rider-deliveries-list');
-            
-            if (deliveries.length === 0) {
-                deliveriesContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <h3>No deliveries yet</h3>
-                        <p>Accept deliveries to see them here</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let deliveriesHTML = '';
-            
-            deliveries.forEach(delivery => {
-                const statusClass = `status-${delivery.status}`;
-                const statusText = delivery.status.charAt(0).toUpperCase() + delivery.status.slice(1);
-                const earnings = delivery.total_amount * 0.2; // 20% commission
-                
-                deliveriesHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <h3>Order #${delivery.id.slice(-6)}</h3>
-                            <div class="order-status ${statusClass}">${statusText}</div>
-                        </div>
-                        <p><strong>Delivery Address:</strong> ${delivery.delivery_address}</p>
-                        <p><strong>Instructions:</strong> ${delivery.delivery_instructions || 'None'}</p>
-                        <p><strong>Earnings:</strong> KSh ${earnings.toFixed(0)}</p>
-                        <p><strong>Date:</strong> ${new Date(delivery.created_at).toLocaleDateString()}</p>
-                    </div>
-                `;
-            });
-            
-            deliveriesContainer.innerHTML = deliveriesHTML;
-        }
-
-        // Load rider earnings
-        async function loadRiderEarnings() {
-            showLoading();
-            
-            try {
-                const { data: deliveries, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .eq('rider_id', currentUser.id);
-                
-                if (error) {
-                    console.error('Error loading rider earnings:', error);
-                    showNotification('Error loading earnings', 'error');
-                } else {
-                    // Calculate earnings
-                    const totalEarnings = deliveries.reduce((total, d) => total + (d.total_amount * 0.2), 0);
-                    
-                    const today = new Date().toISOString().split('T')[0];
-                    const earningsToday = deliveries.filter(d => 
-                        d.created_at.split('T')[0] === today
-                    ).reduce((total, d) => total + (d.total_amount * 0.2), 0);
-                    
-                    const thisWeek = getWeekDates();
-                    const earningsThisWeek = deliveries.filter(d => 
-                        thisWeek.includes(d.created_at.split('T')[0])
-                    ).reduce((total, d) => total + (d.total_amount * 0.2), 0);
-                    
-                    const totalDeliveries = deliveries.length;
+                    console.error('Error getting session:', error);
+                    showNotification('Error checking authentication status', 'error');
+                } else if (session) {
+                    // User is logged in
+                    currentUser = session.user;
+                    userRole = session.user.user_metadata?.role || 'customer';
                     
                     // Update UI
-                    document.querySelector('#rider-earnings-section .stats-grid .stat-card:nth-child(1) .stat-value').textContent = `KSh ${totalEarnings.toFixed(0)}`;
-                    document.querySelector('#rider-earnings-section .stats-grid .stat-card:nth-child(2) .stat-value').textContent = `KSh ${earningsThisWeek.toFixed(0)}`;
-                    document.querySelector('#rider-earnings-section .stats-grid .stat-card:nth-child(3) .stat-value').textContent = `KSh ${earningsToday.toFixed(0)}`;
-                    document.querySelector('#rider-earnings-section .stats-grid .stat-card:nth-child(4) .stat-value').textContent = totalDeliveries;
-                }
-            } catch (error) {
-                console.error('Error loading rider earnings:', error);
-                showNotification('Error loading earnings', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Load seller dashboard
-        async function loadSellerDashboard() {
-            showLoading();
-            
-            try {
-                // Load seller stats
-                const { data: productsData, error: productsError } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('seller_id', currentUser.id);
-                
-                const { data: ordersData, error: ordersError } = await supabase
-                    .from('orders')
-                    .select(`
-                        *,
-                        order_items (
-                            *,
-                            products (
-                                seller_id
-                            )
-                        )
-                    `);
-                
-                if (productsError || ordersError) {
-                    console.error('Error loading seller data:', productsError || ordersError);
-                    showNotification('Error loading dashboard', 'error');
+                    updateUserInfo({
+                        name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+                        role: userRole
+                    });
+                    
+                    // Redirect to dashboard
+                    redirectToDashboard(userRole);
                 } else {
-                    // Filter orders to only include this seller's products
-                    const sellerOrders = ordersData.filter(order => 
-                        order.order_items.some(item => item.products.seller_id === currentUser.id)
-                    );
-                    
-                    // Calculate stats
-                    const totalRevenue = sellerOrders.reduce((total, order) => total + order.total_amount, 0);
-                    
-                    const today = new Date().toISOString().split('T')[0];
-                    const revenueToday = sellerOrders.filter(order => 
-                        order.created_at.split('T')[0] === today
-                    ).reduce((total, order) => total + order.total_amount, 0);
-                    
-                    const thisWeek = getWeekDates();
-                    const revenueThisWeek = sellerOrders.filter(order => 
-                        thisWeek.includes(order.created_at.split('T')[0])
-                    ).reduce((total, order) => total + order.total_amount, 0);
-                    
-                    const totalOrders = sellerOrders.length;
-                    
-                    // Update UI
-                    document.querySelector('#seller-dashboard-section .stats-grid .stat-card:nth-child(1) .stat-value').textContent = `KSh ${totalRevenue.toFixed(0)}`;
-                    document.querySelector('#seller-dashboard-section .stats-grid .stat-card:nth-child(2) .stat-value').textContent = `KSh ${revenueThisWeek.toFixed(0)}`;
-                    document.querySelector('#seller-dashboard-section .stats-grid .stat-card:nth-child(3) .stat-value').textContent = `KSh ${revenueToday.toFixed(0)}`;
-                    document.querySelector('#seller-dashboard-section .stats-grid .stat-card:nth-child(4) .stat-value').textContent = totalOrders;
+                    // User is not logged in, show landing page
+                    showPage('landing-page');
                 }
             } catch (error) {
-                console.error('Error loading seller dashboard:', error);
-                showNotification('Error loading dashboard', 'error');
+                console.error('Error initializing app:', error);
+                showNotification('Error initializing application', 'error');
             } finally {
                 hideLoading();
             }
         }
 
-        // Load seller products
-        async function loadSellerProducts() {
-            showLoading();
-            
-            try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('seller_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('Error loading seller products:', error);
-                    showNotification('Error loading products', 'error');
-                } else {
-                    sellerProducts = data || [];
-                    displaySellerProducts(sellerProducts);
-                }
-            } catch (error) {
-                console.error('Error loading seller products:', error);
-                showNotification('Error loading products', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Display seller products
-        function displaySellerProducts(productsToDisplay) {
-            const productsContainer = document.getElementById('seller-products-list');
-            
-            if (productsToDisplay.length === 0) {
-                productsContainer.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <i class="fas fa-box-open"></i>
-                        <h3>No products yet</h3>
-                        <p>Add your first product to get started!</p>
-                        <button class="btn btn-primary" onclick="openAddProductModal()" style="margin-top: 15px;">
-                            <i class="fas fa-plus"></i> Add Product
-                        </button>
-                    </div>
-                `;
+        // Checkout function (simplified for demo)
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'error');
                 return;
             }
             
-            let productsHTML = '';
-            
-            productsToDisplay.forEach(product => {
-                productsHTML += `
-                    <div class="product-card">
-                        <div class="product-image" style="background-image: url('${product.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}');"></div>
-                        <div class="product-info">
-                            <h3>${product.name}</h3>
-                            <p style="color: var(--gray); margin: 10px 0;">${product.description || 'No description'}</p>
-                            <div class="product-price">KSh ${product.price}</div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                                <span style="color: ${product.stock > 0 ? 'var(--success)' : 'var(--danger)'}; font-weight: 500;">
-                                    ${product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
-                                </span>
-                                <div>
-                                    <button class="btn btn-outline btn-sm" onclick="editProduct('${product.id}')">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product.id}')" style="margin-left: 5px;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            productsContainer.innerHTML = productsHTML;
-        }
-
-        // Open add product modal
-        function openAddProductModal() {
-            document.getElementById('add-product-modal').style.display = 'flex';
-            // Reset form
-            document.getElementById('product-name').value = '';
-            document.getElementById('product-description').value = '';
-            document.getElementById('product-price').value = '';
-            document.getElementById('product-stock').value = '';
-            document.getElementById('product-category').value = 'Food';
-            document.getElementById('image-preview').innerHTML = '';
-        }
-
-        // Close add product modal
-        function closeAddProductModal() {
-            document.getElementById('add-product-modal').style.display = 'none';
-        }
-
-        // Handle image upload
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            // Check if file is an image
-            if (!file.type.match('image.*')) {
-                showNotification('Please select an image file', 'error');
-                return;
-            }
-            
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showNotification('Image size should be less than 5MB', 'error');
-                return;
-            }
-            
-            // Preview image
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('image-preview').innerHTML = `
-                    <img src="${e.target.result}" alt="Preview">
-                    <button class="btn btn-outline btn-sm" onclick="removeImage()" style="margin-top: 10px;">
-                        <i class="fas fa-times"></i> Remove
-                    </button>
-                `;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Remove image
-        function removeImage() {
-            document.getElementById('product-image').value = '';
-            document.getElementById('image-preview').innerHTML = '';
-        }
-
-        // Add product
-        async function addProduct() {
-            const name = document.getElementById('product-name').value;
-            const description = document.getElementById('product-description').value;
-            const price = parseFloat(document.getElementById('product-price').value);
-            const category = document.getElementById('product-category').value;
-            const stock = parseInt(document.getElementById('product-stock').value);
-            const imageFile = document.getElementById('product-image').files[0];
-            
-            // Validate form
-            if (!validateProductName({target: document.getElementById('product-name')}) || 
-                !validateProductPrice({target: document.getElementById('product-price')}) || 
-                !validateProductStock({target: document.getElementById('product-stock')})) {
-                return;
-            }
-            
-            if (price <= 0) {
-                showNotification('Price must be greater than 0', 'error');
-                return;
-            }
-            
-            if (stock < 0) {
-                showNotification('Stock cannot be negative', 'error');
-                return;
-            }
-            
-            showLoading();
-            
-            try {
-                let imageUrl = null;
-                
-                // Upload image if provided
-                if (imageFile) {
-                    const fileExt = imageFile.name.split('.').pop();
-                    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-                    const filePath = `product-images/${fileName}`;
-                    
-                    const { error: uploadError } = await supabase.storage
-                        .from('products')
-                        .upload(filePath, imageFile);
-                    
-                    if (uploadError) {
-                        console.error('Error uploading image:', uploadError);
-                        showNotification('Error uploading image', 'error');
-                        return;
-                    }
-                    
-                    // Get public URL
-                    const { data: { publicUrl } } = supabase.storage
-                        .from('products')
-                        .getPublicUrl(filePath);
-                    
-                    imageUrl = publicUrl;
-                }
-                
-                // Add product to database
-                const { error } = await supabase
-                    .from('products')
-                    .insert([
-                        {
-                            seller_id: currentUser.id,
-                            name: name,
-                            description: description,
-                            price: price,
-                            category: category,
-                            stock: stock,
-                            image_url: imageUrl,
-                            is_active: true
-                        }
-                    ]);
-                
-                if (error) {
-                    console.error('Error adding product:', error);
-                    showNotification('Error adding product', 'error');
-                } else {
-                    showNotification('Product added successfully!', 'success');
-                    closeAddProductModal();
-                    await loadSellerProducts();
-                }
-            } catch (error) {
-                console.error('Error adding product:', error);
-                showNotification('Error adding product', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Edit product
-        function editProduct(productId) {
-            showNotification('Edit functionality coming soon!', 'info');
-        }
-
-        // Delete product
-        async function deleteProduct(productId) {
+            // For demo purposes, simulate successful order
             Swal.fire({
-                title: 'Delete Product?',
-                text: 'This action cannot be undone.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel',
+                title: 'Order Placed!',
+                text: 'Your order has been placed successfully. This is a demo - in a real app, this would connect to payment processing.',
+                icon: 'success',
+                confirmButtonText: 'Great!',
                 confirmButtonColor: '#FF6B00'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    showLoading();
-                    
-                    try {
-                        const { error } = await supabase
-                            .from('products')
-                            .delete()
-                            .eq('id', productId);
-                        
-                        if (error) {
-                            console.error('Error deleting product:', error);
-                            showNotification('Error deleting product', 'error');
-                        } else {
-                            showNotification('Product deleted successfully', 'success');
-                            await loadSellerProducts();
-                        }
-                    } catch (error) {
-                        console.error('Error deleting product:', error);
-                        showNotification('Error deleting product', 'error');
-                    } finally {
-                        hideLoading();
-                    }
-                }
+            }).then(() => {
+                // Clear cart after successful "order"
+                cart = [];
+                saveCartToStorage();
+                updateCartCount();
+                loadCartItems();
+                showNotification('Order placed successfully!', 'success');
             });
-        }
-
-        // Load seller orders
-        async function loadSellerOrders() {
-            showLoading();
-            
-            try {
-                const { data: ordersData, error } = await supabase
-                    .from('orders')
-                    .select(`
-                        *,
-                        order_items (
-                            *,
-                            products (
-                                seller_id,
-                                name
-                            )
-                        )
-                    `)
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('Error loading seller orders:', error);
-                    showNotification('Error loading orders', 'error');
-                } else {
-                    // Filter orders to only include this seller's products
-                    const sellerOrders = ordersData.filter(order => 
-                        order.order_items.some(item => item.products.seller_id === currentUser.id)
-                    );
-                    
-                    displaySellerOrders(sellerOrders);
-                }
-            } catch (error) {
-                console.error('Error loading seller orders:', error);
-                showNotification('Error loading orders', 'error');
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // Display seller orders
-        function displaySellerOrders(ordersToDisplay) {
-            const ordersContainer = document.getElementById('seller-orders-list');
-            
-            if (ordersToDisplay.length === 0) {
-                ordersContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <h3>No orders yet</h3>
-                        <p>Orders will appear here when customers purchase your products</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let ordersHTML = '';
-            
-            ordersToDisplay.forEach(order => {
-                const statusClass = `status-${order.status}`;
-                const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
-                
-                // Get items from this seller
-                const sellerItems = order.order_items.filter(item => 
-                    item.products.seller_id === currentUser.id
-                );
-                
-                let itemsHTML = '';
-                sellerItems.forEach(item => {
-                    itemsHTML += `
-                        <div class="order-item">
-                            <span>${item.products.name} x ${item.quantity}</span>
-                            <span>KSh ${item.price * item.quantity}</span>
-                        </div>
-                    `;
-                });
-                
-                const sellerTotal = sellerItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-                
-                ordersHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <h3>Order #${order.id.slice(-6)}</h3>
-                            <div class="order-status ${statusClass}">${statusText}</div>
-                        </div>
-                        <p><strong>Customer:</strong> ${order.delivery_address}</p>
-                        <p><strong>Instructions:</strong> ${order.delivery_instructions || 'None'}</p>
-                        <div class="order-items">
-                            ${itemsHTML}
-                        </div>
-                        <div class="order-total">
-                            Your Total: KSh ${sellerTotal}
-                        </div>
-                        <div style="margin-top: 15px;">
-                            ${order.status === 'pending' ? `
-                                <button class="btn btn-primary" onclick="updateOrderStatus('${order.id}', 'accepted')">
-                                    <i class="fas fa-check"></i> Accept Order
-                                </button>
-                                <button class="btn btn-danger" onclick="updateOrderStatus('${order.id}', 'cancelled')" style="margin-left: 10px;">
-                                    <i class="fas fa-times"></i> Cancel
-                                </button>
-                            ` : ''}
-                            ${order.status === 'accepted' ? `
-                                <button class="btn btn-success" onclick="updateOrderStatus('${order.id}', 'ready')">
-                                    <i class="fas fa-check-double"></i> Mark as Ready
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            ordersContainer.innerHTML = ordersHTML;
-        }
-
-        // Update order status (for sellers)
-        async function updateOrderStatus(orderId, status) {
-            showLoading();
-            
-            try {
-                const { error } = await supabase
-                    .from('orders')
-                    .update({ status: status })
-                    .eq('id', orderId);
-                
-                if (error) {
-                    console.error('Error updating order status:', error);
-                    showNotification('Error updating order status', 'error');
-                } else {
-                    showNotification(`Order marked as ${status}`, 'success');
-                    await loadSellerOrders();
-                }
-            } catch (error) {
-                console.error('Error updating order status:', error);
-                showNotification('Error updating order status', 'error');
-            } finally {
-                hideLoading();
-            }
         }
     </script>
 </body>
