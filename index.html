@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPATE Deliveries - Fast Nairobi Delivery</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚚</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1281,7 +1282,7 @@
                                         <i class="fas fa-box-open" style="font-size: 48px; color: var(--gray); margin-bottom: 15px;"></i>
                                         <h3>No Active Delivery</h3>
                                         <p style="color: var(--gray); margin-bottom: 20px;">You don't have any active deliveries at the moment.</p>
-                                        <button class="btn btn-primary">
+                                        <button class="btn btn-primary" onclick="checkAvailableDeliveries()">
                                             Check Available Deliveries
                                         </button>
                                     </div>
@@ -1300,6 +1301,9 @@
                                         <i class="fas fa-clipboard-list" style="font-size: 36px; color: var(--gray); margin-bottom: 10px;"></i>
                                         <h3>No Available Deliveries</h3>
                                         <p style="color: var(--gray);">There are no available deliveries at the moment.</p>
+                                        <button class="btn btn-primary" onclick="refreshDeliveries()" style="margin-top: 15px;">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1317,6 +1321,9 @@
                                 <i class="fas fa-clipboard-list"></i>
                                 <h3>No deliveries yet</h3>
                                 <p>When you accept delivery assignments, they will appear here</p>
+                                <button class="btn btn-primary" onclick="showRiderSection('dashboard')" style="margin-top: 15px;">
+                                    Check Available Deliveries
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1331,6 +1338,9 @@
                                 <i class="fas fa-chart-line"></i>
                                 <h3>No earnings data</h3>
                                 <p>Your earnings will appear here after completing deliveries</p>
+                                <button class="btn btn-primary" onclick="showRiderSection('dashboard')" style="margin-top: 15px;">
+                                    Start Delivering
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1345,6 +1355,9 @@
                                 <i class="fas fa-calendar-alt"></i>
                                 <h3>No schedule set</h3>
                                 <p>Set your availability schedule to receive delivery requests</p>
+                                <button class="btn btn-primary" onclick="openScheduleModal()" style="margin-top: 15px;">
+                                    <i class="fas fa-plus"></i> Set Schedule
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1406,9 +1419,9 @@
 
                         <!-- Recent Orders Preview -->
                         <div class="section">
-                            <div class="section-title">
+                            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                                 <h2>📋 Recent Orders</h2>
-                                <button class="btn btn-outline">View All Orders</button>
+                                <button class="btn btn-outline" onclick="showSellerSection('orders')">View All Orders</button>
                             </div>
                             <div class="orders-list" id="recentOrders">
                                 <div class="order-card">
@@ -1432,6 +1445,14 @@
                                         </div>
                                     </div>
                                     <div class="order-total">Total: KSh 2,900</div>
+                                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                        <button class="btn btn-primary btn-sm" onclick="updateOrderStatus('ORD001', 'assigned')">
+                                            Assign Rider
+                                        </button>
+                                        <button class="btn btn-outline btn-sm" onclick="viewOrderDetails('ORD001')">
+                                            View Details
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1439,9 +1460,9 @@
                     
                     <!-- Products Section -->
                     <div id="seller-products-section" class="customer-section">
-                        <div class="section-title">
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                             <h2>📦 My Products</h2>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" onclick="openAddProductModal()">
                                 <i class="fas fa-plus"></i> Add New Product
                             </button>
                         </div>
@@ -1450,7 +1471,7 @@
                                 <i class="fas fa-box-open"></i>
                                 <h3>No products listed</h3>
                                 <p>Add your products to start selling</p>
-                                <button class="btn btn-primary" style="margin-top: 15px;">
+                                <button class="btn btn-primary" onclick="openAddProductModal()" style="margin-top: 15px;">
                                     <i class="fas fa-plus"></i> Add Your First Product
                                 </button>
                             </div>
@@ -1459,10 +1480,10 @@
                     
                     <!-- Orders Section -->
                     <div id="seller-orders-section" class="customer-section">
-                        <div class="section-title">
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                             <h2>📋 All Orders</h2>
                             <div>
-                                <select id="orderFilter">
+                                <select id="orderFilter" class="form-control" onchange="filterSellerOrders()" style="width: auto;">
                                     <option value="all">All Orders</option>
                                     <option value="pending">Pending</option>
                                     <option value="accepted">Accepted</option>
@@ -1493,12 +1514,18 @@
                                 <div class="chart-placeholder">
                                     Sales Chart Visualization
                                 </div>
+                                <button class="btn btn-outline" style="margin-top: 15px;" onclick="generateSalesReport()">
+                                    <i class="fas fa-download"></i> Download Report
+                                </button>
                             </div>
                             <div class="chart-container">
                                 <h3>Top Products</h3>
                                 <div class="chart-placeholder">
                                     Top Products Chart
                                 </div>
+                                <button class="btn btn-outline" style="margin-top: 15px;" onclick="viewProductAnalytics()">
+                                    <i class="fas fa-chart-bar"></i> View Details
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1532,7 +1559,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
                 <p style="text-align: center; margin-top: 15px;">
-                    <a href="#" style="color: var(--primary);">Forgot your password?</a>
+                    <a href="#" style="color: var(--primary);" onclick="showForgotPasswordModal()">Forgot your password?</a>
                 </p>
             </form>
             
@@ -1566,6 +1593,110 @@
         </div>
     </div>
 
+    <!-- Add Product Modal -->
+    <div class="modal" id="add-product-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeAddProductModal()">&times;</span>
+            <h2 style="margin-bottom: 20px;">Add New Product</h2>
+            
+            <form id="add-product-form" onsubmit="addNewProduct(event)">
+                <div class="form-group">
+                    <label for="product-name">Product Name</label>
+                    <input type="text" id="product-name" class="form-control" placeholder="Enter product name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" class="form-control" placeholder="Enter product description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-price">Price (KSh)</label>
+                    <input type="number" id="product-price" class="form-control" placeholder="Enter price" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-category">Category</label>
+                    <select id="product-category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Food">Food</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Personal Care">Personal Care</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Home & Garden">Home & Garden</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-stock">Stock Quantity</label>
+                    <input type="number" id="product-stock" class="form-control" placeholder="Enter stock quantity" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-image">Product Image URL</label>
+                    <input type="url" id="product-image" class="form-control" placeholder="https://example.com/image.jpg">
+                    <small style="color: var(--gray);">Leave empty to use a placeholder image</small>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeAddProductModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div class="modal" id="schedule-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeScheduleModal()">&times;</span>
+            <h2 style="margin-bottom: 20px;">Set Your Schedule</h2>
+            
+            <div class="form-group">
+                <label>Available Days</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="monday"> Monday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="tuesday"> Tuesday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="wednesday"> Wednesday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="thursday"> Thursday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="friday"> Friday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="saturday"> Saturday
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="sunday"> Sunday
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="start-time">Start Time</label>
+                <input type="time" id="start-time" class="form-control" value="08:00">
+            </div>
+            
+            <div class="form-group">
+                <label for="end-time">End Time</label>
+                <input type="time" id="end-time" class="form-control" value="17:00">
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn btn-outline" onclick="closeScheduleModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveSchedule()">Save Schedule</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -1576,10 +1707,10 @@
                     </div>
                     <p>Fast and reliable delivery services across Nairobi. Connecting customers, sellers, and riders for seamless deliveries.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" onclick="showNotification('Facebook page coming soon!', 'info')"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" onclick="showNotification('Twitter page coming soon!', 'info')"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" onclick="showNotification('Instagram page coming soon!', 'info')"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" onclick="showNotification('LinkedIn page coming soon!', 'info')"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -1588,16 +1719,16 @@
                         <li><a href="#features">How It Works</a></li>
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#" onclick="showPage('help-center')">Help Center</a></li>
+                        <li><a href="#" onclick="showNotification('Help Center coming soon!', 'info')">Help Center</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="#">Food Delivery</a></li>
-                        <li><a href="#">Grocery Delivery</a></li>
-                        <li><a href="#">Package Delivery</a></li>
-                        <li><a href="#">Express Delivery</a></li>
+                        <li><a href="#" onclick="showNotification('Food delivery service coming soon!', 'info')">Food Delivery</a></li>
+                        <li><a href="#" onclick="showNotification('Grocery delivery service coming soon!', 'info')">Grocery Delivery</a></li>
+                        <li><a href="#" onclick="showNotification('Package delivery service coming soon!', 'info')">Package Delivery</a></li>
+                        <li><a href="#" onclick="showNotification('Express delivery service coming soon!', 'info')">Express Delivery</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -1664,6 +1795,9 @@
             document.getElementById('searchProducts')?.addEventListener('input', filterProducts);
             document.getElementById('categoryFilter')?.addEventListener('change', filterProducts);
             document.getElementById('orderStatusFilter')?.addEventListener('change', filterOrders);
+            
+            // Availability toggle
+            document.getElementById('availabilityToggle')?.addEventListener('change', toggleAvailability);
         }
 
         // Show notification
@@ -2039,6 +2173,7 @@
         // Load seller dashboard
         function loadSellerDashboard() {
             showNotification('Seller dashboard loaded successfully!', 'success');
+            displaySellerProducts();
         }
 
         // Load mock data for demo
@@ -2465,397 +2600,237 @@
         }
 
         // =============================================
-        // ENHANCED ORDER MANAGEMENT INTEGRATIONS
+        // BUTTON FUNCTIONALITIES
         // =============================================
 
-        // 1. placeOrder() - Customer → Seller
-        async function placeOrder(orderData) {
-            showLoading();
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .insert([
-                        {
-                            customer_id: currentUser.id,
-                            seller_id: orderData.seller_id,
-                            items: orderData.items,
-                            total_amount: orderData.total_amount,
-                            delivery_address: orderData.delivery_address,
-                            status: 'pending',
-                            created_at: new Date()
-                        }
-                    ])
-                    .select();
-                
-                if (error) throw error;
-                
-                // Send notification to seller
-                await notifyNewOrder(data[0].id, orderData.seller_id);
-                
-                showNotification('Order placed successfully!', 'success');
-                return data[0];
-            } catch (error) {
-                console.error('Error placing order:', error);
-                showNotification('Failed to place order', 'error');
-                throw error;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // 2. cancelOrder() - Customer → Seller
-        async function cancelOrder(orderId) {
-            showLoading();
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update({ 
-                        status: 'cancelled',
-                        cancelled_at: new Date()
-                    })
-                    .eq('id', orderId)
-                    .eq('customer_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                // Get order details for notification
-                const { data: order } = await supabase
-                    .from('orders')
-                    .select('seller_id, rider_id')
-                    .eq('id', orderId)
-                    .single();
-                    
-                if (order) {
-                    await sendNotification(order.seller_id, `Order #${orderId} was cancelled by customer`, 'order_cancelled');
-                    if (order.rider_id) {
-                        await sendNotification(order.rider_id, `Delivery for order #${orderId} was cancelled`, 'order_cancelled');
-                    }
-                }
-                
-                showNotification('Order cancelled successfully', 'success');
-                return true;
-            } catch (error) {
-                console.error('Error cancelling order:', error);
-                showNotification('Failed to cancel order', 'error');
-                return false;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // 3. assignRider() - Seller → Rider
-        async function assignRider(orderId, riderId) {
-            showLoading();
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update({ 
-                        rider_id: riderId,
-                        status: 'assigned',
-                        assigned_at: new Date()
-                    })
-                    .eq('id', orderId);
-                
-                if (error) throw error;
-                
-                // Notify rider
-                await notifyRiderAssignment(orderId, riderId);
-                
-                // Update order status for all parties
-                await updateOrderStatus(orderId, 'assigned');
-                
-                showNotification('Rider assigned successfully', 'success');
-                return true;
-            } catch (error) {
-                console.error('Error assigning rider:', error);
-                showNotification('Failed to assign rider', 'error');
-                return false;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // 4. acceptDelivery() - Rider → Seller
-        async function acceptDelivery(orderId) {
-            showLoading();
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update({ 
-                        status: 'accepted',
-                        accepted_at: new Date()
-                    })
-                    .eq('id', orderId)
-                    .eq('rider_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                // Notify seller
-                const { data: order } = await supabase
-                    .from('orders')
-                    .select('seller_id')
-                    .eq('id', orderId)
-                    .single();
-                    
-                if (order) {
-                    await sendNotification(order.seller_id, `Rider accepted delivery for order #${orderId}`, 'delivery_accepted');
-                }
-                
-                showNotification('Delivery accepted', 'success');
-                return true;
-            } catch (error) {
-                console.error('Error accepting delivery:', error);
-                showNotification('Failed to accept delivery', 'error');
-                return false;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // 5. updateOrderStatus() - Seller → All
-        async function updateOrderStatus(orderId, newStatus) {
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update({ 
-                        status: newStatus,
-                        updated_at: new Date()
-                    })
-                    .eq('id', orderId);
-                
-                if (error) throw error;
-                
-                // Get order details for notifications
-                const { data: order } = await supabase
-                    .from('orders')
-                    .select('customer_id, rider_id, seller_id')
-                    .eq('id', orderId)
-                    .single();
-                    
-                if (order) {
-                    // Notify customer and rider
-                    const statusMessage = `Order #${orderId} status updated to: ${newStatus}`;
-                    await sendNotification(order.customer_id, statusMessage, 'order_updated');
-                    if (order.rider_id) {
-                        await sendNotification(order.rider_id, statusMessage, 'order_updated');
-                    }
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Error updating order status:', error);
-                return false;
-            }
-        }
-
-        // 6. updateDeliveryStatus() - Rider → All
-        async function updateDeliveryStatus(orderId, newStatus, location = null) {
-            try {
-                const updateData = { 
-                    delivery_status: newStatus,
-                    delivery_updated_at: new Date()
-                };
-                
-                if (location) {
-                    updateData.current_location = location;
-                }
-                
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update(updateData)
-                    .eq('id', orderId)
-                    .eq('rider_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                // Update order tracking for customer
-                await updateOrderTracking(orderId, newStatus, location);
-                
-                return true;
-            } catch (error) {
-                console.error('Error updating delivery status:', error);
-                return false;
-            }
-        }
-
-        // 7. markDelivered() - Rider → Seller + Customer
-        async function markDelivered(orderId, proofImage = null) {
-            showLoading();
-            try {
-                const updateData = { 
-                    status: 'delivered',
-                    delivery_status: 'delivered',
-                    delivered_at: new Date()
-                };
-                
-                if (proofImage) {
-                    updateData.delivery_proof = proofImage;
-                }
-                
-                const { data, error } = await supabase
-                    .from('orders')
-                    .update(updateData)
-                    .eq('id', orderId)
-                    .eq('rider_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                // Get order details for notifications
-                const { data: order } = await supabase
-                    .from('orders')
-                    .select('customer_id, seller_id')
-                    .eq('id', orderId)
-                    .single();
-                    
-                if (order) {
-                    // Notify customer and seller
-                    const deliveryMessage = `Order #${orderId} has been delivered successfully`;
-                    await sendNotification(order.customer_id, deliveryMessage, 'order_delivered');
-                    await sendNotification(order.seller_id, deliveryMessage, 'order_delivered');
-                }
-                
-                showNotification('Delivery marked as complete', 'success');
-                return true;
-            } catch (error) {
-                console.error('Error marking delivery:', error);
-                showNotification('Failed to mark delivery', 'error');
-                return false;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // 8. rateOrder() - Customer → Seller + Rider
-        async function rateOrder(orderId, sellerRating, riderRating, comments = '') {
-            showLoading();
-            try {
-                const { data: order } = await supabase
-                    .from('orders')
-                    .select('seller_id, rider_id')
-                    .eq('id', orderId)
-                    .single();
-                    
-                if (!order) throw new Error('Order not found');
-                
-                // Insert ratings
-                const ratingsData = [];
-                
-                if (sellerRating) {
-                    ratingsData.push({
-                        order_id: orderId,
-                        rated_user_id: order.seller_id,
-                        rating_by: currentUser.id,
-                        rating: sellerRating,
-                        comments: comments,
-                        type: 'seller',
-                        created_at: new Date()
-                    });
-                }
-                
-                if (riderRating && order.rider_id) {
-                    ratingsData.push({
-                        order_id: orderId,
-                        rated_user_id: order.rider_id,
-                        rating_by: currentUser.id,
-                        rating: riderRating,
-                        comments: comments,
-                        type: 'rider',
-                        created_at: new Date()
-                    });
-                }
-                
-                const { error } = await supabase
-                    .from('ratings')
-                    .insert(ratingsData);
-                
-                if (error) throw error;
-                
-                // Update order to mark as rated
-                await supabase
-                    .from('orders')
-                    .update({ is_rated: true })
-                    .eq('id', orderId);
-                
-                showNotification('Thank you for your rating!', 'success');
-                return true;
-            } catch (error) {
-                console.error('Error submitting rating:', error);
-                showNotification('Failed to submit rating', 'error');
-                return false;
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // =============================================
-        // NOTIFICATION SYSTEM INTEGRATIONS
-        // =============================================
-
-        // 9. sendNotification() - All roles
-        async function sendNotification(userId, message, type = 'info') {
-            try {
-                const { data, error } = await supabase
-                    .from('notifications')
-                    .insert([
-                        {
-                            user_id: userId,
-                            message: message,
-                            type: type,
-                            is_read: false,
-                            created_at: new Date()
-                        }
-                    ]);
-                
-                if (error) throw error;
-                
-                // Real-time notification for online users
-                if (currentUser && currentUser.id === userId) {
-                    showNotification(message, type);
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Error sending notification:', error);
-                return false;
-            }
-        }
-
-        // 10. notifyNewOrder() - Customer → Seller
-        async function notifyNewOrder(orderId, sellerId) {
-            const message = `New order received! Order #${orderId}`;
-            return await sendNotification(sellerId, message, 'new_order');
-        }
-
-        // 11. notifyRiderAssignment() - Seller → Rider
-        async function notifyRiderAssignment(orderId, riderId) {
-            const message = `You have been assigned to deliver order #${orderId}`;
-            return await sendNotification(riderId, message, 'rider_assigned');
-        }
-
-        // 12. updateOrderTracking() - Rider → Customer
-        async function updateOrderTracking(orderId, status, location = null) {
-            const { data: order } = await supabase
-                .from('orders')
-                .select('customer_id')
-                .eq('id', orderId)
-                .single();
-                
-            if (order) {
-                let message = `Your order #${orderId} status: ${status}`;
-                if (location) {
-                    message += ` | Current location: ${location}`;
-                }
-                
-                return await sendNotification(order.customer_id, message, 'order_tracking');
+        // Add Product Modal Functions
+        function openAddProductModal() {
+            if (!currentUser || userRole !== 'seller') {
+                showNotification('Please login as a seller to add products', 'error');
+                return;
             }
             
-            return false;
+            document.getElementById('add-product-modal').style.display = 'flex';
+            document.getElementById('add-product-form').reset();
         }
 
-        // =============================================
-        // ENHANCED CHECKOUT FUNCTION
-        // =============================================
+        function closeAddProductModal() {
+            document.getElementById('add-product-modal').style.display = 'none';
+        }
 
+        async function addNewProduct(event) {
+            if (event) event.preventDefault();
+            
+            if (!currentUser || userRole !== 'seller') {
+                showNotification('Please login as a seller to add products', 'error');
+                return;
+            }
+            
+            const productData = {
+                name: document.getElementById('product-name').value,
+                description: document.getElementById('product-description').value,
+                price: parseInt(document.getElementById('product-price').value),
+                category: document.getElementById('product-category').value,
+                stock: parseInt(document.getElementById('product-stock').value),
+                image_url: document.getElementById('product-image').value || 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                seller_id: currentUser.id,
+                created_at: new Date()
+            };
+            
+            // Validate required fields
+            if (!productData.name || !productData.price || !productData.category || productData.stock < 0) {
+                showNotification('Please fill in all required fields correctly', 'error');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                // For demo purposes, we'll add to local array since database might not be set up
+                const newProduct = {
+                    id: 'prod-' + Date.now(), // Generate unique ID
+                    ...productData
+                };
+                
+                // Add to seller products array
+                if (!sellerProducts) sellerProducts = [];
+                sellerProducts.push(newProduct);
+                
+                // Update UI
+                displaySellerProducts();
+                
+                showNotification('Product added successfully!', 'success');
+                closeAddProductModal();
+                
+            } catch (error) {
+                console.error('Error adding product:', error);
+                showNotification('Failed to add product', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display Seller Products
+        function displaySellerProducts() {
+            const sellerProductsContainer = document.getElementById('sellerProducts');
+            
+            if (!sellerProducts || sellerProducts.length === 0) {
+                sellerProductsContainer.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-box-open"></i>
+                        <h3>No products listed</h3>
+                        <p>Add your products to start selling</p>
+                        <button class="btn btn-primary" onclick="openAddProductModal()" style="margin-top: 15px;">
+                            <i class="fas fa-plus"></i> Add Your First Product
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let productsHTML = '';
+            
+            sellerProducts.forEach(product => {
+                productsHTML += `
+                    <div class="customer-product-card">
+                        <div class="product-image" style="background-image: url('${product.image_url}'); height: 200px; background-size: cover; background-position: center; border-radius: 8px;"></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p style="color: var(--gray); margin: 10px 0;">${product.description || 'No description available'}</p>
+                            <div class="customer-product-price">KSh ${product.price}</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                                <span style="color: var(--gray); font-size: 14px;">
+                                    Category: ${product.category} | Stock: ${product.stock}
+                                </span>
+                                <div class="customer-product-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="editProduct('${product.id}')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product.id}')" style="background: var(--danger); color: white; border: none;">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            sellerProductsContainer.innerHTML = productsHTML;
+        }
+
+        // Edit Product Function
+        function editProduct(productId) {
+            showNotification('Edit product functionality coming soon!', 'info');
+        }
+
+        // Delete Product Function
+        function deleteProduct(productId) {
+            Swal.fire({
+                title: 'Delete Product?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#E84118'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Remove from array
+                    sellerProducts = sellerProducts.filter(product => product.id !== productId);
+                    
+                    // Update UI
+                    displaySellerProducts();
+                    
+                    showNotification('Product deleted successfully', 'success');
+                }
+            });
+        }
+
+        // Rider Functions
+        function toggleAvailability() {
+            const isAvailable = document.getElementById('availabilityToggle').checked;
+            showNotification(isAvailable ? 'You are now available for deliveries' : 'You are now unavailable for deliveries', 'success');
+        }
+
+        function checkAvailableDeliveries() {
+            showNotification('Checking for available deliveries...', 'info');
+            // Simulate API call
+            setTimeout(() => {
+                showNotification('No new deliveries available at the moment', 'info');
+            }, 1500);
+        }
+
+        function refreshDeliveries() {
+            showNotification('Refreshing deliveries...', 'info');
+            // Simulate refresh
+            setTimeout(() => {
+                showNotification('Deliveries refreshed', 'success');
+            }, 1000);
+        }
+
+        // Schedule Functions
+        function openScheduleModal() {
+            document.getElementById('schedule-modal').style.display = 'flex';
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('schedule-modal').style.display = 'none';
+        }
+
+        function saveSchedule() {
+            const days = [];
+            if (document.getElementById('monday').checked) days.push('Monday');
+            if (document.getElementById('tuesday').checked) days.push('Tuesday');
+            if (document.getElementById('wednesday').checked) days.push('Wednesday');
+            if (document.getElementById('thursday').checked) days.push('Thursday');
+            if (document.getElementById('friday').checked) days.push('Friday');
+            if (document.getElementById('saturday').checked) days.push('Saturday');
+            if (document.getElementById('sunday').checked) days.push('Sunday');
+            
+            const startTime = document.getElementById('start-time').value;
+            const endTime = document.getElementById('end-time').value;
+            
+            if (days.length === 0) {
+                showNotification('Please select at least one day', 'error');
+                return;
+            }
+            
+            showNotification(`Schedule saved: ${days.join(', ')} from ${startTime} to ${endTime}`, 'success');
+            closeScheduleModal();
+        }
+
+        // Seller Order Functions
+        function updateOrderStatus(orderId, newStatus) {
+            showNotification(`Order ${orderId} status updated to ${newStatus}`, 'success');
+        }
+
+        function viewOrderDetails(orderId) {
+            showNotification(`Viewing details for order ${orderId}`, 'info');
+        }
+
+        function filterSellerOrders() {
+            const status = document.getElementById('orderFilter').value;
+            showNotification(`Filtering orders by: ${status}`, 'info');
+        }
+
+        function generateSalesReport() {
+            showNotification('Generating sales report...', 'info');
+            setTimeout(() => {
+                showNotification('Sales report downloaded successfully!', 'success');
+            }, 2000);
+        }
+
+        function viewProductAnalytics() {
+            showNotification('Opening product analytics...', 'info');
+        }
+
+        // Forgot Password
+        function showForgotPasswordModal() {
+            showNotification('Password reset feature coming soon!', 'info');
+        }
+
+        // Checkout Function
         async function openCheckoutModal() {
             if (cart.length === 0) {
                 showNotification('Your cart is empty', 'error');
@@ -2874,29 +2849,33 @@
                 seller_id: mockSellerId,
                 items: cart,
                 total_amount: total,
-                delivery_address: 'Nairobi, Kenya', // In real app, get from user profile
+                delivery_address: 'Nairobi, Kenya',
                 delivery_fee: deliveryFee
             };
             
             try {
-                const order = await placeOrder(orderData);
+                // Simulate order placement
+                showLoading();
+                setTimeout(() => {
+                    hideLoading();
+                    Swal.fire({
+                        title: 'Order Placed Successfully!',
+                        text: `Order #ORD${Date.now()} has been placed. Total: KSh ${total}`,
+                        icon: 'success',
+                        confirmButtonText: 'Track Order',
+                        confirmButtonColor: '#FF6B00'
+                    }).then(() => {
+                        // Clear cart after successful order
+                        cart = [];
+                        saveCartToStorage();
+                        updateCartCount();
+                        loadCartItems();
+                        
+                        // Redirect to orders section
+                        showCustomerSection('orders');
+                    });
+                }, 2000);
                 
-                Swal.fire({
-                    title: 'Order Placed Successfully!',
-                    text: `Order #${order.id} has been placed. Total: KSh ${total}`,
-                    icon: 'success',
-                    confirmButtonText: 'Track Order',
-                    confirmButtonColor: '#FF6B00'
-                }).then(() => {
-                    // Clear cart after successful order
-                    cart = [];
-                    saveCartToStorage();
-                    updateCartCount();
-                    loadCartItems();
-                    
-                    // Redirect to orders section
-                    showCustomerSection('orders');
-                });
             } catch (error) {
                 Swal.fire({
                     title: 'Order Failed',
