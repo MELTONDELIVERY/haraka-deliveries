@@ -2523,6 +2523,7 @@
             initializeApp();
             setupEventListeners();
             checkAuthState();
+            testSupabaseConnection(); // Test the connection
         });
         
         // Initialize the application
@@ -2549,6 +2550,35 @@
             // Update UI based on initial state
             updateCartUI();
             updateProductsUI();
+        }
+        
+        // Test Supabase connection
+        async function testSupabaseConnection() {
+            try {
+                console.log('Testing Supabase connection...');
+                
+                // Test auth
+                const { data: authData, error: authError } = await supabase.auth.getSession();
+                console.log('Auth test:', authData, authError);
+                
+                // Test database (if profiles table exists)
+                const { data: dbData, error: dbError } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .limit(1);
+                
+                console.log('Database test:', dbData, dbError);
+                
+                if (dbError && dbError.code === '42P01') {
+                    console.error('❌ Profiles table does not exist!');
+                    showNotification('Warning', 'Database not properly configured. Some features may not work.', 'warning');
+                } else {
+                    console.log('✅ Supabase connection successful!');
+                }
+                
+            } catch (error) {
+                console.error('Connection test failed:', error);
+            }
         }
         
         // Set up event listeners
@@ -2662,30 +2692,31 @@
                     
                     if (error) {
                         console.error('Error fetching user profile:', error);
-                        return;
+                        // Use default role if profile doesn't exist
+                        userRole = 'customer';
+                    } else {
+                        userRole = profile.role;
                     }
-                    
-                    userRole = profile.role;
                     
                     // Update UI based on role
                     switch (userRole) {
                         case 'customer':
                             showCustomerDashboard();
-                            elements.customerWelcomeName.textContent = profile.name || user.email;
-                            elements.customerName.textContent = profile.name || user.email;
-                            elements.customerAvatar.textContent = (profile.name || user.email).charAt(0).toUpperCase();
+                            elements.customerWelcomeName.textContent = (profile && profile.name) || user.email;
+                            elements.customerName.textContent = (profile && profile.name) || user.email;
+                            elements.customerAvatar.textContent = ((profile && profile.name) || user.email).charAt(0).toUpperCase();
                             loadCustomerData();
                             break;
                         case 'seller':
                             showSellerDashboard();
-                            elements.sellerName.textContent = profile.name || user.email;
-                            elements.sellerAvatar.textContent = (profile.name || user.email).charAt(0).toUpperCase();
+                            elements.sellerName.textContent = (profile && profile.name) || user.email;
+                            elements.sellerAvatar.textContent = ((profile && profile.name) || user.email).charAt(0).toUpperCase();
                             loadSellerData();
                             break;
                         case 'rider':
                             showRiderDashboard();
-                            elements.riderName.textContent = profile.name || user.email;
-                            elements.riderAvatar.textContent = (profile.name || user.email).charAt(0).toUpperCase();
+                            elements.riderName.textContent = (profile && profile.name) || user.email;
+                            elements.riderAvatar.textContent = ((profile && profile.name) || user.email).charAt(0).toUpperCase();
                             loadRiderData();
                             break;
                     }
@@ -2724,57 +2755,83 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
+            if (!email || !password) {
+                showNotification('Error', 'Please enter both email and password', 'error');
+                return;
+            }
+            
             showLoading();
             
             try {
+                console.log('Attempting login for:', email);
+                
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email,
                     password
                 });
                 
                 if (error) {
+                    console.error('Login error:', error);
                     throw error;
                 }
                 
+                console.log('Login successful:', data.user);
                 currentUser = data.user;
                 
-                // Get user role
-                const { data: profile } = await supabase
-                    .from('profiles')
-                    .select('role, name')
-                    .eq('id', data.user.id)
-                    .single();
-                
-                userRole = profile.role;
+                // Try to get user profile, but don't fail if table doesn't exist
+                try {
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('role, name')
+                        .eq('id', data.user.id)
+                        .single();
+                    
+                    userRole = profile ? profile.role : 'customer'; // Default to customer if no profile
+                } catch (profileError) {
+                    console.warn('Could not fetch profile:', profileError);
+                    userRole = 'customer'; // Default role
+                }
                 
                 hideLoading();
                 hideAuthModal();
                 showNotification('Success', 'Logged in successfully!', 'success');
                 
-                // Redirect based on role
+                // Use user metadata if profile doesn't exist
+                const userName = data.user.user_metadata?.name || data.user.email;
+                
                 switch (userRole) {
                     case 'customer':
                         showCustomerDashboard();
-                        elements.customerWelcomeName.textContent = profile.name || data.user.email;
-                        elements.customerName.textContent = profile.name || data.user.email;
-                        elements.customerAvatar.textContent = (profile.name || data.user.email).charAt(0).toUpperCase();
+                        elements.customerWelcomeName.textContent = userName;
+                        elements.customerName.textContent = userName;
+                        elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
                         loadCustomerData();
                         break;
                     case 'seller':
                         showSellerDashboard();
-                        elements.sellerName.textContent = profile.name || data.user.email;
-                        elements.sellerAvatar.textContent = (profile.name || data.user.email).charAt(0).toUpperCase();
+                        elements.sellerName.textContent = userName;
+                        elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
                         loadSellerData();
                         break;
                     case 'rider':
                         showRiderDashboard();
-                        elements.riderName.textContent = profile.name || data.user.email;
-                        elements.riderAvatar.textContent = (profile.name || data.user.email).charAt(0).toUpperCase();
+                        elements.riderName.textContent = userName;
+                        elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
                         loadRiderData();
                         break;
+                    default:
+                        // Default to customer dashboard
+                        userRole = 'customer';
+                        showCustomerDashboard();
+                        elements.customerWelcomeName.textContent = userName;
+                        elements.customerName.textContent = userName;
+                        elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
+                        loadCustomerData();
                 }
+                
             } catch (error) {
                 hideLoading();
+                console.error('Full login error:', error);
                 showNotification('Error', error.message, 'error');
             }
         }
@@ -2788,9 +2845,22 @@
             const password = document.getElementById('signupPassword').value;
             const role = document.getElementById('userRole').value;
             
+            // Basic validation
+            if (!name || !email || !password || !role) {
+                showNotification('Error', 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Error', 'Password must be at least 6 characters', 'error');
+                return;
+            }
+            
             showLoading();
             
             try {
+                console.log('Attempting signup for:', email);
+                
                 // Create user in Supabase Auth
                 const { data, error } = await supabase.auth.signUp({
                     email,
@@ -2804,11 +2874,14 @@
                 });
                 
                 if (error) {
+                    console.error('Signup error:', error);
                     throw error;
                 }
                 
-                // Create user profile in database
-                const { error: profileError } = await supabase
+                console.log('Auth user created:', data.user);
+                
+                // Check if profiles table exists and create profile
+                const { data: profile, error: profileError } = await supabase
                     .from('profiles')
                     .insert([
                         {
@@ -2817,20 +2890,37 @@
                             email,
                             role
                         }
-                    ]);
+                    ])
+                    .select()
+                    .single();
                 
                 if (profileError) {
-                    throw profileError;
+                    console.error('Profile creation error:', profileError);
+                    
+                    // If profile table doesn't exist, continue without it for now
+                    if (profileError.code === '42P01') { // table doesn't exist
+                        console.warn('Profiles table does not exist. Please create it in Supabase.');
+                        showNotification('Success', 'Account created! But profiles table missing.', 'warning');
+                    } else {
+                        throw profileError;
+                    }
+                } else {
+                    console.log('Profile created:', profile);
                 }
                 
                 hideLoading();
                 hideAuthModal();
-                showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
                 
-                // Clear form
-                document.getElementById('signupForm').reset();
+                if (data.user && data.user.identities && data.user.identities.length === 0) {
+                    showNotification('Error', 'User already exists with this email', 'error');
+                } else {
+                    showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
+                    document.getElementById('signupForm').reset();
+                }
+                
             } catch (error) {
                 hideLoading();
+                console.error('Full signup error:', error);
                 showNotification('Error', error.message, 'error');
             }
         }
