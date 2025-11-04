@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://js.mpesa.co.ke/v1/mpesa.js"></script>
     <style>
         :root {
             --primary: #FF6B00;
@@ -46,7 +45,7 @@
             padding: 0 20px;
         }
 
-        /* Modern Glass Effect */
+        /* Glass Effect */
         .glass {
             background: var(--glass);
             backdrop-filter: var(--blur);
@@ -991,63 +990,6 @@
             transform: translateX(30px);
         }
 
-        /* Map Container */
-        .map-container {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            margin-top: 30px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            color: white;
-        }
-
-        .map-overlay {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 300px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        /* Analytics Grid */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .chart-container {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-        }
-
-        .chart-placeholder {
-            height: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 18px;
-        }
-
         /* Loading Spinner */
         .loading-spinner {
             display: none;
@@ -1520,8 +1462,8 @@
                     </div>
                     <nav class="nav-links">
                         <a href="#features">Features</a>
-                        <a href="#about">About</a>
-                        <a href="#contact">Contact</a>
+                        <a href="#" id="aboutLink">About</a>
+                        <a href="#" id="contactLink">Contact</a>
                         <a href="#" id="privacyLink">Privacy</a>
                     </nav>
                     <div class="auth-buttons">
@@ -1602,8 +1544,8 @@
                         <h4>Quick Links</h4>
                         <ul>
                             <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
-                            <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                            <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                            <li><a href="#" id="aboutLinkFooter"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                            <li><a href="#" id="contactLinkFooter"><i class="fas fa-chevron-right"></i> Contact</a></li>
                             <li><a href="#" id="termsLink"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
                         </ul>
                     </div>
@@ -2442,18 +2384,18 @@
     </div>
 
     <script>
-        // Supabase Configuration
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
+        // Supabase Configuration with YOUR actual credentials
+        const SUPABASE_URL = 'https://stnodqdazzenapubqbou.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0bm9kcWRhenplbmFwdWJxYm91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxMDAxMzksImV4cCI6MjA3NzY3NjEzOX0.DdeYFmLgwb5_rSSAitibIKXavOtT3BNTVvj5ny4nEmk';
         
         // Initialize Supabase client
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // MPESA Configuration
+        // MPESA Configuration with YOUR actual credentials
         const MPESA_CONFIG = {
-            consumerKey: 'your-consumer-key',
-            consumerSecret: 'your-consumer-secret',
-            environment: 'sandbox' // or 'production'
+            consumerKey: 'OEN1B3ABYfbLpeoM639unjaG93KY6ixvXUi6YcZEfx3YXiY1',
+            consumerSecret: 'P3xjtdLYDXkcycs8hyhORluuZQNRj0eOFGXWvOS0dGNPxJCF0hgD27xgauZgJWJ3',
+            environment: 'sandbox' // Change to 'production' for live environment
         };
         
         // Global State
@@ -2564,6 +2506,10 @@
             // Navigation Links
             privacyLink: document.getElementById('privacyLink'),
             termsLink: document.getElementById('termsLink'),
+            aboutLink: document.getElementById('aboutLink'),
+            contactLink: document.getElementById('contactLink'),
+            aboutLinkFooter: document.getElementById('aboutLinkFooter'),
+            contactLinkFooter: document.getElementById('contactLinkFooter'),
             backFromPrivacyBtn: document.getElementById('backFromPrivacyBtn'),
             backFromTermsBtn: document.getElementById('backFromTermsBtn'),
             backFromAboutBtn: document.getElementById('backFromAboutBtn'),
@@ -2666,6 +2612,26 @@
             elements.termsLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 showPage('termsPage');
+            });
+            
+            elements.aboutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('aboutPage');
+            });
+            
+            elements.contactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('contactPage');
+            });
+            
+            elements.aboutLinkFooter.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('aboutPage');
+            });
+            
+            elements.contactLinkFooter.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('contactPage');
             });
             
             elements.backFromPrivacyBtn.addEventListener('click', () => showPage('landingPage'));
