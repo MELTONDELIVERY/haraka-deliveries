@@ -3146,6 +3146,16 @@
     </div>
 
     <script>
+
+        <!-- In login form -->
+<input type="password" id="loginPassword" class="form-control" 
+       placeholder="Enter your password" required 
+       autocomplete="current-password">
+
+<!-- In signup form -->
+<input type="password" id="signupPassword" class="form-control" 
+       placeholder="Create a password" required 
+       autocomplete="new-password">
         // Supabase Configuration
         const SUPABASE_URL = 'https://xbwvsswycdskxkorharu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
@@ -3458,30 +3468,36 @@
             });
         }
 
-        // Initialize database tables
-        async function initializeDatabase() {
-            try {
-                // Check if required tables exist, if not create them
-                const requiredTables = ['profiles', 'products', 'orders', 'order_items', 'cart_items', 'deliveries', 'verifications'];
-                
-                for (const table of requiredTables) {
-                    const { error } = await supabase
-                        .from(table)
-                        .select('*')
-                        .limit(1);
-                    
-                    if (error && error.code === 'PGRST116') {
-                        // Table doesn't exist, we need to create it
-                        console.log(`Table ${table} doesn't exist. Creating sample data...`);
-                        await createSampleData();
-                        break;
-                    }
-                }
-            } catch (error) {
-                console.error('Error initializing database:', error);
-            }
+      
+ // Initialize database tables 
+async function initializeDatabase() {
+    try {
+        // Check if profiles table exists and has data
+        const { data: profiles, error: profilesError } = await supabase
+            .from('profiles')
+            .select('*')
+            .limit(1);
+        
+        if (profilesError && profilesError.code === '42P01') {
+            // Table doesn't exist
+            console.log('Database tables need to be created. Please run the SQL setup script in Supabase.');
+            showNotification('Info', 'Database setup required. Please contact administrator.', 'info');
+            return;
         }
-
+        
+        // Create sample data only if no products exist
+        const { data: products, error: productsError } = await supabase
+            .from('products')
+            .select('*')
+            .limit(1);
+        
+        if (!productsError && (!products || products.length === 0)) {
+            await createSampleData();
+        }
+    } catch (error) {
+        console.error('Error initializing database:', error);
+    }
+}
         // Create sample data
         async function createSampleData() {
             try {
@@ -3671,6 +3687,7 @@
                 
                 currentUser = data.user;
                 
+                
                 // Get user profile
                 const { data: profile, error: profileError } = await supabase
                     .from('profiles')
@@ -3760,19 +3777,197 @@
                     throw error;
                 }
                 
-                // Create user profile in database
-                if (data.user) {
-                    await createUserProfile(data.user, role, name);
+   // Improved profile creation with better error handling
+async function createUserProfile(user, role, name) {
+    try {
+        const profileData = {
+            id: user.id,
+            name: name,
+            email: user.email,
+            role: role,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+        };
+        
+        // Add role-specific fields
+        if (role === 'seller') {
+            profileData.verification_status = 'pending';
+            profileData.business_type = '';
+        } else if (role === 'rider') {
+            profileData.verification_status = 'pending';
+            profileData.vehicle_type = 'motorcycle';
+            profileData.is_available = true;
+        }
+        
+        const { data, error } = await supabase
+            .from('profiles')
+            .insert([profileData])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error creating user profile:', error);
+            
+            // If profile might already exist, try to fetch it
+            if (error.code === '23505') { // Unique violation
+                const { data: existingProfile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+                
+                if (existingProfile) {
+                    return existingProfile;
                 }
+            }
+            
+            throw error;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Failed to create user profile:', error);
+        throw error;
+    }
+}
+
+// Update the signup handler
+async function handleSignup(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const role = document.getElementById('userRole').value;
+    
+    if (!name || !email || !password || !role) {
+        showNotification('Error', 'Please fill in all fields', 'error');
+        return;
+    }
+    
+    if (password.length < 6) {
+        showNotification('Error', 'Password must be at least 6 characters', 'error');
+        return;
+    }
+    
+    showLoading();
+    
+    try {
+        // Create user in Supabase Auth
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name: name,
+                    role: role
+                }
+            }
+        });
+        
+        if (error) {
+            throw error;
+        }
+        
+        // Try to create user profile
+        if (data.user) {
+            try {
+                await createUserProfile(data.user, role, name);
+            } catch (profileError) {
+                console.warn('Profile creation warning:', profileError);
+                // Continue even if profile creation has issues
+            }
+        }
+        
+        hideLoading();
+        hideAuthModal();
+        
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+            showNotification('Error', 'User already exists with this email', 'error');
+        } else {
+            showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
+            document.getElementById('signupForm').reset();
+            
+            // Auto-login after successful signup
+            if (data.user) {
+                currentUser = data.user;
+                userRole = role;
                 
-                hideLoading();
-                hideAuthModal();
-                
-                if (data.user && data.user.identities && data.user.identities.length === 0) {
-                    showNotification('Error', 'User already exists with this email', 'error');
-                } else {
-                    showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
-                    document.getElementById('signupForm').reset();
+                // Show appropriate dashboard
+                showDashboardBasedOnRole(role, name);
+            }
+        }
+        
+    } catch (error) {
+        hideLoading();
+        showNotification('Error', error.message, 'error');
+    }
+}
+
+// Helper function to show dashboard based on role
+function showDashboardBasedOnRole(role, userName) {
+    switch (role) {
+        case 'customer':
+            showCustomerDashboard();
+            elements.customerWelcomeName.textContent = userName;
+            elements.customerName.textContent = userName;
+            elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
+            break;
+        case 'seller':
+            showSellerDashboard();
+            elements.sellerName.textContent = userName;
+            elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
+            break;
+        case 'rider':
+            showRiderDashboard();
+            elements.riderName.textContent = userName;
+            elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
+            elements.emergencyBtn.style.display = 'flex';
+            break;
+    }
+}
+        
+        // Add role-specific fields
+        if (role === 'seller') {
+            profileData.verification_status = 'pending';
+            profileData.business_type = '';
+        } else if (role === 'rider') {
+            profileData.verification_status = 'pending';
+            profileData.vehicle_type = 'motorcycle';
+            profileData.is_available = true;
+        }
+        
+        const { data, error } = await supabase
+            .from('profiles')
+            .insert([profileData])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error creating user profile:', error);
+            
+            // If RLS is still blocking, try using the Supabase Auth admin API
+            // or check if the user needs to verify their email first
+            if (error.code === '42501') {
+                showNotification('Error', 'Please verify your email before completing registration.', 'error');
+                return null;
+            }
+            throw error;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Failed to create user profile:', error);
+        
+        // Provide more user-friendly error messages
+        if (error.code === '42501') {
+            showNotification('Error', 'Registration failed due to security restrictions. Please contact support.', 'error');
+        } else {
+            showNotification('Error', 'Failed to create user profile: ' + error.message, 'error');
+        }
+        throw error;
+    }
+}
                     
                     // Auto-login after successful signup
                     if (data.user) {
@@ -6698,3 +6893,4 @@
     </script>
 </body>
 </html>
+
