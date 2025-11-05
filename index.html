@@ -3876,87 +3876,102 @@
         }
 
         // Handle checkout
-        async function handleCheckout() {
-            try {
-                // Get cart items
-                const { data: cartItems, error } = await supabase
-                    .from('cart_items')
-                    .select(`
-                        *,
-                        products (*)
-                    `)
-                    .eq('user_id', currentUser.id);
-                
-                if (error) throw error;
-                
-                if (!cartItems || cartItems.length === 0) {
-                    showNotification('Error', 'Your cart is empty', 'error');
-                    return;
-                }
-                
-                // Calculate total
-                let total = 0;
-                cartItems.forEach(item => {
-                    total += item.products.price * item.quantity;
-                });
-                
-                // Create order
-                const { data: order, error: orderError } = await supabase
-                    .from('orders')
-                    .insert([
-                        {
-                            customer_id: currentUser.id,
-                            total: total,
-                            status: 'pending'
-                        }
-                    ])
-                    .select()
-                    .single();
-                
-                if (orderError) throw orderError;
-                
-                // Create order items
-                const orderItems = cartItems.map(item => ({
-                    order_id: order.id,
-                    product_id: item.product_id,
-                    quantity: item.quantity,
-                    price: item.products.price
-                }));
-                
-                const { error: itemsError } = await supabase
-                    .from('order_items')
-                    .insert(orderItems);
-                
-                if (itemsError) throw itemsError;
-                
-                // Clear cart
-                const { error: clearError } = await supabase
-                    .from('cart_items')
-                    .delete()
-                    .eq('user_id', currentUser.id);
-                
-                if (clearError) throw clearError;
-                
-                // Update product stock
-                for (const item of cartItems) {
-                    const newStock = item.products.stock - item.quantity;
-                    const { error: stockError } = await supabase
-                        .from('products')
-                        .update({ stock: newStock })
-                        .eq('id', item.product_id);
-                    
-                    if (stockError) throw stockError;
-                }
-                
-                showNotification('Success', 'Order placed successfully!', 'success');
-                loadCustomerCart();
-                updateCustomerStats();
-                switchDashboardSection('orders');
-            } catch (error) {
-                showNotification('Error', 'Failed to place order: ' + error.message, 'error');
-            }
+async function handleCheckout() {
+    try {
+        // Get customer profile to get delivery address
+        const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('address')
+            .eq('id', currentUser.id)
+            .single();
+        
+        if (profileError) throw profileError;
+        
+        if (!profile.address) {
+            showNotification('Error', 'Please set your delivery address in your profile before placing an order', 'error');
+            switchDashboardSection('profile');
+            return;
         }
 
+        // Get cart items
+        const { data: cartItems, error } = await supabase
+            .from('cart_items')
+            .select(`
+                *,
+                products (*)
+            `)
+            .eq('user_id', currentUser.id);
+        
+        if (error) throw error;
+        
+        if (!cartItems || cartItems.length === 0) {
+            showNotification('Error', 'Your cart is empty', 'error');
+            return;
+        }
+        
+        // Calculate total
+        let total = 0;
+        cartItems.forEach(item => {
+            total += item.products.price * item.quantity;
+        });
+        
+        // Create order with delivery address
+        const { data: order, error: orderError } = await supabase
+            .from('orders')
+            .insert([
+                {
+                    customer_id: currentUser.id,
+                    total: total,
+                    status: 'pending',
+                    delivery_address: profile.address
+                }
+            ])
+            .select()
+            .single();
+        
+        if (orderError) throw orderError;
+        
+        // Create order items
+        const orderItems = cartItems.map(item => ({
+            order_id: order.id,
+            product_id: item.product_id,
+            quantity: item.quantity,
+            price: item.products.price
+        }));
+        
+        const { error: itemsError } = await supabase
+            .from('order_items')
+            .insert(orderItems);
+        
+        if (itemsError) throw itemsError;
+        
+        // Clear cart
+        const { error: clearError } = await supabase
+            .from('cart_items')
+            .delete()
+            .eq('user_id', currentUser.id);
+        
+        if (clearError) throw clearError;
+        
+        // Update product stock
+        for (const item of cartItems) {
+            const newStock = item.products.stock - item.quantity;
+            const { error: stockError } = await supabase
+                .from('products')
+                .update({ stock: newStock })
+                .eq('id', item.product_id);
+            
+            if (stockError) throw stockError;
+        }
+        
+        showNotification('Success', 'Order placed successfully!', 'success');
+        loadCustomerCart();
+        updateCustomerStats();
+        switchDashboardSection('orders');
+    } catch (error) {
+        showNotification('Error', 'Failed to place order: ' + error.message, 'error');
+    }
+}
         // Load seller data
         async function loadSellerData() {
             await updateSellerStats();
@@ -4795,3 +4810,4 @@
     </script>
 </body>
 </html>
+
