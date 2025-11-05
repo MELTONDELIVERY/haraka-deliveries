@@ -2032,25 +2032,25 @@
                 <p class="section-subtitle">The passionate individuals behind IPATE Deliveries</p>
                 <div class="team-grid">
                     <div class="team-member">
-                        <div class="member-avatar" style="background-image: url('https://postimg.cc/N9kB560n');"></div>
+                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd728f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
                         <h3 class="member-name">Melton Konchella</h3>
                         <div class="member-role">CEO & Founder</div>
                         <p class="member-bio">Former logistics manager with 10+ years experience in supply chain management.</p>
                     </div>
                     <div class="team-member">
-                        <div class="member-avatar" style="background-image: url('https://photos.google.com/photo/AF1QipM1JF2YRClq2LONuNQWePaxqf6eTJ0SK7Dx8xn0');"></div>
+                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4..3&auto=format&fit=crop&w=500&q=80');"></div>
                         <h3 class="member-name">Sarah Wanjiku</h3>
                         <div class="member-role">Operations Director</div>
                         <p class="member-bio">Expert in process optimization and rider management with background in tech startups.</p>
                     </div>
                     <div class="team-member">
-                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4f4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
                         <h3 class="member-name">David Ochieng</h3>
                         <div class="member-role">Technology Lead</div>
                         <p class="member-bio">Full-stack developer specializing in real-time tracking systems and mobile applications.</p>
                     </div>
                     <div class="team-member">
-                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="member-avatar" style="background-image: url('https://images.unsplash.com/photo-1489424731084-a5d8b19a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
                         <h3 class="member-name">Grace Akinyi</h3>
                         <div class="member-role">Customer Success</div>
                         <p class="member-bio">Dedicated to ensuring every customer has an exceptional experience with our service.</p>
@@ -3110,11 +3110,11 @@
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
@@ -3125,11 +3125,11 @@
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <label for="userRole">Account Type</label>
@@ -3146,16 +3146,6 @@
     </div>
 
     <script>
-
-        <!-- In login form -->
-<input type="password" id="loginPassword" class="form-control" 
-       placeholder="Enter your password" required 
-       autocomplete="current-password">
-
-<!-- In signup form -->
-<input type="password" id="signupPassword" class="form-control" 
-       placeholder="Create a password" required 
-       autocomplete="new-password">
         // Supabase Configuration
         const SUPABASE_URL = 'https://xbwvsswycdskxkorharu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
@@ -3468,36 +3458,36 @@
             });
         }
 
-      
- // Initialize database tables 
-async function initializeDatabase() {
-    try {
-        // Check if profiles table exists and has data
-        const { data: profiles, error: profilesError } = await supabase
-            .from('profiles')
-            .select('*')
-            .limit(1);
-        
-        if (profilesError && profilesError.code === '42P01') {
-            // Table doesn't exist
-            console.log('Database tables need to be created. Please run the SQL setup script in Supabase.');
-            showNotification('Info', 'Database setup required. Please contact administrator.', 'info');
-            return;
+        // Initialize database tables 
+        async function initializeDatabase() {
+            try {
+                // Check if profiles table exists and has data
+                const { data: profiles, error: profilesError } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .limit(1);
+                
+                if (profilesError && profilesError.code === '42P01') {
+                    // Table doesn't exist
+                    console.log('Database tables need to be created. Please run the SQL setup script in Supabase.');
+                    showNotification('Info', 'Database setup required. Please contact administrator.', 'info');
+                    return;
+                }
+                
+                // Create sample data only if no products exist
+                const { data: products, error: productsError } = await supabase
+                    .from('products')
+                    .select('*')
+                    .limit(1);
+                
+                if (!productsError && (!products || products.length === 0)) {
+                    await createSampleData();
+                }
+            } catch (error) {
+                console.error('Error initializing database:', error);
+            }
         }
-        
-        // Create sample data only if no products exist
-        const { data: products, error: productsError } = await supabase
-            .from('products')
-            .select('*')
-            .limit(1);
-        
-        if (!productsError && (!products || products.length === 0)) {
-            await createSampleData();
-        }
-    } catch (error) {
-        console.error('Error initializing database:', error);
-    }
-}
+
         // Create sample data
         async function createSampleData() {
             try {
@@ -3687,7 +3677,6 @@ async function initializeDatabase() {
                 
                 currentUser = data.user;
                 
-                
                 // Get user profile
                 const { data: profile, error: profileError } = await supabase
                     .from('profiles')
@@ -3777,235 +3766,61 @@ async function initializeDatabase() {
                     throw error;
                 }
                 
-   // Improved profile creation with better error handling
-async function createUserProfile(user, role, name) {
-    try {
-        const profileData = {
-            id: user.id,
-            name: name,
-            email: user.email,
-            role: role,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-        };
-        
-        // Add role-specific fields
-        if (role === 'seller') {
-            profileData.verification_status = 'pending';
-            profileData.business_type = '';
-        } else if (role === 'rider') {
-            profileData.verification_status = 'pending';
-            profileData.vehicle_type = 'motorcycle';
-            profileData.is_available = true;
-        }
-        
-        const { data, error } = await supabase
-            .from('profiles')
-            .insert([profileData])
-            .select()
-            .single();
-        
-        if (error) {
-            console.error('Error creating user profile:', error);
-            
-            // If profile might already exist, try to fetch it
-            if (error.code === '23505') { // Unique violation
-                const { data: existingProfile } = await supabase
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single();
-                
-                if (existingProfile) {
-                    return existingProfile;
+                // Try to create user profile
+                if (data.user) {
+                    try {
+                        await createUserProfile(data.user, role, name);
+                    } catch (profileError) {
+                        console.warn('Profile creation warning:', profileError);
+                        // Continue even if profile creation has issues
+                    }
                 }
-            }
-            
-            throw error;
-        }
-        
-        return data;
-    } catch (error) {
-        console.error('Failed to create user profile:', error);
-        throw error;
-    }
-}
-
-// Update the signup handler
-async function handleSignup(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const role = document.getElementById('userRole').value;
-    
-    if (!name || !email || !password || !role) {
-        showNotification('Error', 'Please fill in all fields', 'error');
-        return;
-    }
-    
-    if (password.length < 6) {
-        showNotification('Error', 'Password must be at least 6 characters', 'error');
-        return;
-    }
-    
-    showLoading();
-    
-    try {
-        // Create user in Supabase Auth
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    name: name,
-                    role: role
-                }
-            }
-        });
-        
-        if (error) {
-            throw error;
-        }
-        
-        // Try to create user profile
-        if (data.user) {
-            try {
-                await createUserProfile(data.user, role, name);
-            } catch (profileError) {
-                console.warn('Profile creation warning:', profileError);
-                // Continue even if profile creation has issues
-            }
-        }
-        
-        hideLoading();
-        hideAuthModal();
-        
-        if (data.user && data.user.identities && data.user.identities.length === 0) {
-            showNotification('Error', 'User already exists with this email', 'error');
-        } else {
-            showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
-            document.getElementById('signupForm').reset();
-            
-            // Auto-login after successful signup
-            if (data.user) {
-                currentUser = data.user;
-                userRole = role;
                 
-                // Show appropriate dashboard
-                showDashboardBasedOnRole(role, name);
-            }
-        }
-        
-    } catch (error) {
-        hideLoading();
-        showNotification('Error', error.message, 'error');
-    }
-}
-
-// Helper function to show dashboard based on role
-function showDashboardBasedOnRole(role, userName) {
-    switch (role) {
-        case 'customer':
-            showCustomerDashboard();
-            elements.customerWelcomeName.textContent = userName;
-            elements.customerName.textContent = userName;
-            elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
-            break;
-        case 'seller':
-            showSellerDashboard();
-            elements.sellerName.textContent = userName;
-            elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
-            break;
-        case 'rider':
-            showRiderDashboard();
-            elements.riderName.textContent = userName;
-            elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
-            elements.emergencyBtn.style.display = 'flex';
-            break;
-    }
-}
-        
-        // Add role-specific fields
-        if (role === 'seller') {
-            profileData.verification_status = 'pending';
-            profileData.business_type = '';
-        } else if (role === 'rider') {
-            profileData.verification_status = 'pending';
-            profileData.vehicle_type = 'motorcycle';
-            profileData.is_available = true;
-        }
-        
-        const { data, error } = await supabase
-            .from('profiles')
-            .insert([profileData])
-            .select()
-            .single();
-        
-        if (error) {
-            console.error('Error creating user profile:', error);
-            
-            // If RLS is still blocking, try using the Supabase Auth admin API
-            // or check if the user needs to verify their email first
-            if (error.code === '42501') {
-                showNotification('Error', 'Please verify your email before completing registration.', 'error');
-                return null;
-            }
-            throw error;
-        }
-        
-        return data;
-    } catch (error) {
-        console.error('Failed to create user profile:', error);
-        
-        // Provide more user-friendly error messages
-        if (error.code === '42501') {
-            showNotification('Error', 'Registration failed due to security restrictions. Please contact support.', 'error');
-        } else {
-            showNotification('Error', 'Failed to create user profile: ' + error.message, 'error');
-        }
-        throw error;
-    }
-}
+                hideLoading();
+                hideAuthModal();
+                
+                if (data.user && data.user.identities && data.user.identities.length === 0) {
+                    showNotification('Error', 'User already exists with this email', 'error');
+                } else {
+                    showNotification('Success', 'Account created successfully! Please check your email for verification.', 'success');
+                    document.getElementById('signupForm').reset();
                     
                     // Auto-login after successful signup
                     if (data.user) {
                         currentUser = data.user;
                         userRole = role;
                         
-                        // Show appropriate dashboard based on selected role
-                        const userName = name || data.user.email;
-                        
-                        switch (userRole) {
-                            case 'customer':
-                                showCustomerDashboard();
-                                elements.customerWelcomeName.textContent = userName;
-                                elements.customerName.textContent = userName;
-                                elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
-                                loadCustomerData();
-                                break;
-                            case 'seller':
-                                showSellerDashboard();
-                                elements.sellerName.textContent = userName;
-                                elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
-                                loadSellerData();
-                                break;
-                            case 'rider':
-                                showRiderDashboard();
-                                elements.riderName.textContent = userName;
-                                elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
-                                loadRiderData();
-                                // Show emergency button for riders
-                                elements.emergencyBtn.style.display = 'flex';
-                                break;
-                        }
+                        // Show appropriate dashboard
+                        showDashboardBasedOnRole(role, name);
                     }
                 }
                 
             } catch (error) {
                 hideLoading();
                 showNotification('Error', error.message, 'error');
+            }
+        }
+
+        // Helper function to show dashboard based on role
+        function showDashboardBasedOnRole(role, userName) {
+            switch (role) {
+                case 'customer':
+                    showCustomerDashboard();
+                    elements.customerWelcomeName.textContent = userName;
+                    elements.customerName.textContent = userName;
+                    elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
+                    break;
+                case 'seller':
+                    showSellerDashboard();
+                    elements.sellerName.textContent = userName;
+                    elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
+                    break;
+                case 'rider':
+                    showRiderDashboard();
+                    elements.riderName.textContent = userName;
+                    elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
+                    elements.emergencyBtn.style.display = 'flex';
+                    break;
             }
         }
 
@@ -4016,7 +3831,9 @@ function showDashboardBasedOnRole(role, userName) {
                     id: user.id,
                     name: name,
                     email: user.email,
-                    role: role
+                    role: role,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
                 };
                 
                 // Add role-specific fields
@@ -4037,6 +3854,20 @@ function showDashboardBasedOnRole(role, userName) {
                 
                 if (error) {
                     console.error('Error creating user profile:', error);
+                    
+                    // If profile might already exist, try to fetch it
+                    if (error.code === '23505') { // Unique violation
+                        const { data: existingProfile } = await supabase
+                            .from('profiles')
+                            .select('*')
+                            .eq('id', user.id)
+                            .single();
+                        
+                        if (existingProfile) {
+                            return existingProfile;
+                        }
+                    }
+                    
                     throw error;
                 }
                 
@@ -6149,61 +5980,28 @@ function showDashboardBasedOnRole(role, userName) {
                     .from('deliveries')
                     .select('*')
                     .is('rider_id', null)
-                    .in('status', ['pending', 'accepted']);
+                    .eq('status', 'pending');
                 
                 if (availableError) throw availableError;
                 
-                const available = availableDeliveries ? availableDeliveries.length : 0;
-                const active = deliveries ? deliveries.filter(d => d.status === 'accepted' || d.status === 'picked_up' || d.status === 'in_transit').length : 0;
-                const completedToday = deliveries ? deliveries.filter(d => {
-                    const deliveryDate = new Date(d.updated_at);
-                    const today = new Date();
-                    return d.status === 'delivered' && 
-                           deliveryDate.getDate() === today.getDate() &&
-                           deliveryDate.getMonth() === today.getMonth() &&
-                           deliveryDate.getFullYear() === today.getFullYear();
-                }).length : 0;
+                // Calculate stats
+                const today = new Date().toISOString().split('T')[0];
+                const completedToday = deliveries ? deliveries.filter(d => 
+                    d.status === 'delivered' && d.updated_at && d.updated_at.startsWith(today)
+                ).length : 0;
                 
-                // Calculate earnings
-                let todayEarnings = 0;
-                let weekEarnings = 0;
-                let monthEarnings = 0;
-                const today = new Date();
-                const weekStart = new Date(today);
-                weekStart.setDate(today.getDate() - today.getDay());
-                const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                const activeDeliveriesCount = deliveries ? deliveries.filter(d => 
+                    ['accepted', 'picked_up', 'in_transit'].includes(d.status)
+                ).length : 0;
                 
-                if (deliveries) {
-                    deliveries.forEach(delivery => {
-                        if (delivery.status === 'delivered') {
-                            const deliveryDate = new Date(delivery.updated_at);
-                            
-                            if (deliveryDate.toDateString() === today.toDateString()) {
-                                todayEarnings += delivery.delivery_fee || 0;
-                            }
-                            
-                            if (deliveryDate >= weekStart) {
-                                weekEarnings += delivery.delivery_fee || 0;
-                            }
-                            
-                            if (deliveryDate >= monthStart) {
-                                monthEarnings += delivery.delivery_fee || 0;
-                            }
-                        }
-                    });
-                }
+                // Calculate rating (simplified)
+                const rating = 4.8; // This would come from customer reviews in a real app
                 
-                // Calculate rating (mock data for now)
-                const rating = '4.8';
-                
-                elements.availableDeliveries.textContent = available;
-                elements.activeDeliveries.textContent = active;
+                elements.availableDeliveries.textContent = availableDeliveries ? availableDeliveries.length : 0;
+                elements.activeDeliveries.textContent = activeDeliveriesCount;
                 elements.completedDeliveries.textContent = completedToday;
-                elements.riderRating.textContent = rating;
-                elements.todayEarnings.textContent = todayEarnings.toLocaleString();
-                elements.weekEarnings.textContent = weekEarnings.toLocaleString();
-                elements.monthEarnings.textContent = monthEarnings.toLocaleString();
-                elements.totalDeliveries.textContent = deliveries ? deliveries.length : 0;
+                elements.riderRating.textContent = rating.toFixed(1);
+                
             } catch (error) {
                 console.error('Error updating rider stats:', error);
             }
@@ -6242,20 +6040,16 @@ function showDashboardBasedOnRole(role, userName) {
                 deliveries.forEach(delivery => {
                     let icon = 'fas fa-truck';
                     let title = 'Delivery Assigned';
-                    let description = `Delivery #${delivery.id.substring(0, 8)} assigned to you`;
+                    let description = `New delivery assigned to you`;
                     
                     if (delivery.status === 'delivered') {
                         icon = 'fas fa-check-circle';
                         title = 'Delivery Completed';
-                        description = `Delivery #${delivery.id.substring(0, 8)} completed`;
-                    } else if (delivery.status === 'picked_up') {
-                        icon = 'fas fa-box';
-                        title = 'Package Picked Up';
-                        description = `Picked up delivery #${delivery.id.substring(0, 8)}`;
-                    } else if (delivery.status === 'in_transit') {
+                        description = `Delivery completed successfully`;
+                    } else if (delivery.status === 'picked_up' || delivery.status === 'in_transit') {
                         icon = 'fas fa-shipping-fast';
-                        title = 'In Transit';
-                        description = `Delivery #${delivery.id.substring(0, 8)} is in transit`;
+                        title = 'Delivery in Progress';
+                        description = `Delivery is on the way`;
                     }
                     
                     const activityItem = document.createElement('div');
@@ -6267,7 +6061,7 @@ function showDashboardBasedOnRole(role, userName) {
                         <div class="timeline-content">
                             <h4>${title}</h4>
                             <p>${description}</p>
-                            <div class="timeline-time">${formatTimeAgo(delivery.updated_at)}</div>
+                            <div class="timeline-time">${formatTimeAgo(delivery.updated_at || delivery.created_at)}</div>
                         </div>
                     `;
                     
@@ -6281,7 +6075,6 @@ function showDashboardBasedOnRole(role, userName) {
         // Load available deliveries
         async function loadAvailableDeliveries() {
             try {
-                // Get deliveries that need a rider
                 const { data: deliveries, error } = await supabase
                     .from('deliveries')
                     .select(`
@@ -6292,7 +6085,7 @@ function showDashboardBasedOnRole(role, userName) {
                         )
                     `)
                     .is('rider_id', null)
-                    .in('status', ['pending', 'accepted'])
+                    .eq('status', 'pending')
                     .order('created_at', { ascending: false });
                 
                 if (error) throw error;
@@ -6302,7 +6095,7 @@ function showDashboardBasedOnRole(role, userName) {
                 if (!deliveries || deliveries.length === 0) {
                     elements.availableDeliveriesList.innerHTML = `
                         <div class="empty-state">
-                            <i class="fas fa-truck"></i>
+                            <i class="fas fa-list"></i>
                             <h3>No Available Deliveries</h3>
                             <p>Check back later for new delivery requests.</p>
                         </div>
@@ -6315,23 +6108,43 @@ function showDashboardBasedOnRole(role, userName) {
                     deliveryCard.className = 'delivery-card';
                     deliveryCard.innerHTML = `
                         <div class="delivery-header">
-                            <h4>Delivery #${delivery.id.substring(0, 8)}</h4>
-                            <span class="delivery-status status-${delivery.status}">
-                                ${delivery.status === 'accepted' ? 'Urgent' : 'Standard'}
-                            </span>
+                            <div>
+                                <h4>Delivery #${delivery.id.substring(0, 8)}</h4>
+                                <p>Pickup: ${delivery.pickup_address || 'N/A'}</p>
+                                <p>Delivery: ${delivery.delivery_address || 'N/A'}</p>
+                            </div>
+                            <span class="delivery-status status-${delivery.status}">${delivery.status}</span>
                         </div>
-                        <div class="delivery-details">
-                            <p><strong>From:</strong> ${delivery.pickup_address || 'N/A'}</p>
-                            <p><strong>To:</strong> ${delivery.delivery_address || 'N/A'}</p>
-                            <p><strong>Distance:</strong> ${calculateDistance(delivery.pickup_address, delivery.delivery_address)}</p>
-                            <p><strong>Fee:</strong> KSh ${delivery.delivery_fee || 0}</p>
+                        <div class="delivery-info">
+                            <div class="delivery-info-item">
+                                <div class="delivery-info-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div>
+                                    <strong>Delivery Fee</strong>
+                                    <p>KSh ${delivery.delivery_fee || 0}</p>
+                                </div>
+                            </div>
+                            <div class="delivery-info-item">
+                                <div class="delivery-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <strong>Estimated Time</strong>
+                                    <p>30-45 minutes</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="delivery-map">
-                            <i class="fas fa-map-marked-alt" style="font-size: 48px;"></i>
+                            <i class="fas fa-map-marker-alt" style="font-size: 48px; margin-bottom: 10px;"></i>
+                            <p>Route visualization would appear here</p>
                         </div>
-                        <div class="delivery-actions" style="margin-top: 15px;">
+                        <div class="order-card-actions">
                             <button class="btn btn-primary btn-sm accept-delivery-btn" data-delivery-id="${delivery.id}">
                                 <i class="fas fa-check"></i> Accept Delivery
+                            </button>
+                            <button class="btn btn-outline btn-sm view-details-btn" data-delivery-id="${delivery.id}">
+                                <i class="fas fa-eye"></i> View Details
                             </button>
                         </div>
                     `;
@@ -6339,25 +6152,84 @@ function showDashboardBasedOnRole(role, userName) {
                     elements.availableDeliveriesList.appendChild(deliveryCard);
                 });
                 
-                // Add event listeners to accept delivery buttons
+                // Add event listeners to delivery actions
                 document.querySelectorAll('.accept-delivery-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const deliveryId = this.getAttribute('data-delivery-id');
                         acceptDelivery(deliveryId);
                     });
                 });
+                
+                document.querySelectorAll('.view-details-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deliveryId = this.getAttribute('data-delivery-id');
+                        viewDeliveryDetails(deliveryId);
+                    });
+                });
             } catch (error) {
                 console.error('Error loading available deliveries:', error);
-                showNotification('Error', 'Failed to load deliveries', 'error');
+                showNotification('Error', 'Failed to load available deliveries', 'error');
             }
         }
 
-        // Calculate distance between two addresses (simplified)
-        function calculateDistance(from, to) {
-            // This is a simplified calculation
-            // In a real app, you would use a mapping service API
-            const distances = ['2.3 km', '5.7 km', '8.1 km', '12.5 km', '15.2 km'];
-            return distances[Math.floor(Math.random() * distances.length)];
+        // Accept delivery
+        async function acceptDelivery(deliveryId) {
+            showLoading();
+            
+            try {
+                const { data, error } = await supabase
+                    .from('deliveries')
+                    .update({
+                        rider_id: currentUser.id,
+                        status: 'accepted',
+                        accepted_at: new Date().toISOString()
+                    })
+                    .eq('id', deliveryId)
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                hideLoading();
+                showNotification('Success', 'Delivery accepted successfully!', 'success');
+                loadAvailableDeliveries();
+                updateRiderStats();
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to accept delivery: ' + error.message, 'error');
+            }
+        }
+
+        // View delivery details
+        async function viewDeliveryDetails(deliveryId) {
+            try {
+                const { data: delivery, error } = await supabase
+                    .from('deliveries')
+                    .select(`
+                        *,
+                        orders (
+                            customer_id,
+                            total
+                        )
+                    `)
+                    .eq('id', deliveryId)
+                    .single();
+                
+                if (error) throw error;
+                
+                let details = `Delivery #${delivery.id.substring(0, 8)}\n\n`;
+                details += `Status: ${delivery.status}\n`;
+                details += `Pickup Address: ${delivery.pickup_address || 'N/A'}\n`;
+                details += `Delivery Address: ${delivery.delivery_address || 'N/A'}\n`;
+                details += `Delivery Fee: KSh ${delivery.delivery_fee || 0}\n`;
+                details += `Distance: ~5 km\n`;
+                details += `Estimated Time: 30-45 minutes`;
+                
+                alert(details);
+            } catch (error) {
+                console.error('Error viewing delivery details:', error);
+                showNotification('Error', 'Failed to load delivery details', 'error');
+            }
         }
 
         // Load my deliveries
@@ -6386,6 +6258,9 @@ function showDashboardBasedOnRole(role, userName) {
                             <i class="fas fa-truck"></i>
                             <h3>No Active Deliveries</h3>
                             <p>You don't have any active deliveries at the moment.</p>
+                            <button class="btn btn-primary" style="margin-top: 20px;" onclick="switchDashboardSection('availableDeliveries')">
+                                <i class="fas fa-list"></i> View Available Deliveries
+                            </button>
                         </div>
                     `;
                     return;
@@ -6396,38 +6271,55 @@ function showDashboardBasedOnRole(role, userName) {
                     deliveryCard.className = 'delivery-card';
                     deliveryCard.innerHTML = `
                         <div class="delivery-header">
-                            <h4>Delivery #${delivery.id.substring(0, 8)}</h4>
-                            <span class="delivery-status status-${delivery.status}">
-                                ${delivery.status}
-                            </span>
+                            <div>
+                                <h4>Delivery #${delivery.id.substring(0, 8)}</h4>
+                                <p>Pickup: ${delivery.pickup_address || 'N/A'}</p>
+                                <p>Delivery: ${delivery.delivery_address || 'N/A'}</p>
+                            </div>
+                            <span class="delivery-status status-${delivery.status}">${delivery.status}</span>
                         </div>
-                        <div class="delivery-details">
-                            <p><strong>From:</strong> ${delivery.pickup_address || 'N/A'}</p>
-                            <p><strong>To:</strong> ${delivery.delivery_address || 'N/A'}</p>
-                            <p><strong>Distance:</strong> ${calculateDistance(delivery.pickup_address, delivery.delivery_address)}</p>
-                            <p><strong>Fee:</strong> KSh ${delivery.delivery_fee || 0}</p>
+                        <div class="delivery-info">
+                            <div class="delivery-info-item">
+                                <div class="delivery-info-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div>
+                                    <strong>Delivery Fee</strong>
+                                    <p>KSh ${delivery.delivery_fee || 0}</p>
+                                </div>
+                            </div>
+                            <div class="delivery-info-item">
+                                <div class="delivery-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <strong>Status</strong>
+                                    <p>${delivery.status.replace('_', ' ').toUpperCase()}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="delivery-map">
-                            <i class="fas fa-map-marked-alt" style="font-size: 48px;"></i>
+                            <i class="fas fa-map-marker-alt" style="font-size: 48px; margin-bottom: 10px;"></i>
+                            <p>Real-time tracking would appear here</p>
                         </div>
-                        <div class="delivery-actions" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="order-card-actions">
                             ${delivery.status === 'accepted' ? `
-                            <button class="btn btn-primary btn-sm update-delivery-btn" data-delivery-id="${delivery.id}" data-status="picked_up">
+                            <button class="btn btn-primary btn-sm pickup-delivery-btn" data-delivery-id="${delivery.id}">
                                 <i class="fas fa-box"></i> Mark as Picked Up
                             </button>
                             ` : ''}
                             ${delivery.status === 'picked_up' ? `
-                            <button class="btn btn-primary btn-sm update-delivery-btn" data-delivery-id="${delivery.id}" data-status="in_transit">
-                                <i class="fas fa-shipping-fast"></i> Start Delivery
+                            <button class="btn btn-primary btn-sm transit-delivery-btn" data-delivery-id="${delivery.id}">
+                                <i class="fas fa-shipping-fast"></i> Mark as In Transit
                             </button>
                             ` : ''}
                             ${delivery.status === 'in_transit' ? `
-                            <button class="btn btn-secondary btn-sm update-delivery-btn" data-delivery-id="${delivery.id}" data-status="delivered">
-                                <i class="fas fa-check-circle"></i> Mark as Delivered
+                            <button class="btn btn-primary btn-sm deliver-btn" data-delivery-id="${delivery.id}">
+                                <i class="fas fa-check"></i> Mark as Delivered
                             </button>
                             ` : ''}
-                            <button class="btn btn-outline btn-sm contact-customer-btn" data-delivery-id="${delivery.id}">
-                                <i class="fas fa-phone"></i> Contact Customer
+                            <button class="btn btn-outline btn-sm view-details-btn" data-delivery-id="${delivery.id}">
+                                <i class="fas fa-eye"></i> View Details
                             </button>
                         </div>
                     `;
@@ -6435,25 +6327,81 @@ function showDashboardBasedOnRole(role, userName) {
                     elements.myDeliveriesList.appendChild(deliveryCard);
                 });
                 
-                // Add event listeners to update delivery buttons
-                document.querySelectorAll('.update-delivery-btn').forEach(button => {
+                // Add event listeners to delivery actions
+                document.querySelectorAll('.pickup-delivery-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const deliveryId = this.getAttribute('data-delivery-id');
-                        const status = this.getAttribute('data-status');
-                        updateDeliveryStatus(deliveryId, status);
+                        updateDeliveryStatus(deliveryId, 'picked_up');
                     });
                 });
                 
-                // Add event listeners to contact customer buttons
-                document.querySelectorAll('.contact-customer-btn').forEach(button => {
+                document.querySelectorAll('.transit-delivery-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const deliveryId = this.getAttribute('data-delivery-id');
-                        contactCustomer(deliveryId);
+                        updateDeliveryStatus(deliveryId, 'in_transit');
+                    });
+                });
+                
+                document.querySelectorAll('.deliver-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deliveryId = this.getAttribute('data-delivery-id');
+                        updateDeliveryStatus(deliveryId, 'delivered');
+                    });
+                });
+                
+                document.querySelectorAll('.view-details-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deliveryId = this.getAttribute('data-delivery-id');
+                        viewDeliveryDetails(deliveryId);
                     });
                 });
             } catch (error) {
                 console.error('Error loading my deliveries:', error);
-                showNotification('Error', 'Failed to load deliveries', 'error');
+                showNotification('Error', 'Failed to load your deliveries', 'error');
+            }
+        }
+
+        // Update delivery status
+        async function updateDeliveryStatus(deliveryId, status) {
+            showLoading();
+            
+            try {
+                const updateData = {
+                    status: status,
+                    updated_at: new Date().toISOString()
+                };
+                
+                // Add timestamp for specific status changes
+                if (status === 'picked_up') {
+                    updateData.picked_up_at = new Date().toISOString();
+                } else if (status === 'delivered') {
+                    updateData.delivered_at = new Date().toISOString();
+                }
+                
+                const { data, error } = await supabase
+                    .from('deliveries')
+                    .update(updateData)
+                    .eq('id', deliveryId)
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                // If delivery is completed, also update the order status
+                if (status === 'delivered') {
+                    await supabase
+                        .from('orders')
+                        .update({ status: 'delivered' })
+                        .eq('id', data.order_id);
+                }
+                
+                hideLoading();
+                showNotification('Success', `Delivery status updated to ${status.replace('_', ' ')}!`, 'success');
+                loadMyDeliveries();
+                updateRiderStats();
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to update delivery status: ' + error.message, 'error');
             }
         }
 
@@ -6465,41 +6413,87 @@ function showDashboardBasedOnRole(role, userName) {
                     .from('deliveries')
                     .select('*')
                     .eq('rider_id', currentUser.id)
-                    .eq('status', 'delivered')
-                    .order('updated_at', { ascending: false })
-                    .limit(10);
+                    .eq('status', 'delivered');
                 
                 if (error) throw error;
                 
-                elements.riderEarningsHistory.innerHTML = '';
+                // Calculate earnings
+                let todayEarnings = 0;
+                let weekEarnings = 0;
+                let monthEarnings = 0;
+                const totalDeliveries = deliveries ? deliveries.length : 0;
                 
-                if (!deliveries || deliveries.length === 0) {
-                    elements.riderEarningsHistory.innerHTML = `
-                        <div class="empty-state" style="padding: 20px;">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <p>No earnings history yet</p>
-                        </div>
-                    `;
-                    return;
+                const today = new Date();
+                const weekStart = new Date(today);
+                weekStart.setDate(today.getDate() - today.getDay());
+                const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                
+                if (deliveries) {
+                    deliveries.forEach(delivery => {
+                        const deliveryDate = new Date(delivery.delivered_at || delivery.updated_at);
+                        const earnings = delivery.delivery_fee || 0;
+                        
+                        if (deliveryDate.toDateString() === today.toDateString()) {
+                            todayEarnings += earnings;
+                        }
+                        
+                        if (deliveryDate >= weekStart) {
+                            weekEarnings += earnings;
+                        }
+                        
+                        if (deliveryDate >= monthStart) {
+                            monthEarnings += earnings;
+                        }
+                    });
                 }
                 
-                deliveries.forEach(delivery => {
-                    const earningItem = document.createElement('div');
-                    earningItem.className = 'earning-item';
-                    earningItem.style.cssText = 'display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);';
-                    earningItem.innerHTML = `
-                        <div>
-                            <strong>${new Date(delivery.updated_at).toLocaleDateString()}</strong>
-                            <div style="font-size: 0.8rem; opacity: 0.7;">Delivery #${delivery.id.substring(0, 8)}</div>
-                        </div>
-                        <div style="font-weight: bold;">KSh ${(delivery.delivery_fee || 0).toLocaleString()}</div>
-                    `;
-                    
-                    elements.riderEarningsHistory.appendChild(earningItem);
-                });
+                elements.todayEarnings.textContent = todayEarnings.toLocaleString();
+                elements.weekEarnings.textContent = weekEarnings.toLocaleString();
+                elements.monthEarnings.textContent = monthEarnings.toLocaleString();
+                elements.totalDeliveries.textContent = totalDeliveries;
+                
+                // Load earnings history
+                loadEarningsHistory(deliveries);
             } catch (error) {
                 console.error('Error loading rider earnings:', error);
+                showNotification('Error', 'Failed to load earnings data', 'error');
             }
+        }
+
+        // Load earnings history
+        function loadEarningsHistory(deliveries) {
+            if (!deliveries || deliveries.length === 0) {
+                elements.riderEarningsHistory.innerHTML = `
+                    <div class="empty-state" style="padding: 20px;">
+                        <i class="fas fa-chart-line"></i>
+                        <p>No earnings history available</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group deliveries by date
+            const earningsByDate = {};
+            deliveries.forEach(delivery => {
+                const date = new Date(delivery.delivered_at || delivery.updated_at).toDateString();
+                if (!earningsByDate[date]) {
+                    earningsByDate[date] = 0;
+                }
+                earningsByDate[date] += delivery.delivery_fee || 0;
+            });
+            
+            // Create earnings history list
+            let earningsHTML = '';
+            Object.keys(earningsByDate).slice(0, 7).forEach(date => {
+                earningsHTML += `
+                    <div class="order-item">
+                        <div>${new Date(date).toLocaleDateString()}</div>
+                        <div>KSh ${earningsByDate[date].toLocaleString()}</div>
+                    </div>
+                `;
+            });
+            
+            elements.riderEarningsHistory.innerHTML = earningsHTML;
         }
 
         // Load rider profile
@@ -6620,7 +6614,7 @@ function showDashboardBasedOnRole(role, userName) {
             const file = e.target.files[0];
             if (!file) return;
             
-            await uploadRiderDocument(file, 'license');
+            await uploadRiderDocument(file, 'license_photo_url');
         }
 
         // Handle vehicle photo upload
@@ -6628,17 +6622,17 @@ function showDashboardBasedOnRole(role, userName) {
             const file = e.target.files[0];
             if (!file) return;
             
-            await uploadRiderDocument(file, 'vehicle');
+            await uploadRiderDocument(file, 'vehicle_photo_url');
         }
 
         // Upload rider document
-        async function uploadRiderDocument(file, documentType) {
+        async function uploadRiderDocument(file, fieldName) {
             try {
                 showLoading();
                 
                 // Upload file to Supabase Storage
                 const fileExt = file.name.split('.').pop();
-                const fileName = `${currentUser.id}-${documentType}.${fileExt}`;
+                const fileName = `${currentUser.id}-${fieldName}.${fileExt}`;
                 const filePath = `rider-docs/${fileName}`;
                 
                 const { error: uploadError } = await supabase.storage
@@ -6653,10 +6647,9 @@ function showDashboardBasedOnRole(role, userName) {
                     .getPublicUrl(filePath);
                 
                 // Update user profile with document URL
-                const updateField = documentType === 'license' ? 'license_photo_url' : 'vehicle_photo_url';
                 const { data, error } = await supabase
                     .from('profiles')
-                    .update({ [updateField]: publicUrl })
+                    .update({ [fieldName]: publicUrl })
                     .eq('id', currentUser.id)
                     .select()
                     .single();
@@ -6664,13 +6657,13 @@ function showDashboardBasedOnRole(role, userName) {
                 if (error) throw error;
                 
                 hideLoading();
-                showNotification('Success', `${documentType.charAt(0).toUpperCase() + documentType.slice(1)} photo uploaded successfully!`, 'success');
+                showNotification('Success', 'Document uploaded successfully!', 'success');
                 
                 // Refresh verification status
                 loadRiderVerificationStatus(data);
             } catch (error) {
                 hideLoading();
-                showNotification('Error', `Failed to upload ${documentType} photo: ` + error.message, 'error');
+                showNotification('Error', 'Failed to upload document: ' + error.message, 'error');
             }
         }
 
@@ -6679,8 +6672,8 @@ function showDashboardBasedOnRole(role, userName) {
             const name = document.getElementById('riderProfileName').value;
             const phone = document.getElementById('riderProfilePhone').value;
             const idNumber = document.getElementById('riderIdNumber').value;
-            const vehicle = document.getElementById('riderVehicle').value;
-            const license = document.getElementById('riderLicense').value;
+            const vehicleType = document.getElementById('riderVehicle').value;
+            const licenseNumber = document.getElementById('riderLicense').value;
             const vehicleReg = document.getElementById('riderVehicleReg').value;
             const emergencyName = document.getElementById('emergencyContactName').value;
             const emergencyPhone = document.getElementById('emergencyContactPhone').value;
@@ -6691,16 +6684,16 @@ function showDashboardBasedOnRole(role, userName) {
                     name,
                     phone,
                     id_number: idNumber,
-                    vehicle_type: vehicle,
-                    license_number: license,
+                    vehicle_type: vehicleType,
+                    license_number: licenseNumber,
                     vehicle_registration: vehicleReg,
                     emergency_contact_name: emergencyName,
                     emergency_contact_phone: emergencyPhone,
                     emergency_contact_relation: emergencyRelation
                 };
                 
-                // If this is the first time setting critical info, set verification status to pending
-                if ((idNumber || license || vehicleReg) && !profileData.verification_status) {
+                // If this is the first time setting required fields, set verification status to pending
+                if (idNumber && licenseNumber && vehicleReg && !profileData.verification_status) {
                     profileData.verification_status = 'pending';
                 }
                 
@@ -6725,128 +6718,25 @@ function showDashboardBasedOnRole(role, userName) {
             }
         }
 
-        // Accept delivery
-        async function acceptDelivery(deliveryId) {
-            showLoading();
-            
-            try {
-                const { data, error } = await supabase
-                    .from('deliveries')
-                    .update({
-                        rider_id: currentUser.id,
-                        status: 'accepted',
-                        assigned_at: new Date().toISOString()
-                    })
-                    .eq('id', deliveryId)
-                    .select()
-                    .single();
-                
-                if (error) throw error;
-                
-                // Update the order status as well
-                await supabase
-                    .from('orders')
-                    .update({ status: 'accepted' })
-                    .eq('id', data.order_id);
-                
-                hideLoading();
-                showNotification('Success', 'Delivery accepted successfully!', 'success');
-                loadAvailableDeliveries();
-                updateRiderStats();
-                switchDashboardSection('myDeliveries');
-            } catch (error) {
-                hideLoading();
-                showNotification('Error', 'Failed to accept delivery: ' + error.message, 'error');
-            }
-        }
-
-        // Update delivery status
-        async function updateDeliveryStatus(deliveryId, status) {
-            showLoading();
-            
-            try {
-                const updates = {
-                    status: status
-                };
-                
-                // Add timestamps based on status
-                if (status === 'picked_up') {
-                    updates.picked_up_at = new Date().toISOString();
-                } else if (status === 'in_transit') {
-                    updates.in_transit_at = new Date().toISOString();
-                } else if (status === 'delivered') {
-                    updates.delivered_at = new Date().toISOString();
-                    
-                    // Update order status as well
-                    const { data: delivery } = await supabase
-                        .from('deliveries')
-                        .select('order_id')
-                        .eq('id', deliveryId)
-                        .single();
-                    
-                    if (delivery) {
-                        await supabase
-                            .from('orders')
-                            .update({ status: 'delivered' })
-                            .eq('id', delivery.order_id);
-                    }
-                }
-                
-                const { data, error } = await supabase
-                    .from('deliveries')
-                    .update(updates)
-                    .eq('id', deliveryId)
-                    .select()
-                    .single();
-                
-                if (error) throw error;
-                
-                hideLoading();
-                
-                let message = '';
-                if (status === 'picked_up') {
-                    message = 'Delivery marked as picked up!';
-                } else if (status === 'in_transit') {
-                    message = 'Delivery is now in transit!';
-                } else if (status === 'delivered') {
-                    message = 'Delivery marked as delivered!';
-                }
-                
-                showNotification('Success', message, 'success');
-                loadMyDeliveries();
-                updateRiderStats();
-                
-                if (status === 'delivered') {
-                    switchDashboardSection('availableDeliveries');
-                }
-            } catch (error) {
-                hideLoading();
-                showNotification('Error', 'Failed to update delivery status: ' + error.message, 'error');
-            }
-        }
-
-        // Contact customer
-        function contactCustomer(deliveryId) {
-            // In a real app, this would initiate contact with the customer
-            showNotification('Info', 'This would initiate contact with the customer', 'info');
-        }
-
         // Handle emergency button
         function handleEmergency() {
-            if (confirm('Are you sure you want to trigger an emergency alert? This will notify IPATE support and emergency contacts.')) {
-                showNotification('Emergency Alert', 'Emergency alert has been sent to IPATE support and your emergency contacts.', 'error');
+            if (confirm('Are you sure you want to trigger an emergency alert? This will notify our support team immediately.')) {
+                showLoading();
                 
-                // In a real app, this would send notifications to support and emergency contacts
-                // with the rider's location and details
+                // Simulate emergency alert
+                setTimeout(() => {
+                    hideLoading();
+                    showNotification('Emergency Alert', 'Emergency alert sent! Support team has been notified.', 'info');
+                    
+                    // In a real app, this would send an actual emergency notification
+                    // to the support team with the rider's location and details
+                }, 2000);
             }
         }
 
         // Handle contact form
-        async function handleContactForm(e) {
+        function handleContactForm(e) {
             e.preventDefault();
-            
-            // In a real app, this would send the form data to a server
-            // For now, we'll just show a success message
             showNotification('Success', 'Your message has been sent! We will get back to you soon.', 'success');
             e.target.reset();
         }
@@ -6862,22 +6752,21 @@ function showDashboardBasedOnRole(role, userName) {
         }
 
         // Show notification
-        function showNotification(title, message, type) {
+        function showNotification(title, message, type = 'info') {
             elements.notificationTitle.textContent = title;
             elements.notificationMessage.textContent = message;
             
-            // Set icon based on type
-            let icon = 'fa-info-circle';
-            if (type === 'success') icon = 'fa-check-circle';
-            if (type === 'error') icon = 'fa-exclamation-circle';
-            if (type === 'warning') icon = 'fa-exclamation-triangle';
-            
-            elements.notification.querySelector('i').className = `fas ${icon}`;
-            
-            // Set color based on type
-            elements.notification.classList.remove('notification-success', 'notification-error');
-            if (type === 'success') elements.notification.classList.add('notification-success');
-            if (type === 'error') elements.notification.classList.add('notification-error');
+            // Set notification type
+            elements.notification.className = 'notification';
+            if (type === 'success') {
+                elements.notification.classList.add('notification-success');
+                elements.notification.querySelector('i').className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                elements.notification.classList.add('notification-error');
+                elements.notification.querySelector('i').className = 'fas fa-exclamation-circle';
+            } else {
+                elements.notification.querySelector('i').className = 'fas fa-info-circle';
+            }
             
             // Show notification
             elements.notification.classList.add('show');
@@ -6887,12 +6776,6 @@ function showDashboardBasedOnRole(role, userName) {
                 elements.notification.classList.remove('show');
             }, 5000);
         }
-
-        // Make functions globally available for onclick handlers
-        window.switchDashboardSection = switchDashboardSection;
     </script>
 </body>
 </html>
-
-
-
