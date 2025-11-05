@@ -21,8 +21,12 @@
             --warning: #FBC531;
             --danger: #E84118;
             --info: #0984e3;
-            --glass: rgba(255, 255, 255, 0.25);
-            --blur: blur(10px);
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-dark: rgba(0, 0, 0, 0.2);
+            --blur: blur(15px);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-primary: linear-gradient(135deg, var(--primary), #FF8C00);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), #00C853);
         }
 
         * {
@@ -33,10 +37,11 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient);
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -54,7 +59,7 @@
         }
 
         .glass-dark {
-            background: rgba(0, 0, 0, 0.25);
+            background: var(--glass-dark);
             backdrop-filter: var(--blur);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
@@ -68,6 +73,12 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-scrolled {
+            background: rgba(26, 26, 26, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -154,7 +165,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #FF8C00);
+            background: var(--gradient-primary);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
         }
@@ -177,7 +188,7 @@
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, var(--secondary), #00C853);
+            background: var(--gradient-secondary);
             color: white;
             box-shadow: 0 4px 15px rgba(0, 168, 89, 0.3);
         }
@@ -214,7 +225,7 @@
         .hero {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
             color: white;
-            padding: 120px 0;
+            padding: 150px 0 120px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -232,24 +243,31 @@
             z-index: -1;
         }
 
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 20px;
             font-weight: 800;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            line-height: 1.1;
         }
 
         .hero p {
             font-size: 1.3rem;
-            max-width: 700px;
             margin: 0 auto 40px;
             opacity: 0.9;
+            max-width: 600px;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         /* Features Section */
@@ -264,6 +282,14 @@
             font-size: 2.5rem;
             color: white;
             font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto 60px;
+            font-size: 1.1rem;
         }
 
         .features-grid {
@@ -281,11 +307,30 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
 
         .feature-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.1;
         }
 
         .feature-icon {
@@ -383,6 +428,7 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.18);
             overflow: hidden;
+            transition: all 0.3s;
         }
         
         .faq-question {
@@ -898,6 +944,311 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Seller Dashboard Styles */
+        .seller-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .product-form {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+
+        .product-form h3 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Rider Dashboard Styles */
+        .delivery-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .delivery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .delivery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .delivery-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: rgba(251, 197, 49, 0.2);
+            color: var(--warning);
+        }
+
+        .status-accepted {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .status-delivered {
+            background: rgba(116, 185, 255, 0.2);
+            color: var(--info);
+        }
+
+        .status-cancelled {
+            background: rgba(232, 65, 24, 0.2);
+            color: var(--danger);
+        }
+
+        /* Legal Pages */
+        .legal-page {
+            padding: 120px 0 80px;
+            color: white;
+        }
+
+        .legal-content {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .legal-content h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-content h2 {
+            margin: 30px 0 15px;
+            color: white;
+        }
+
+        .legal-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .legal-content ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Contact Page */
+        .contact-page {
+            padding: 120px 0 80px;
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-form {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .message-sent {
+            background: var(--gradient-primary);
+            margin-left: auto;
+        }
+
+        .message-received {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .chat-input button {
+            padding: 15px 25px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Cart and Order Styles */
+        .cart-item, .order-item {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-info, .order-item-info {
+            flex: 1;
+        }
+
+        .cart-item-actions, .order-item-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gradient-primary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Map Styles */
+        .map-container {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        /* Animation for floating elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -919,7 +1270,7 @@
     <!-- Landing Page -->
     <div class="page active" id="landingPage">
         <!-- Header -->
-        <header>
+        <header id="mainHeader">
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
@@ -930,7 +1281,7 @@
                         <a href="#features">Features</a>
                         <a href="#testimonials">Testimonials</a>
                         <a href="#faq">FAQ</a>
-                        <a href="#contact">Contact</a>
+                        <a href="#" id="contactLink">Contact</a>
                     </nav>
                     <div class="auth-buttons">
                         <button class="btn btn-outline" id="loginBtn">Login</button>
@@ -946,15 +1297,17 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
-                <h1>Fast & Reliable Deliveries in Nairobi</h1>
-                <p>Get your goods delivered quickly and safely with our trusted network of riders. From food to documents, we've got you covered.</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary btn-large" id="getStartedBtn">
-                        <i class="fas fa-rocket"></i> Get Started Now
-                    </button>
-                    <button class="btn btn-outline btn-large" id="learnMoreBtn">
-                        <i class="fas fa-play-circle"></i> Learn More
-                    </button>
+                <div class="hero-content">
+                    <h1>Fast & Reliable Deliveries in Nairobi</h1>
+                    <p>Get your goods delivered quickly and safely with our trusted network of riders. From food to documents, we've got you covered.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" id="getStartedBtn">
+                            <i class="fas fa-rocket"></i> Get Started Now
+                        </button>
+                        <button class="btn btn-outline btn-large" id="learnMoreBtn">
+                            <i class="fas fa-play-circle"></i> Watch Demo
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -963,23 +1316,24 @@
         <section class="features" id="features">
             <div class="container">
                 <h2 class="section-title">Why Choose IPATE Deliveries?</h2>
+                <p class="section-subtitle">We provide the fastest, most reliable delivery service in Nairobi with cutting-edge technology and dedicated professionals.</p>
                 <div class="features-grid">
-                    <div class="feature-card">
+                    <div class="feature-card floating">
                         <i class="fas fa-bolt feature-icon"></i>
                         <h3>Lightning Fast</h3>
                         <p>Our riders are strategically located across Nairobi to ensure your deliveries arrive in record time.</p>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card floating" style="animation-delay: 0.5s;">
                         <i class="fas fa-shield-alt feature-icon"></i>
                         <h3>Secure & Safe</h3>
                         <p>All our riders are verified and your items are insured for complete peace of mind.</p>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card floating" style="animation-delay: 1s;">
                         <i class="fas fa-map-marker-alt feature-icon"></i>
                         <h3>Real-Time Tracking</h3>
                         <p>Track your delivery in real-time from pickup to drop-off with our advanced tracking system.</p>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card floating" style="animation-delay: 1.5s;">
                         <i class="fas fa-money-bill-wave feature-icon"></i>
                         <h3>Affordable Pricing</h3>
                         <p>Competitive pricing with no hidden fees. Pay only for the distance your delivery travels.</p>
@@ -992,6 +1346,7 @@
         <section class="testimonials" id="testimonials">
             <div class="container">
                 <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Hear from our satisfied customers, sellers, and riders about their experience with IPATE Deliveries.</p>
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
@@ -1037,6 +1392,7 @@
         <section class="faq-section" id="faq">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Find answers to the most common questions about our delivery services.</p>
                 <div class="faq-container">
                     <div class="faq-item">
                         <div class="faq-question">
@@ -1088,7 +1444,7 @@
         </section>
 
         <!-- Footer -->
-        <footer id="contact">
+        <footer>
             <div class="container">
                 <div class="footer-grid">
                     <div class="footer-logo">
@@ -1101,20 +1457,20 @@
                             <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
                             <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
                             <li><a href="#faq"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                            <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                            <li><a href="#" id="footerContactLink"><i class="fas fa-chevron-right"></i> Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-links">
                         <h4>Legal</h4>
                         <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                            <li><a href="#" id="privacyPolicyLink"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                            <li><a href="#" id="termsLink"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
                         </ul>
                     </div>
                     <div class="footer-links">
                         <h4>Contact Info</h4>
                         <ul>
-                            <li><a href="tel:+254700000000"><i class="fas fa-phone"></i> +254 748 894 671</a></li>
+                            <li><a href="tel:+254748894671"><i class="fas fa-phone"></i> +254 748 894 671</a></li>
                             <li><a href="mailto:info@ipatedeliveries.com"><i class="fas fa-envelope"></i> info@ipatedeliveries.com</a></li>
                             <li><a href="#"><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</a></li>
                         </ul>
@@ -1240,6 +1596,475 @@
         </div>
     </div>
 
+    <!-- Seller Dashboard -->
+    <div class="page dashboard" id="sellerDashboard">
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast logo-icon"></i>
+                        <span class="logo-text">IPATE Deliveries</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar" id="sellerAvatar">S</div>
+                        <div>
+                            <div id="sellerName">Seller</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Seller Account</div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" id="sellerLogoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-content">
+                <h2 style="color: white; margin-bottom: 30px;">Seller Dashboard</h2>
+                
+                <div class="dashboard-nav-links">
+                    <a href="#" class="dashboard-nav-link active" data-section="sellerProducts">My Products</a>
+                    <a href="#" class="dashboard-nav-link" data-section="addProduct">Add Product</a>
+                    <a href="#" class="dashboard-nav-link" data-section="sellerOrders">Orders</a>
+                    <a href="#" class="dashboard-nav-link" data-section="sellerAnalytics">Analytics</a>
+                    <a href="#" class="dashboard-nav-link" data-section="sellerProfile">Profile</a>
+                </div>
+
+                <!-- Products Section -->
+                <div class="dashboard-section active" id="sellerProductsSection">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerTotalProducts">0</div>
+                            <div class="stat-label">Total Products</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerLowStock">0</div>
+                            <div class="stat-label">Low Stock</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerTotalOrders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerPendingOrders">0</div>
+                            <div class="stat-label">Pending Orders</div>
+                        </div>
+                    </div>
+
+                    <div class="seller-actions">
+                        <button class="btn btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                        <button class="btn btn-outline" id="refreshProductsBtn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+
+                    <h3 style="color: white; margin-bottom: 20px;">My Products</h3>
+                    <div class="products-grid" id="sellerProductsGrid">
+                        <!-- Seller products will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Add Product Section -->
+                <div class="dashboard-section" id="addProductSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Add New Product</h3>
+                    <div class="product-form">
+                        <form id="addProductForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" id="productName" class="form-control" placeholder="Enter product name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productPrice">Price (KSh)</label>
+                                    <input type="number" id="productPrice" class="form-control" placeholder="Enter price" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productCategory">Category</label>
+                                    <select id="productCategory" class="form-control" required>
+                                        <option value="">Select category</option>
+                                        <option value="food">Food</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="clothing">Clothing</option>
+                                        <option value="home">Home & Garden</option>
+                                        <option value="health">Health & Beauty</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productStock">Stock Quantity</label>
+                                    <input type="number" id="productStock" class="form-control" placeholder="Enter stock quantity" min="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDescription">Description</label>
+                                <textarea id="productDescription" class="form-control" placeholder="Enter product description" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="productImage">Image URL</label>
+                                <input type="url" id="productImage" class="form-control" placeholder="Enter image URL">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div class="dashboard-section" id="sellerOrdersSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Order Management</h3>
+                    <div class="orders-list" id="sellerOrdersList">
+                        <!-- Seller orders will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div class="dashboard-section" id="sellerAnalyticsSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Sales Analytics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerTotalRevenue">0</div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerMonthlyRevenue">0</div>
+                            <div class="stat-label">Monthly Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerAvgOrder">0</div>
+                            <div class="stat-label">Avg Order Value</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sellerConversion">0%</div>
+                            <div class="stat-label">Conversion Rate</div>
+                        </div>
+                    </div>
+                    <div style="background: var(--glass); backdrop-filter: var(--blur); border-radius: 20px; padding: 30px; margin-top: 30px; border: 1px solid rgba(255, 255, 255, 0.18); color: white; text-align: center;">
+                        <h4 style="margin-bottom: 15px;">Sales Chart</h4>
+                        <p>Sales visualization will be displayed here</p>
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                            <i class="fas fa-chart-line" style="font-size: 48px; opacity: 0.5;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="dashboard-section" id="sellerProfileSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Seller Profile</h3>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="sellerProfileName">Business Name</label>
+                            <input type="text" id="sellerProfileName" class="form-control" placeholder="Enter your business name">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerProfileEmail">Email</label>
+                            <input type="email" id="sellerProfileEmail" class="form-control" placeholder="Enter your email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerProfilePhone">Phone Number</label>
+                            <input type="tel" id="sellerProfilePhone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerProfileAddress">Business Address</label>
+                            <textarea id="sellerProfileAddress" class="form-control" placeholder="Enter your business address" rows="3"></textarea>
+                        </div>
+                        <button class="btn btn-primary" id="sellerProfileSaveBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rider Dashboard -->
+    <div class="page dashboard" id="riderDashboard">
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <div class="logo">
+                        <i class="fas fa-truck-fast logo-icon"></i>
+                        <span class="logo-text">IPATE Deliveries</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar" id="riderAvatar">R</div>
+                        <div>
+                            <div id="riderName">Rider</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Rider Account</div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" id="riderLogoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-content">
+                <h2 style="color: white; margin-bottom: 30px;">Rider Dashboard</h2>
+                
+                <div class="dashboard-nav-links">
+                    <a href="#" class="dashboard-nav-link active" data-section="availableDeliveries">Available Deliveries</a>
+                    <a href="#" class="dashboard-nav-link" data-section="myDeliveries">My Deliveries</a>
+                    <a href="#" class="dashboard-nav-link" data-section="riderEarnings">Earnings</a>
+                    <a href="#" class="dashboard-nav-link" data-section="riderProfile">Profile</a>
+                </div>
+
+                <!-- Available Deliveries Section -->
+                <div class="dashboard-section active" id="availableDeliveriesSection">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="availableDeliveries">0</div>
+                            <div class="stat-label">Available Deliveries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="activeDeliveries">0</div>
+                            <div class="stat-label">Active Deliveries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="completedDeliveries">0</div>
+                            <div class="stat-label">Completed Today</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="riderRating">0.0</div>
+                            <div class="stat-label">Your Rating</div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: white; margin-bottom: 20px;">Available Deliveries</h3>
+                    <div class="deliveries-list" id="availableDeliveriesList">
+                        <!-- Available deliveries will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- My Deliveries Section -->
+                <div class="dashboard-section" id="myDeliveriesSection">
+                    <h3 style="color: white; margin-bottom: 20px;">My Active Deliveries</h3>
+                    <div class="deliveries-list" id="myDeliveriesList">
+                        <!-- Rider's active deliveries will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Earnings Section -->
+                <div class="dashboard-section" id="riderEarningsSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Earnings Overview</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">KSh <span id="todayEarnings">0</span></div>
+                            <div class="stat-label">Today's Earnings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">KSh <span id="weekEarnings">0</span></div>
+                            <div class="stat-label">This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">KSh <span id="monthEarnings">0</span></div>
+                            <div class="stat-label">This Month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalDeliveries">0</div>
+                            <div class="stat-label">Total Deliveries</div>
+                        </div>
+                    </div>
+                    <div style="background: var(--glass); backdrop-filter: var(--blur); border-radius: 20px; padding: 30px; margin-top: 30px; border: 1px solid rgba(255, 255, 255, 0.18); color: white;">
+                        <h4 style="margin-bottom: 15px;">Earnings History</h4>
+                        <div class="earnings-history" id="riderEarningsHistory">
+                            <!-- Earnings history will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="dashboard-section" id="riderProfileSection">
+                    <h3 style="color: white; margin-bottom: 20px;">Rider Profile</h3>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="riderProfileName">Full Name</label>
+                            <input type="text" id="riderProfileName" class="form-control" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="riderProfileEmail">Email</label>
+                            <input type="email" id="riderProfileEmail" class="form-control" placeholder="Enter your email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="riderProfilePhone">Phone Number</label>
+                            <input type="tel" id="riderProfilePhone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="riderVehicle">Vehicle Type</label>
+                            <select id="riderVehicle" class="form-control">
+                                <option value="motorcycle">Motorcycle</option>
+                                <option value="bicycle">Bicycle</option>
+                                <option value="car">Car</option>
+                                <option value="truck">Truck</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="riderLicense">License Number</label>
+                            <input type="text" id="riderLicense" class="form-control" placeholder="Enter your license number">
+                        </div>
+                        <button class="btn btn-primary" id="riderProfileSaveBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page contact-page" id="contactPage">
+        <div class="container">
+            <div class="legal-content">
+                <h1>Contact Us</h1>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Get In Touch</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+254 748 894 671</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@ipatedeliveries.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Address</h4>
+                                <p>Nairobi, Kenya</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4>Business Hours</h4>
+                                <p>Mon - Sun: 6:00 AM - 10:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Send us a Message</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Your Message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="chat-container" style="margin-top: 40px;">
+                    <h3 style="margin-bottom: 20px;">Live Chat Support</h3>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message message-received">
+                            <p>Hello! How can we help you today?</p>
+                            <small>10:30 AM</small>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type your message here...">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Page -->
+    <div class="page legal-page" id="privacyPolicyPage">
+        <div class="container">
+            <div class="legal-content">
+                <h1>Privacy Policy</h1>
+                <p>Last updated: January 1, 2025</p>
+                
+                <h2>1. Information We Collect</h2>
+                <p>We collect information you provide directly to us, including:</p>
+                <ul>
+                    <li>Personal identification information (Name, email address, phone number)</li>
+                    <li>Delivery addresses and location data</li>
+                    <li>Payment information</li>
+                    <li>Communications with us</li>
+                </ul>
+                
+                <h2>2. How We Use Your Information</h2>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Provide, maintain, and improve our services</li>
+                    <li>Process transactions and send related information</li>
+                    <li>Send you technical notices and support messages</li>
+                    <li>Respond to your comments and questions</li>
+                </ul>
+                
+                <h2>3. Information Sharing</h2>
+                <p>We do not sell, trade, or rent users' personal identification information to others.</p>
+                
+                <h2>4. Security</h2>
+                <p>We implement appropriate security measures to protect your personal information.</p>
+                
+                <h2>5. Your Rights</h2>
+                <p>You have the right to access, correct, or delete your personal information.</p>
+                
+                <h2>6. Contact Us</h2>
+                <p>If you have any questions about this Privacy Policy, please contact us at privacy@ipatedeliveries.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Page -->
+    <div class="page legal-page" id="termsPage">
+        <div class="container">
+            <div class="legal-content">
+                <h1>Terms of Service</h1>
+                <p>Last updated: January 1, 2025</p>
+                
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using IPATE Deliveries, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                
+                <h2>2. Use License</h2>
+                <p>Permission is granted to temporarily use IPATE Deliveries for personal, non-commercial transitory viewing only.</p>
+                
+                <h2>3. Delivery Services</h2>
+                <p>We strive to provide timely delivery services, but we cannot guarantee specific delivery times due to factors beyond our control.</p>
+                
+                <h2>4. User Accounts</h2>
+                <p>You are responsible for maintaining the confidentiality of your account and password.</p>
+                
+                <h2>5. Payments</h2>
+                <p>All payments are processed securely through our payment partners. Refunds are subject to our refund policy.</p>
+                
+                <h2>6. Limitations</h2>
+                <p>In no event shall IPATE Deliveries or its suppliers be liable for any damages arising out of the use or inability to use our services.</p>
+                
+                <h2>7. Governing Law</h2>
+                <p>These terms and conditions are governed by and construed in accordance with the laws of Kenya.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Authentication Modal -->
     <div class="modal" id="authModal">
         <div class="modal-content">
@@ -1303,6 +2128,11 @@
             // Pages
             landingPage: document.getElementById('landingPage'),
             customerDashboard: document.getElementById('customerDashboard'),
+            sellerDashboard: document.getElementById('sellerDashboard'),
+            riderDashboard: document.getElementById('riderDashboard'),
+            contactPage: document.getElementById('contactPage'),
+            privacyPolicyPage: document.getElementById('privacyPolicyPage'),
+            termsPage: document.getElementById('termsPage'),
             
             // Authentication
             authModal: document.getElementById('authModal'),
@@ -1331,6 +2161,49 @@
             customerCartItemsCount: document.getElementById('customerCartItems'),
             customerProfileSaveBtn: document.getElementById('customerProfileSaveBtn'),
             
+            // Seller Dashboard
+            sellerProductsGrid: document.getElementById('sellerProductsGrid'),
+            sellerOrdersList: document.getElementById('sellerOrdersList'),
+            sellerLogoutBtn: document.getElementById('sellerLogoutBtn'),
+            sellerName: document.getElementById('sellerName'),
+            sellerAvatar: document.getElementById('sellerAvatar'),
+            sellerTotalProducts: document.getElementById('sellerTotalProducts'),
+            sellerLowStock: document.getElementById('sellerLowStock'),
+            sellerTotalOrders: document.getElementById('sellerTotalOrders'),
+            sellerPendingOrders: document.getElementById('sellerPendingOrders'),
+            sellerTotalRevenue: document.getElementById('sellerTotalRevenue'),
+            sellerMonthlyRevenue: document.getElementById('sellerMonthlyRevenue'),
+            sellerAvgOrder: document.getElementById('sellerAvgOrder'),
+            sellerConversion: document.getElementById('sellerConversion'),
+            addProductForm: document.getElementById('addProductForm'),
+            sellerProfileSaveBtn: document.getElementById('sellerProfileSaveBtn'),
+            addProductBtn: document.getElementById('addProductBtn'),
+            refreshProductsBtn: document.getElementById('refreshProductsBtn'),
+            
+            // Rider Dashboard
+            riderLogoutBtn: document.getElementById('riderLogoutBtn'),
+            riderName: document.getElementById('riderName'),
+            riderAvatar: document.getElementById('riderAvatar'),
+            availableDeliveries: document.getElementById('availableDeliveries'),
+            activeDeliveries: document.getElementById('activeDeliveries'),
+            completedDeliveries: document.getElementById('completedDeliveries'),
+            riderRating: document.getElementById('riderRating'),
+            todayEarnings: document.getElementById('todayEarnings'),
+            weekEarnings: document.getElementById('weekEarnings'),
+            monthEarnings: document.getElementById('monthEarnings'),
+            totalDeliveries: document.getElementById('totalDeliveries'),
+            availableDeliveriesList: document.getElementById('availableDeliveriesList'),
+            myDeliveriesList: document.getElementById('myDeliveriesList'),
+            riderEarningsHistory: document.getElementById('riderEarningsHistory'),
+            riderProfileSaveBtn: document.getElementById('riderProfileSaveBtn'),
+            
+            // Legal and Contact Links
+            contactLink: document.getElementById('contactLink'),
+            footerContactLink: document.getElementById('footerContactLink'),
+            privacyPolicyLink: document.getElementById('privacyPolicyLink'),
+            termsLink: document.getElementById('termsLink'),
+            contactForm: document.getElementById('contactForm'),
+            
             // Loading Spinner
             loadingSpinner: document.getElementById('loadingSpinner'),
             
@@ -1346,6 +2219,7 @@
             checkAuthState();
             initializeSampleData();
             setupFAQ();
+            setupHeaderScroll();
         });
 
         // Set up event listeners
@@ -1372,9 +2246,37 @@
             
             // Logout buttons
             elements.customerLogoutBtn.addEventListener('click', handleLogout);
+            elements.sellerLogoutBtn.addEventListener('click', handleLogout);
+            elements.riderLogoutBtn.addEventListener('click', handleLogout);
             
             // Profile Save Buttons
             elements.customerProfileSaveBtn.addEventListener('click', saveCustomerProfile);
+            elements.sellerProfileSaveBtn.addEventListener('click', saveSellerProfile);
+            elements.riderProfileSaveBtn.addEventListener('click', saveRiderProfile);
+            
+            // Seller Actions
+            elements.addProductBtn.addEventListener('click', () => switchDashboardSection('addProduct'));
+            elements.refreshProductsBtn.addEventListener('click', loadSellerProducts);
+            elements.addProductForm.addEventListener('submit', handleAddProduct);
+            
+            // Legal and Contact Links
+            elements.contactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('contactPage');
+            });
+            elements.footerContactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('contactPage');
+            });
+            elements.privacyPolicyLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('privacyPolicyPage');
+            });
+            elements.termsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('termsPage');
+            });
+            elements.contactForm.addEventListener('submit', handleContactForm);
             
             // Close modals when clicking outside
             document.addEventListener('click', (e) => {
@@ -1395,6 +2297,18 @@
                         });
                     }
                 });
+            });
+        }
+
+        // Setup header scroll effect
+        function setupHeaderScroll() {
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
             });
         }
 
@@ -1449,13 +2363,27 @@
                     userRole = profile.role;
                     
                     // Update UI based on role
+                    const userName = profile?.name || user.email;
+                    
                     switch (userRole) {
                         case 'customer':
                             showCustomerDashboard();
-                            elements.customerWelcomeName.textContent = profile?.name || user.email;
-                            elements.customerName.textContent = profile?.name || user.email;
-                            elements.customerAvatar.textContent = (profile?.name || user.email).charAt(0).toUpperCase();
+                            elements.customerWelcomeName.textContent = userName;
+                            elements.customerName.textContent = userName;
+                            elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
                             loadCustomerData();
+                            break;
+                        case 'seller':
+                            showSellerDashboard();
+                            elements.sellerName.textContent = userName;
+                            elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
+                            loadSellerData();
+                            break;
+                        case 'rider':
+                            showRiderDashboard();
+                            elements.riderName.textContent = userName;
+                            elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
+                            loadRiderData();
                             break;
                     }
                 }
@@ -1541,6 +2469,18 @@
                         elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
                         loadCustomerData();
                         break;
+                    case 'seller':
+                        showSellerDashboard();
+                        elements.sellerName.textContent = userName;
+                        elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
+                        loadSellerData();
+                        break;
+                    case 'rider':
+                        showRiderDashboard();
+                        elements.riderName.textContent = userName;
+                        elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
+                        loadRiderData();
+                        break;
                 }
                 
             } catch (error) {
@@ -1616,6 +2556,18 @@
                                 elements.customerName.textContent = userName;
                                 elements.customerAvatar.textContent = userName.charAt(0).toUpperCase();
                                 loadCustomerData();
+                                break;
+                            case 'seller':
+                                showSellerDashboard();
+                                elements.sellerName.textContent = userName;
+                                elements.sellerAvatar.textContent = userName.charAt(0).toUpperCase();
+                                loadSellerData();
+                                break;
+                            case 'rider':
+                                showRiderDashboard();
+                                elements.riderName.textContent = userName;
+                                elements.riderAvatar.textContent = userName.charAt(0).toUpperCase();
+                                loadRiderData();
                                 break;
                         }
                     }
@@ -1698,6 +2650,18 @@
             switchDashboardSection('products');
         }
 
+        // Show seller dashboard
+        function showSellerDashboard() {
+            showPage('sellerDashboard');
+            switchDashboardSection('sellerProducts');
+        }
+
+        // Show rider dashboard
+        function showRiderDashboard() {
+            showPage('riderDashboard');
+            switchDashboardSection('availableDeliveries');
+        }
+
         // Switch dashboard section
         function switchDashboardSection(section) {
             // Get the parent dashboard
@@ -1736,6 +2700,34 @@
                     break;
                 case 'profile':
                     loadCustomerProfile();
+                    break;
+                case 'sellerProducts':
+                    loadSellerProducts();
+                    break;
+                case 'addProduct':
+                    // Reset form
+                    document.getElementById('addProductForm').reset();
+                    break;
+                case 'sellerOrders':
+                    loadSellerOrders();
+                    break;
+                case 'sellerAnalytics':
+                    loadSellerAnalytics();
+                    break;
+                case 'sellerProfile':
+                    loadSellerProfile();
+                    break;
+                case 'availableDeliveries':
+                    loadAvailableDeliveries();
+                    break;
+                case 'myDeliveries':
+                    loadMyDeliveries();
+                    break;
+                case 'riderEarnings':
+                    loadRiderEarnings();
+                    break;
+                case 'riderProfile':
+                    loadRiderProfile();
                     break;
             }
         }
@@ -1804,7 +2796,7 @@
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
                     productCard.innerHTML = `
-                        <div class="product-image" style="background-image: url('${product.image_url}')">
+                        <div class="product-image" style="background-image: url('${product.image_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}')">
                             <div style="position: relative; z-index: 2; text-align: center;">
                                 <i class="fas fa-box" style="font-size: 48px; margin-bottom: 10px;"></i>
                                 <div>${product.category}</div>
@@ -1879,19 +2871,19 @@
                     cartItem.className = 'cart-item';
                     cartItem.innerHTML = `
                         <div class="cart-item-info">
-                            <div>
-                                <h4>${product.name}</h4>
-                                <p>KSh ${product.price.toLocaleString()} each</p>
-                            </div>
+                            <h4>${product.name}</h4>
+                            <p>KSh ${product.price.toLocaleString()} each</p>
                         </div>
-                        <div class="cart-item-quantity">
-                            <button class="quantity-btn decrease-quantity" data-cart-item-id="${item.id}">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span>${item.quantity}</span>
-                            <button class="quantity-btn increase-quantity" data-cart-item-id="${item.id}">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                        <div class="cart-item-actions">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn decrease-quantity" data-cart-item-id="${item.id}">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span style="margin: 0 10px; font-weight: bold;">${item.quantity}</span>
+                                <button class="quantity-btn increase-quantity" data-cart-item-id="${item.id}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                             <button class="btn btn-outline btn-sm remove-from-cart" data-cart-item-id="${item.id}" style="margin-left: 15px;">
                                 <i class="fas fa-trash"></i>
                             </button>
@@ -1904,15 +2896,40 @@
                     elements.customerCartItems.appendChild(cartItem);
                 });
                 
+                // Add event listeners to cart controls
+                document.querySelectorAll('.decrease-quantity').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const cartItemId = this.getAttribute('data-cart-item-id');
+                        updateCartQuantity(cartItemId, -1);
+                    });
+                });
+                
+                document.querySelectorAll('.increase-quantity').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const cartItemId = this.getAttribute('data-cart-item-id');
+                        updateCartQuantity(cartItemId, 1);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-from-cart').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const cartItemId = this.getAttribute('data-cart-item-id');
+                        removeFromCart(cartItemId);
+                    });
+                });
+                
                 // Update cart summary
                 elements.customerCartSummary.innerHTML = `
-                    <div class="order-total">
-                        Total: KSh ${total.toLocaleString()}
+                    <div class="order-total" style="text-align: right; padding: 20px; background: var(--glass); border-radius: 15px; margin-bottom: 20px;">
+                        <h3>Total: KSh ${total.toLocaleString()}</h3>
                     </div>
-                    <button class="btn btn-primary btn-large" style="margin-top: 20px; width: 100%;">
+                    <button class="btn btn-primary btn-large" id="checkoutBtn" style="width: 100%;">
                         <i class="fas fa-lock"></i> Proceed to Checkout
                     </button>
                 `;
+                
+                // Add checkout event listener
+                document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
             } catch (error) {
                 console.error('Error loading customer cart:', error);
                 showNotification('Error', 'Failed to load cart', 'error');
@@ -1948,17 +2965,15 @@
                 
                 orders.forEach(order => {
                     const orderCard = document.createElement('div');
-                    orderCard.className = 'order-card';
+                    orderCard.className = 'order-item';
                     orderCard.innerHTML = `
-                        <div class="order-header">
-                            <div>
-                                <h4>Order #${order.id.substring(0, 8)}</h4>
-                                <p>Placed on ${new Date(order.created_at).toLocaleDateString()}</p>
-                            </div>
-                            <div class="order-status status-${order.status}">${order.status}</div>
+                        <div class="order-item-info">
+                            <h4>Order #${order.id.substring(0, 8)}</h4>
+                            <p>Placed on ${new Date(order.created_at).toLocaleDateString()}</p>
+                            <p>Status: <span class="status-${order.status}">${order.status}</span></p>
                         </div>
-                        <div class="order-total">
-                            Total: KSh ${order.total.toLocaleString()}
+                        <div class="order-item-total">
+                            <strong>KSh ${order.total.toLocaleString()}</strong>
                         </div>
                     `;
                     
@@ -2077,6 +3092,855 @@
             } catch (error) {
                 showNotification('Error', 'Failed to add to cart: ' + error.message, 'error');
             }
+        }
+
+        // Update cart quantity
+        async function updateCartQuantity(cartItemId, change) {
+            try {
+                const { data: cartItem, error } = await supabase
+                    .from('cart_items')
+                    .select('quantity')
+                    .eq('id', cartItemId)
+                    .single();
+                
+                if (error) throw error;
+                
+                const newQuantity = cartItem.quantity + change;
+                
+                if (newQuantity <= 0) {
+                    await removeFromCart(cartItemId);
+                } else {
+                    const { error } = await supabase
+                        .from('cart_items')
+                        .update({ quantity: newQuantity })
+                        .eq('id', cartItemId);
+                    
+                    if (error) throw error;
+                }
+                
+                loadCustomerCart();
+                updateCustomerStats();
+            } catch (error) {
+                showNotification('Error', 'Failed to update cart', 'error');
+            }
+        }
+
+        // Remove from cart
+        async function removeFromCart(cartItemId) {
+            try {
+                const { error } = await supabase
+                    .from('cart_items')
+                    .delete()
+                    .eq('id', cartItemId);
+                
+                if (error) throw error;
+                
+                loadCustomerCart();
+                updateCustomerStats();
+                showNotification('Success', 'Item removed from cart', 'success');
+            } catch (error) {
+                showNotification('Error', 'Failed to remove item', 'error');
+            }
+        }
+
+        // Handle checkout
+        async function handleCheckout() {
+            try {
+                // Get cart items
+                const { data: cartItems, error } = await supabase
+                    .from('cart_items')
+                    .select(`
+                        *,
+                        products (*)
+                    `)
+                    .eq('user_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                if (!cartItems || cartItems.length === 0) {
+                    showNotification('Error', 'Your cart is empty', 'error');
+                    return;
+                }
+                
+                // Calculate total
+                let total = 0;
+                cartItems.forEach(item => {
+                    total += item.products.price * item.quantity;
+                });
+                
+                // Create order
+                const { data: order, error: orderError } = await supabase
+                    .from('orders')
+                    .insert([
+                        {
+                            customer_id: currentUser.id,
+                            total: total,
+                            status: 'pending'
+                        }
+                    ])
+                    .select()
+                    .single();
+                
+                if (orderError) throw orderError;
+                
+                // Create order items
+                const orderItems = cartItems.map(item => ({
+                    order_id: order.id,
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                    price: item.products.price
+                }));
+                
+                const { error: itemsError } = await supabase
+                    .from('order_items')
+                    .insert(orderItems);
+                
+                if (itemsError) throw itemsError;
+                
+                // Clear cart
+                const { error: clearError } = await supabase
+                    .from('cart_items')
+                    .delete()
+                    .eq('user_id', currentUser.id);
+                
+                if (clearError) throw clearError;
+                
+                // Update product stock
+                for (const item of cartItems) {
+                    const newStock = item.products.stock - item.quantity;
+                    const { error: stockError } = await supabase
+                        .from('products')
+                        .update({ stock: newStock })
+                        .eq('id', item.product_id);
+                    
+                    if (stockError) throw stockError;
+                }
+                
+                showNotification('Success', 'Order placed successfully!', 'success');
+                loadCustomerCart();
+                updateCustomerStats();
+                switchDashboardSection('orders');
+            } catch (error) {
+                showNotification('Error', 'Failed to place order: ' + error.message, 'error');
+            }
+        }
+
+        // Load seller data
+        async function loadSellerData() {
+            await updateSellerStats();
+            await loadSellerProducts();
+        }
+
+        // Update seller stats
+        async function updateSellerStats() {
+            try {
+                // Get seller products
+                const { data: products, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('seller_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                // Get seller orders
+                const { data: orders, error: ordersError } = await supabase
+                    .from('orders')
+                    .select(`
+                        *,
+                        order_items (
+                            *,
+                            products (
+                                seller_id
+                            )
+                        )
+                    `);
+                
+                if (ordersError) throw ordersError;
+                
+                // Filter orders for this seller
+                const sellerOrders = orders ? orders.filter(order => 
+                    order.order_items.some(item => item.products.seller_id === currentUser.id)
+                ) : [];
+                
+                const pendingOrders = sellerOrders.filter(order => order.status === 'pending' || order.status === 'accepted').length;
+                
+                // Calculate low stock products
+                const lowStock = products ? products.filter(product => product.stock < 10).length : 0;
+                
+                // Calculate revenue
+                let totalRevenue = 0;
+                let monthlyRevenue = 0;
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+                
+                sellerOrders.forEach(order => {
+                    const orderDate = new Date(order.created_at);
+                    if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+                        monthlyRevenue += order.total;
+                    }
+                    totalRevenue += order.total;
+                });
+                
+                const avgOrder = sellerOrders.length > 0 ? totalRevenue / sellerOrders.length : 0;
+                const conversion = products && products.length > 0 ? (sellerOrders.length / products.length * 100).toFixed(1) : 0;
+                
+                elements.sellerTotalProducts.textContent = products ? products.length : 0;
+                elements.sellerLowStock.textContent = lowStock;
+                elements.sellerTotalOrders.textContent = sellerOrders.length;
+                elements.sellerPendingOrders.textContent = pendingOrders;
+                elements.sellerTotalRevenue.textContent = Math.round(totalRevenue).toLocaleString();
+                elements.sellerMonthlyRevenue.textContent = Math.round(monthlyRevenue).toLocaleString();
+                elements.sellerAvgOrder.textContent = Math.round(avgOrder).toLocaleString();
+                elements.sellerConversion.textContent = conversion + '%';
+            } catch (error) {
+                console.error('Error updating seller stats:', error);
+            }
+        }
+
+        // Load seller products
+        async function loadSellerProducts() {
+            try {
+                const { data: products, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('seller_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                elements.sellerProductsGrid.innerHTML = '';
+                
+                if (!products || products.length === 0) {
+                    elements.sellerProductsGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column: 1 / -1;">
+                            <i class="fas fa-box-open"></i>
+                            <h3>No Products Yet</h3>
+                            <p>Add your first product to start selling.</p>
+                            <button class="btn btn-primary" style="margin-top: 20px;" onclick="switchDashboardSection('addProduct')">
+                                <i class="fas fa-plus"></i> Add Product
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image" style="background-image: url('${product.image_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}')">
+                            <div style="position: relative; z-index: 2; text-align: center;">
+                                <i class="fas fa-box" style="font-size: 48px; margin-bottom: 10px;"></i>
+                                <div>${product.category}</div>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h4>${product.name}</h4>
+                            <p>${product.description}</p>
+                            <div class="product-price">KSh ${product.price.toLocaleString()}</div>
+                            <div style="margin-top: 10px;">
+                                <span class="status-${product.stock > 10 ? 'delivered' : product.stock > 0 ? 'accepted' : 'cancelled'}">
+                                    Stock: ${product.stock}
+                                </span>
+                            </div>
+                            <div class="seller-product-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                                <button class="btn btn-outline btn-sm edit-product-btn" data-product-id="${product.id}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-outline btn-sm delete-product-btn" data-product-id="${product.id}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    elements.sellerProductsGrid.appendChild(productCard);
+                });
+                
+                // Add event listeners to product actions
+                document.querySelectorAll('.edit-product-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        editProduct(productId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-product-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        deleteProduct(productId);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading seller products:', error);
+                showNotification('Error', 'Failed to load products', 'error');
+            }
+        }
+
+        // Handle add product
+        async function handleAddProduct(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const stock = parseInt(document.getElementById('productStock').value);
+            const description = document.getElementById('productDescription').value;
+            const imageUrl = document.getElementById('productImage').value;
+            
+            if (!name || !price || !category || !stock || !description) {
+                showNotification('Error', 'Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (price < 0) {
+                showNotification('Error', 'Price must be a positive number', 'error');
+                return;
+            }
+            
+            if (stock < 0) {
+                showNotification('Error', 'Stock must be a positive number', 'error');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .insert([
+                        {
+                            name,
+                            price,
+                            category,
+                            stock,
+                            description,
+                            image_url: imageUrl || null,
+                            seller_id: currentUser.id
+                        }
+                    ])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                hideLoading();
+                showNotification('Success', 'Product added successfully!', 'success');
+                document.getElementById('addProductForm').reset();
+                loadSellerProducts();
+                updateSellerStats();
+                switchDashboardSection('sellerProducts');
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to add product: ' + error.message, 'error');
+            }
+        }
+
+        // Edit product
+        async function editProduct(productId) {
+            // In a real app, you would show a modal with the product details to edit
+            showNotification('Info', 'Edit functionality would open a form to modify the product', 'info');
+        }
+
+        // Delete product
+        async function deleteProduct(productId) {
+            if (!confirm('Are you sure you want to delete this product?')) {
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const { error } = await supabase
+                    .from('products')
+                    .delete()
+                    .eq('id', productId)
+                    .eq('seller_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                hideLoading();
+                showNotification('Success', 'Product deleted successfully!', 'success');
+                loadSellerProducts();
+                updateSellerStats();
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to delete product: ' + error.message, 'error');
+            }
+        }
+
+        // Load seller orders
+        async function loadSellerOrders() {
+            try {
+                const { data: orders, error } = await supabase
+                    .from('orders')
+                    .select(`
+                        *,
+                        order_items (
+                            *,
+                            products (
+                                seller_id,
+                                name
+                            )
+                        )
+                    `)
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                // Filter orders for this seller
+                const sellerOrders = orders ? orders.filter(order => 
+                    order.order_items.some(item => item.products.seller_id === currentUser.id)
+                ) : [];
+                
+                elements.sellerOrdersList.innerHTML = '';
+                
+                if (sellerOrders.length === 0) {
+                    elements.sellerOrdersList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>No Orders Yet</h3>
+                            <p>Orders from your products will appear here.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                sellerOrders.forEach(order => {
+                    // Calculate total for this seller's products in the order
+                    let sellerTotal = 0;
+                    order.order_items.forEach(item => {
+                        if (item.products.seller_id === currentUser.id) {
+                            sellerTotal += item.price * item.quantity;
+                        }
+                    });
+                    
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'order-item';
+                    orderCard.innerHTML = `
+                        <div class="order-item-info">
+                            <h4>Order #${order.id.substring(0, 8)}</h4>
+                            <p>Placed on ${new Date(order.created_at).toLocaleDateString()}</p>
+                            <p>Status: <span class="status-${order.status}">${order.status}</span></p>
+                        </div>
+                        <div class="order-item-total">
+                            <strong>KSh ${sellerTotal.toLocaleString()}</strong>
+                        </div>
+                    `;
+                    
+                    elements.sellerOrdersList.appendChild(orderCard);
+                });
+            } catch (error) {
+                console.error('Error loading seller orders:', error);
+                showNotification('Error', 'Failed to load orders', 'error');
+            }
+        }
+
+        // Load seller analytics
+        async function loadSellerAnalytics() {
+            // This would typically load more detailed analytics data
+            // For now, we'll just update the stats which are already loaded
+            updateSellerStats();
+        }
+
+        // Load seller profile
+        async function loadSellerProfile() {
+            try {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (error) throw error;
+                
+                document.getElementById('sellerProfileName').value = profile.name || '';
+                document.getElementById('sellerProfileEmail').value = currentUser.email;
+                document.getElementById('sellerProfilePhone').value = profile.phone || '';
+                document.getElementById('sellerProfileAddress').value = profile.address || '';
+            } catch (error) {
+                console.error('Error loading seller profile:', error);
+            }
+        }
+
+        // Save seller profile
+        async function saveSellerProfile() {
+            const name = document.getElementById('sellerProfileName').value;
+            const phone = document.getElementById('sellerProfilePhone').value;
+            const address = document.getElementById('sellerProfileAddress').value;
+            
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .update({
+                        name,
+                        phone,
+                        address
+                    })
+                    .eq('id', currentUser.id)
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                elements.sellerName.textContent = name;
+                elements.sellerAvatar.textContent = name.charAt(0).toUpperCase();
+                
+                showNotification('Success', 'Profile updated successfully!', 'success');
+            } catch (error) {
+                showNotification('Error', 'Failed to update profile: ' + error.message, 'error');
+            }
+        }
+
+        // Load rider data
+        async function loadRiderData() {
+            await updateRiderStats();
+            await loadAvailableDeliveries();
+        }
+
+        // Update rider stats
+        async function updateRiderStats() {
+            try {
+                // Get rider's deliveries
+                const { data: deliveries, error } = await supabase
+                    .from('deliveries')
+                    .select('*')
+                    .eq('rider_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                const available = 5; // Mock data
+                const active = deliveries ? deliveries.filter(d => d.status === 'accepted').length : 0;
+                const completedToday = deliveries ? deliveries.filter(d => {
+                    const deliveryDate = new Date(d.updated_at);
+                    const today = new Date();
+                    return d.status === 'delivered' && 
+                           deliveryDate.getDate() === today.getDate() &&
+                           deliveryDate.getMonth() === today.getMonth() &&
+                           deliveryDate.getFullYear() === today.getFullYear();
+                }).length : 0;
+                
+                // Mock earnings data
+                const todayEarnings = 1250;
+                const weekEarnings = 8750;
+                const monthEarnings = 32500;
+                
+                elements.availableDeliveries.textContent = available;
+                elements.activeDeliveries.textContent = active;
+                elements.completedDeliveries.textContent = completedToday;
+                elements.riderRating.textContent = '4.8';
+                elements.todayEarnings.textContent = todayEarnings.toLocaleString();
+                elements.weekEarnings.textContent = weekEarnings.toLocaleString();
+                elements.monthEarnings.textContent = monthEarnings.toLocaleString();
+                elements.totalDeliveries.textContent = deliveries ? deliveries.length : 0;
+            } catch (error) {
+                console.error('Error updating rider stats:', error);
+            }
+        }
+
+        // Load available deliveries
+        async function loadAvailableDeliveries() {
+            try {
+                // In a real app, this would fetch deliveries that need a rider
+                // For now, we'll use mock data
+                const mockDeliveries = [
+                    {
+                        id: '1',
+                        pickup_address: 'Westlands, Nairobi',
+                        delivery_address: 'Kilimani, Nairobi',
+                        distance: '5.2 km',
+                        fee: 250,
+                        urgency: 'Standard'
+                    },
+                    {
+                        id: '2',
+                        pickup_address: 'CBD, Nairobi',
+                        delivery_address: 'Karen, Nairobi',
+                        distance: '12.7 km',
+                        fee: 450,
+                        urgency: 'Express'
+                    },
+                    {
+                        id: '3',
+                        pickup_address: 'Kileleshwa, Nairobi',
+                        delivery_address: 'Parklands, Nairobi',
+                        distance: '3.8 km',
+                        fee: 200,
+                        urgency: 'Standard'
+                    }
+                ];
+                
+                elements.availableDeliveriesList.innerHTML = '';
+                
+                if (mockDeliveries.length === 0) {
+                    elements.availableDeliveriesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-truck"></i>
+                            <h3>No Available Deliveries</h3>
+                            <p>Check back later for new delivery requests.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                mockDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status status-${delivery.urgency === 'Express' ? 'accepted' : 'pending'}">
+                                ${delivery.urgency}
+                            </span>
+                        </div>
+                        <div class="delivery-details">
+                            <p><strong>From:</strong> ${delivery.pickup_address}</p>
+                            <p><strong>To:</strong> ${delivery.delivery_address}</p>
+                            <p><strong>Distance:</strong> ${delivery.distance}</p>
+                            <p><strong>Fee:</strong> KSh ${delivery.fee}</p>
+                        </div>
+                        <div class="delivery-actions" style="margin-top: 15px;">
+                            <button class="btn btn-primary btn-sm accept-delivery-btn" data-delivery-id="${delivery.id}">
+                                <i class="fas fa-check"></i> Accept Delivery
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.availableDeliveriesList.appendChild(deliveryCard);
+                });
+                
+                // Add event listeners to accept delivery buttons
+                document.querySelectorAll('.accept-delivery-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deliveryId = this.getAttribute('data-delivery-id');
+                        acceptDelivery(deliveryId);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading available deliveries:', error);
+                showNotification('Error', 'Failed to load deliveries', 'error');
+            }
+        }
+
+        // Load my deliveries
+        async function loadMyDeliveries() {
+            try {
+                // In a real app, this would fetch deliveries assigned to the current rider
+                // For now, we'll use mock data
+                const mockMyDeliveries = [
+                    {
+                        id: '4',
+                        pickup_address: 'Lavington, Nairobi',
+                        delivery_address: 'CBD, Nairobi',
+                        distance: '6.3 km',
+                        fee: 300,
+                        status: 'accepted',
+                        customer_name: 'John Doe',
+                        customer_phone: '+254 712 345 678'
+                    }
+                ];
+                
+                elements.myDeliveriesList.innerHTML = '';
+                
+                if (mockMyDeliveries.length === 0) {
+                    elements.myDeliveriesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-truck"></i>
+                            <h3>No Active Deliveries</h3>
+                            <p>You don't have any active deliveries at the moment.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                mockMyDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status status-${delivery.status}">
+                                ${delivery.status}
+                            </span>
+                        </div>
+                        <div class="delivery-details">
+                            <p><strong>From:</strong> ${delivery.pickup_address}</p>
+                            <p><strong>To:</strong> ${delivery.delivery_address}</p>
+                            <p><strong>Distance:</strong> ${delivery.distance}</p>
+                            <p><strong>Fee:</strong> KSh ${delivery.fee}</p>
+                            <p><strong>Customer:</strong> ${delivery.customer_name} (${delivery.customer_phone})</p>
+                        </div>
+                        <div class="delivery-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                            <button class="btn btn-primary btn-sm update-delivery-btn" data-delivery-id="${delivery.id}" data-status="picked_up">
+                                <i class="fas fa-box"></i> Mark as Picked Up
+                            </button>
+                            <button class="btn btn-secondary btn-sm update-delivery-btn" data-delivery-id="${delivery.id}" data-status="delivered">
+                                <i class="fas fa-check-circle"></i> Mark as Delivered
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.myDeliveriesList.appendChild(deliveryCard);
+                });
+                
+                // Add event listeners to update delivery buttons
+                document.querySelectorAll('.update-delivery-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deliveryId = this.getAttribute('data-delivery-id');
+                        const status = this.getAttribute('data-status');
+                        updateDeliveryStatus(deliveryId, status);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading my deliveries:', error);
+                showNotification('Error', 'Failed to load deliveries', 'error');
+            }
+        }
+
+        // Load rider earnings
+        async function loadRiderEarnings() {
+            try {
+                // Mock earnings history
+                const earningsHistory = [
+                    { date: '2025-01-15', amount: 1250, deliveries: 5 },
+                    { date: '2025-01-14', amount: 980, deliveries: 4 },
+                    { date: '2025-01-13', amount: 1120, deliveries: 4 },
+                    { date: '2025-01-12', amount: 1560, deliveries: 6 },
+                    { date: '2025-01-11', amount: 890, deliveries: 3 }
+                ];
+                
+                elements.riderEarningsHistory.innerHTML = '';
+                
+                earningsHistory.forEach(earning => {
+                    const earningItem = document.createElement('div');
+                    earningItem.className = 'earning-item';
+                    earningItem.style.cssText = 'display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);';
+                    earningItem.innerHTML = `
+                        <div>
+                            <strong>${new Date(earning.date).toLocaleDateString()}</strong>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">${earning.deliveries} deliveries</div>
+                        </div>
+                        <div style="font-weight: bold;">KSh ${earning.amount.toLocaleString()}</div>
+                    `;
+                    
+                    elements.riderEarningsHistory.appendChild(earningItem);
+                });
+            } catch (error) {
+                console.error('Error loading rider earnings:', error);
+            }
+        }
+
+        // Load rider profile
+        async function loadRiderProfile() {
+            try {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (error) throw error;
+                
+                document.getElementById('riderProfileName').value = profile.name || '';
+                document.getElementById('riderProfileEmail').value = currentUser.email;
+                document.getElementById('riderProfilePhone').value = profile.phone || '';
+                document.getElementById('riderVehicle').value = profile.vehicle || 'motorcycle';
+                document.getElementById('riderLicense').value = profile.license || '';
+            } catch (error) {
+                console.error('Error loading rider profile:', error);
+            }
+        }
+
+        // Save rider profile
+        async function saveRiderProfile() {
+            const name = document.getElementById('riderProfileName').value;
+            const phone = document.getElementById('riderProfilePhone').value;
+            const vehicle = document.getElementById('riderVehicle').value;
+            const license = document.getElementById('riderLicense').value;
+            
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .update({
+                        name,
+                        phone,
+                        vehicle,
+                        license
+                    })
+                    .eq('id', currentUser.id)
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                elements.riderName.textContent = name;
+                elements.riderAvatar.textContent = name.charAt(0).toUpperCase();
+                
+                showNotification('Success', 'Profile updated successfully!', 'success');
+            } catch (error) {
+                showNotification('Error', 'Failed to update profile: ' + error.message, 'error');
+            }
+        }
+
+        // Accept delivery
+        async function acceptDelivery(deliveryId) {
+            showLoading();
+            
+            try {
+                // In a real app, this would update the delivery record in the database
+                // For now, we'll simulate the action
+                setTimeout(() => {
+                    hideLoading();
+                    showNotification('Success', 'Delivery accepted successfully!', 'success');
+                    loadAvailableDeliveries();
+                    updateRiderStats();
+                    switchDashboardSection('myDeliveries');
+                }, 1000);
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to accept delivery', 'error');
+            }
+        }
+
+        // Update delivery status
+        async function updateDeliveryStatus(deliveryId, status) {
+            showLoading();
+            
+            try {
+                // In a real app, this would update the delivery record in the database
+                // For now, we'll simulate the action
+                setTimeout(() => {
+                    hideLoading();
+                    
+                    let message = '';
+                    if (status === 'picked_up') {
+                        message = 'Delivery marked as picked up!';
+                    } else if (status === 'delivered') {
+                        message = 'Delivery marked as delivered!';
+                    }
+                    
+                    showNotification('Success', message, 'success');
+                    loadMyDeliveries();
+                    updateRiderStats();
+                    
+                    if (status === 'delivered') {
+                        switchDashboardSection('availableDeliveries');
+                    }
+                }, 1000);
+            } catch (error) {
+                hideLoading();
+                showNotification('Error', 'Failed to update delivery status', 'error');
+            }
+        }
+
+        // Handle contact form
+        async function handleContactForm(e) {
+            e.preventDefault();
+            
+            // In a real app, this would send the form data to a server
+            // For now, we'll just show a success message
+            showNotification('Success', 'Your message has been sent! We will get back to you soon.', 'success');
+            e.target.reset();
         }
 
         // Initialize sample data
