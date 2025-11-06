@@ -10,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
+            --primary: #FF6B00;
+            --secondary: #00A859;
             --success: #00B894;
             --warning: #FBC531;
             --danger: #E84118;
@@ -75,17 +75,20 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-icon {
-            color: white;
+            color: var(--primary);
             font-size: 28px;
         }
 
         .logo-text {
             font-size: 28px;
             font-weight: 800;
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .admin-nav {
@@ -101,6 +104,7 @@
             color: white;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 14px;
         }
 
         .nav-btn:hover, .nav-btn.active {
@@ -115,6 +119,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            background: var(--gradient);
         }
 
         .login-box {
@@ -126,16 +131,24 @@
             max-width: 400px;
             border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
+            text-align: center;
         }
 
         .login-title {
-            text-align: center;
             margin-bottom: 30px;
             font-size: 2rem;
         }
 
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .form-control {
@@ -152,7 +165,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
         }
 
         /* GitHub Optimized Dropdowns */
@@ -180,23 +193,33 @@
             transition: all 0.3s;
             border: none;
             font-size: 16px;
-            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #FF8C00);
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
         }
 
         .btn-primary:hover {
-            background: #5a6fd8;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-block {
+            width: 100%;
         }
 
         /* Dashboard */
         .admin-dashboard {
             padding: 40px 0;
             display: none;
+            min-height: 100vh;
+            background: var(--gradient);
         }
 
         .stats-grid {
@@ -224,7 +247,9 @@
         .stat-value {
             font-size: 2.5rem;
             font-weight: 800;
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
 
@@ -305,6 +330,9 @@
             cursor: pointer;
             font-size: 12px;
             margin: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .btn-success { background: var(--success); color: white; }
@@ -355,7 +383,9 @@
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 40px;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .spinner {
@@ -406,9 +436,10 @@
         /* GitHub Footer */
         .github-footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             color: rgba(255, 255, 255, 0.7);
             margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .github-link {
@@ -417,10 +448,24 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-weight: 600;
         }
 
         .github-link:hover {
             color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            margin-bottom: 25px;
+            opacity: 0.5;
         }
 
         /* Responsive */
@@ -451,11 +496,16 @@
                 flex-direction: column;
                 gap: 15px;
             }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 480px) {
             .login-box {
-                padding: 20px;
+                padding: 30px 20px;
             }
             
             .stat-card {
@@ -465,6 +515,11 @@
             .chart-container {
                 padding: 20px;
             }
+            
+            .table-header, .table-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -472,23 +527,29 @@
     <!-- Login Page -->
     <div id="loginPage" class="login-container">
         <div class="login-box">
+            <div class="logo" style="justify-content: center; margin-bottom: 30px;">
+                <i class="fas fa-truck-fast logo-icon"></i>
+                <span class="logo-text">IPATE Deliveries</span>
+            </div>
             <h1 class="login-title">
                 <i class="fas fa-crown"></i><br>
-                IPATE Admin
+                Admin Portal
             </h1>
             <form id="adminLoginForm">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="adminUsername" placeholder="Admin Username" value="admin" required>
+                    <label for="adminUsername"><i class="fas fa-user"></i> Admin Username</label>
+                    <input type="text" class="form-control" id="adminUsername" placeholder="Enter admin username" value="admin" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="adminPassword" placeholder="Password" value="admin123" required>
+                    <label for="adminPassword"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" class="form-control" id="adminPassword" placeholder="Enter password" value="admin123" required>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary btn-block">
                     <i class="fas fa-sign-in-alt"></i> Access Admin Panel
                 </button>
             </form>
-            <div style="text-align: center; margin-top: 20px; color: rgba(255,255,255,0.7);">
-                <small>IPATE Deliveries - GitHub Hosted Admin</small>
+            <div style="text-align: center; margin-top: 25px; color: rgba(255,255,255,0.7);">
+                <small>IPATE Deliveries - Secure Admin Access</small>
             </div>
         </div>
     </div>
@@ -499,8 +560,8 @@
         <header class="admin-header">
             <div class="container">
                 <div class="header-content">
-                    <div class="logo">
-                        <i class="fas fa-crown logo-icon"></i>
+                    <div class="logo" onclick="window.location.href = 'index.html'">
+                        <i class="fas fa-truck-fast logo-icon"></i>
                         <span class="logo-text">IPATE Admin</span>
                     </div>
                     <div class="admin-nav">
@@ -518,8 +579,11 @@
                         </button>
                     </div>
                     <div style="color: white; display: flex; align-items: center; gap: 15px;">
-                        <span id="adminGreeting">Welcome, Admin</span>
-                        <button class="nav-btn" onclick="adminLogout()">
+                        <div style="text-align: right;">
+                            <div id="adminGreeting" style="font-weight: 600;">Welcome, Admin</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Platform Administrator</div>
+                        </div>
+                        <button class="nav-btn" onclick="adminLogout()" style="background: rgba(255,255,255,0.1);">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
                     </div>
@@ -531,7 +595,7 @@
         <div class="container">
             <!-- Overview Section -->
             <div id="overviewSection" class="dashboard-section active">
-                <h2 style="color: white; margin-bottom: 30px;">Platform Overview</h2>
+                <h2 style="color: white; margin-bottom: 30px; text-align: center;">Platform Overview Dashboard</h2>
                 
                 <!-- Quick Actions -->
                 <div class="quick-actions">
@@ -588,7 +652,7 @@
                 <!-- Platform Analytics -->
                 <div class="chart-container">
                     <h3 style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                        <span>Platform Analytics</span>
+                        <span><i class="fas fa-chart-line"></i> Platform Analytics</span>
                         <select class="form-control filter-select" style="width: auto; min-width: 150px;" onchange="loadAnalytics(this.value)">
                             <option value="7days">Last 7 Days</option>
                             <option value="30days">Last 30 Days</option>
@@ -604,7 +668,7 @@
 
                 <!-- Recent Activity -->
                 <div class="chart-container">
-                    <h3 style="margin-bottom: 20px;">Recent Platform Activity</h3>
+                    <h3 style="margin-bottom: 20px;"><i class="fas fa-clock"></i> Recent Platform Activity</h3>
                     <div class="data-table">
                         <div class="table-header">
                             <div>User</div>
@@ -616,6 +680,7 @@
                         <div id="recentActivity">
                             <div class="loading-spinner">
                                 <div class="spinner"></div>
+                                <p>Loading recent activity...</p>
                             </div>
                         </div>
                     </div>
@@ -624,7 +689,7 @@
 
             <!-- Users Management Section -->
             <div id="usersSection" class="dashboard-section">
-                <h2 style="color: white; margin-bottom: 20px;">User Management</h2>
+                <h2 style="color: white; margin-bottom: 20px;"><i class="fas fa-users"></i> User Management</h2>
                 
                 <div class="admin-toolbar">
                     <div class="search-box">
@@ -658,6 +723,7 @@
                     <div id="usersTableBody">
                         <div class="loading-spinner">
                             <div class="spinner"></div>
+                            <p>Loading users...</p>
                         </div>
                     </div>
                 </div>
@@ -665,7 +731,7 @@
 
             <!-- Orders Management Section -->
             <div id="ordersSection" class="dashboard-section">
-                <h2 style="color: white; margin-bottom: 20px;">Order Management</h2>
+                <h2 style="color: white; margin-bottom: 20px;"><i class="fas fa-shopping-cart"></i> Order Management</h2>
                 
                 <div class="admin-toolbar">
                     <div class="search-box">
@@ -698,6 +764,7 @@
                     <div id="ordersTableBody">
                         <div class="loading-spinner">
                             <div class="spinner"></div>
+                            <p>Loading orders...</p>
                         </div>
                     </div>
                 </div>
@@ -705,7 +772,7 @@
 
             <!-- Verification Center Section -->
             <div id="verificationSection" class="dashboard-section">
-                <h2 style="color: white; margin-bottom: 20px;">Verification Center</h2>
+                <h2 style="color: white; margin-bottom: 20px;"><i class="fas fa-shield-alt"></i> Verification Center</h2>
                 
                 <div class="admin-toolbar">
                     <select class="form-control filter-select" id="verificationTypeFilter">
@@ -734,6 +801,7 @@
                     <div id="verificationTableBody">
                         <div class="loading-spinner">
                             <div class="spinner"></div>
+                            <p>Loading verifications...</p>
                         </div>
                     </div>
                 </div>
@@ -743,7 +811,7 @@
         <!-- GitHub Footer -->
         <footer class="github-footer">
             <p>
-                <a href="https://github.com/yourusername/ipate-deliveries" class="github-link" target="_blank">
+                <a href="https://github.com/meltondelivery/ipate-deliveries" class="github-link" target="_blank">
                     <i class="fab fa-github"></i>
                     View on GitHub
                 </a>
@@ -751,22 +819,25 @@
             <p style="margin-top: 10px; font-size: 0.9em;">
                 IPATE Deliveries Admin Panel - Hosted on GitHub Pages
             </p>
+            <p style="margin-top: 5px; font-size: 0.8em; opacity: 0.7;">
+                &copy; 2024 IPATE Deliveries. All rights reserved.
+            </p>
         </footer>
     </div>
 
     <script>
-        // Supabase Configuration
+        // Supabase Configuration - Using your existing Supabase
         const SUPABASE_URL = 'https://xbwvsswycdskxkorharu.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
 
         // Initialize Supabase
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // GitHub Optimized Admin Configuration
+        // Admin Configuration
         const ADMIN_CREDENTIALS = {
             username: "admin",
             password: "admin123",
-            name: "GitHub Admin"
+            name: "Platform Admin"
         };
 
         // Admin State
@@ -774,7 +845,7 @@
 
         // Initialize Admin System
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 IPATE GitHub Admin Panel Initializing...');
+            console.log('🚀 IPATE Admin Panel Initializing...');
             initializeAdminSystem();
         });
 
@@ -788,6 +859,7 @@
                     showAdminDashboard();
                 } else {
                     localStorage.removeItem('ipateAdminSession');
+                showNotification('Info', 'Session expired. Please login again.', 'info');
                 }
             }
 
@@ -823,7 +895,7 @@
             const username = document.getElementById('adminUsername').value;
             const password = document.getElementById('adminPassword').value;
 
-            // GitHub compatible authentication
+            // Simple authentication for GitHub Pages
             if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
                 // Create admin session
                 const session = {
@@ -835,7 +907,7 @@
                 
                 isAdminLoggedIn = true;
                 showAdminDashboard();
-                showNotification('Success', 'Welcome to IPATE Admin!', 'success');
+                showNotification('Success', 'Welcome to IPATE Admin Panel!', 'success');
             } else {
                 showNotification('Error', 'Invalid admin credentials!', 'error');
             }
@@ -938,7 +1010,13 @@
                 const activityContainer = document.getElementById('recentActivity');
                 
                 if (!activities || activities.length === 0) {
-                    activityContainer.innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">No recent activity</div></div>';
+                    activityContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-clock"></i>
+                            <h3>No Recent Activity</h3>
+                            <p>User activities will appear here</p>
+                        </div>
+                    `;
                     return;
                 }
 
@@ -959,7 +1037,13 @@
 
             } catch (error) {
                 console.error('Error loading recent activity:', error);
-                document.getElementById('recentActivity').innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">Error loading activity</div></div>';
+                document.getElementById('recentActivity').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Activity</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
             }
         }
 
@@ -1005,7 +1089,13 @@
                 const tableBody = document.getElementById('usersTableBody');
                 
                 if (!filteredUsers || filteredUsers.length === 0) {
-                    tableBody.innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">No users found</div></div>';
+                    tableBody.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <h3>No Users Found</h3>
+                            <p>Try adjusting your search criteria</p>
+                        </div>
+                    `;
                     return;
                 }
 
@@ -1042,7 +1132,13 @@
 
             } catch (error) {
                 console.error('Error loading users:', error);
-                document.getElementById('usersTableBody').innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">Error loading users</div></div>';
+                document.getElementById('usersTableBody').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Users</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
                 showNotification('Error', 'Failed to load users', 'error');
             }
         }
@@ -1083,7 +1179,13 @@
                 const tableBody = document.getElementById('ordersTableBody');
                 
                 if (!filteredOrders || filteredOrders.length === 0) {
-                    tableBody.innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">No orders found</div></div>';
+                    tableBody.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>No Orders Found</h3>
+                            <p>Try adjusting your search criteria</p>
+                        </div>
+                    `;
                     return;
                 }
 
@@ -1113,7 +1215,13 @@
 
             } catch (error) {
                 console.error('Error loading orders:', error);
-                document.getElementById('ordersTableBody').innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">Error loading orders</div></div>';
+                document.getElementById('ordersTableBody').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Orders</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
                 showNotification('Error', 'Failed to load orders', 'error');
             }
         }
@@ -1146,7 +1254,13 @@
                 const tableBody = document.getElementById('verificationTableBody');
                 
                 if (!users || users.length === 0) {
-                    tableBody.innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">No verifications found</div></div>';
+                    tableBody.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>No Verifications Found</h3>
+                            <p>No pending verifications at the moment</p>
+                        </div>
+                    `;
                     return;
                 }
 
@@ -1176,7 +1290,13 @@
 
             } catch (error) {
                 console.error('Error loading verifications:', error);
-                document.getElementById('verificationTableBody').innerHTML = '<div class="table-row"><div style="text-align: center; grid-column: 1 / -1;">Error loading verifications</div></div>';
+                document.getElementById('verificationTableBody').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Verifications</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
                 showNotification('Error', 'Failed to load verifications', 'error');
             }
         }
@@ -1319,7 +1439,7 @@
         function showLoading(elementId) {
             const element = document.getElementById(elementId);
             if (element) {
-                element.innerHTML = '<div class="loading-spinner"><div class="spinner"></div></div>';
+                element.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Loading...</p></div>';
             }
         }
 
