@@ -758,8 +758,6 @@
             font-weight: bold;
             font-size: 18px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            background-size: cover;
-            background-position: center;
         }
 
         .dashboard-content {
@@ -831,8 +829,6 @@
             align-items: center;
             justify-content: center;
             color: white;
-            background-size: cover;
-            background-position: center;
             position: relative;
         }
 
@@ -935,46 +931,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dashboard Navigation */
-        .dashboard-nav-links {
-            display: flex;
-            gap: 15px;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-
-        .dashboard-nav-link {
-            padding: 12px 24px;
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 12px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .dashboard-nav-link:hover, .dashboard-nav-link.active {
-            background: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 80px 30px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .empty-state i {
-            font-size: 80px;
-            margin-bottom: 25px;
-            opacity: 0.5;
-        }
-
         /* Loading Spinner */
         .loading-spinner {
             display: none;
@@ -1006,410 +962,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* Seller Dashboard Styles */
-        .seller-actions {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .product-form {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-        }
-
-        .product-form h3 {
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Rider Dashboard Styles */
-        .delivery-card {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .delivery-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .delivery-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .delivery-status {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background: rgba(251, 197, 49, 0.2);
-            color: var(--warning);
-        }
-
-        .status-accepted {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-
-        .status-picked_up {
-            background: rgba(116, 185, 255, 0.2);
-            color: var(--info);
-        }
-
-        .status-delivered {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-
-        .status-cancelled {
-            background: rgba(232, 65, 24, 0.2);
-            color: var(--danger);
-        }
-
-        /* Legal Pages */
-        .legal-page {
-            padding: 120px 0 80px;
-            color: white;
-        }
-
-        .legal-content {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .legal-content h1 {
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .legal-content h2 {
-            margin: 30px 0 15px;
-            color: white;
-        }
-
-        .legal-content p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .legal-content ul {
-            margin-bottom: 15px;
-            padding-left: 20px;
-        }
-
-        .legal-content li {
-            margin-bottom: 8px;
-        }
-
-        /* Contact Page */
-        .contact-page {
-            padding: 120px 0 80px;
-            color: white;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .contact-info {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .contact-form {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        /* Chat Styles */
-        .chat-container {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 10px;
-        }
-
-        .chat-message {
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 15px;
-            max-width: 80%;
-        }
-
-        .message-sender {
-            background: var(--gradient-primary);
-            margin-left: auto;
-        }
-
-        .message-receiver {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .chat-input {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Verification Progress */
-        .verification-steps {
-            margin: 30px 0;
-        }
-
-        .verification-step {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-        }
-
-        .step-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            font-size: 20px;
-        }
-
-        .step-completed .step-icon {
-            background: var(--success);
-        }
-
-        .step-active .step-icon {
-            background: var(--primary);
-        }
-
-        .step-info {
-            flex: 1;
-        }
-
-        .step-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .step-description {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .step-status {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-completed {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-
-        .status-pending {
-            background: rgba(251, 197, 49, 0.2);
-            color: var(--warning);
-        }
-
-        .status-active {
-            background: rgba(255, 107, 0, 0.2);
-            color: var(--primary);
-        }
-
-        /* Order Tracking */
-        .order-tracking {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .tracking-steps {
-            display: flex;
-            justify-content: space-between;
-            margin: 30px 0;
-            position: relative;
-        }
-
-        .tracking-steps::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: 1;
-        }
-
-        .tracking-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-indicator {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-        }
-
-        .step-active .step-indicator {
-            background: var(--primary);
-            box-shadow: 0 0 0 8px rgba(255, 107, 0, 0.2);
-        }
-
-        .step-completed .step-indicator {
-            background: var(--success);
-        }
-
-        .step-label {
-            font-size: 14px;
-            text-align: center;
-        }
-
-        /* Map Container */
-        .map-container {
-            height: 400px;
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            overflow: hidden;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 480px) {
-            .modal-content {
-                padding: 25px;
-            }
-
-            .auth-tab {
-                padding: 12px 20px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .tracking-steps {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .tracking-steps::before {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1422,63 +974,64 @@
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
-        <div class="notification-content">
-            <h4>Success!</h4>
-            <p>Operation completed successfully</p>
+        <div>
+            <h4 id="notificationTitle">Success</h4>
+            <p id="notificationMessage">Operation completed successfully</p>
         </div>
     </div>
 
-    <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo" onclick="showPage('home')">
-                    <i class="fas fa-shipping-fast logo-icon"></i>
-                    <span class="logo-text">IPATE Deliveries</span>
+    <!-- Landing Page -->
+    <div class="page active" id="landingPage">
+        <!-- Header -->
+        <header id="mainHeader">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo" onclick="showPage('landingPage')">
+                        <i class="fas fa-truck-fast logo-icon"></i>
+                        <span class="logo-text">IPATE Deliveries</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a onclick="showPage('landingPage')">Home</a>
+                        <a onclick="scrollToSection('features')">Features</a>
+                        <a onclick="showPage('aboutPage')">About</a>
+                        <a onclick="showPage('contactPage')">Contact</a>
+                    </nav>
+                    <div class="auth-buttons" id="authButtons">
+                        <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
+                        <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
-                <div class="nav-links">
-                    <a onclick="showPage('home')">Home</a>
-                    <a onclick="showPage('services')">Services</a>
-                    <a onclick="showPage('about')">About</a>
-                    <a onclick="showPage('contact')">Contact</a>
-                </div>
-                <div class="auth-buttons">
-                    <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
-                    <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
-                </div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-nav-links">
+                <a onclick="showPage('landingPage'); hideMobileMenu()">Home</a>
+                <a onclick="scrollToSection('features'); hideMobileMenu()">Features</a>
+                <a onclick="showPage('aboutPage'); hideMobileMenu()">About</a>
+                <a onclick="showPage('contactPage'); hideMobileMenu()">Contact</a>
+            </div>
+            <div class="mobile-auth-buttons" id="mobileAuthButtons">
+                <button class="btn btn-outline btn-block" onclick="showAuthModal(); hideMobileMenu()">Login</button>
+                <button class="btn btn-primary btn-block" onclick="showAuthModal(); hideMobileMenu()">Sign Up</button>
             </div>
         </div>
-    </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-nav-links">
-            <a onclick="showPage('home'); toggleMobileMenu()">Home</a>
-            <a onclick="showPage('services'); toggleMobileMenu()">Services</a>
-            <a onclick="showPage('about'); toggleMobileMenu()">About</a>
-            <a onclick="showPage('contact'); toggleMobileMenu()">Contact</a>
-        </div>
-        <div class="mobile-auth-buttons">
-            <button class="btn btn-outline btn-block" onclick="showAuthModal(); toggleMobileMenu()">Login</button>
-            <button class="btn btn-primary btn-block" onclick="showAuthModal(); toggleMobileMenu()">Sign Up</button>
-        </div>
-    </div>
-
-    <!-- Home Page -->
-    <div class="page active" id="home-page">
+        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>Fast & Reliable Delivery in Nairobi</h1>
-                    <p>Get your packages delivered quickly and safely with our network of verified riders. From food to documents, we've got you covered.</p>
+                    <h1>Fast & Reliable Deliveries in Nairobi</h1>
+                    <p>Get your goods delivered quickly and safely with our trusted network of verified riders. From food to documents, we've got you covered.</p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary btn-large" onclick="showAuthModal()">
-                            <i class="fas fa-shipping-fast"></i> Start Delivering
+                            <i class="fas fa-rocket"></i> Get Started Now
                         </button>
-                        <button class="btn btn-outline btn-large" onclick="showPage('services')">
+                        <button class="btn btn-outline btn-large" onclick="scrollToSection('features')">
                             <i class="fas fa-info-circle"></i> Learn More
                         </button>
                     </div>
@@ -1486,88 +1039,75 @@
             </div>
         </section>
 
-        <section class="features">
+        <!-- Features Section -->
+        <section class="features" id="features">
             <div class="container">
                 <h2 class="section-title">Why Choose IPATE Deliveries?</h2>
-                <p class="section-subtitle">We provide a comprehensive delivery solution that connects customers, sellers, and riders seamlessly.</p>
-                
+                <p class="section-subtitle">We provide the fastest, most reliable delivery service in Nairobi with cutting-edge technology and dedicated professionals.</p>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
+                        <i class="fas fa-bolt feature-icon"></i>
                         <h3>Lightning Fast</h3>
-                        <p>Get your deliveries completed in record time with our optimized routing and verified rider network.</p>
+                        <p>Our riders are strategically located across Nairobi to ensure your deliveries arrive in record time.</p>
                     </div>
-                    
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Fully Verified</h3>
-                        <p>All our sellers and riders go through a rigorous verification process to ensure safety and reliability.</p>
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h3>Secure & Safe</h3>
+                        <p>All our riders are verified and your items are insured for complete peace of mind.</p>
                     </div>
-                    
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
+                        <i class="fas fa-map-marker-alt feature-icon"></i>
                         <h3>Real-Time Tracking</h3>
-                        <p>Track your deliveries in real-time with live GPS updates and estimated arrival times.</p>
+                        <p>Track your delivery in real-time from pickup to drop-off with our advanced tracking system.</p>
                     </div>
-                    
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <h3>Secure Payments</h3>
-                        <p>Multiple payment options including M-PESA, cards, and cash on delivery with full transaction security.</p>
+                        <i class="fas fa-money-bill-wave feature-icon"></i>
+                        <h3>Affordable Pricing</h3>
+                        <p>Competitive pricing with no hidden fees. Pay only for the distance your delivery travels.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Testimonials Section -->
         <section class="testimonials">
             <div class="container">
-                <h2 class="section-title">What Our Users Say</h2>
-                <p class="section-subtitle">Hear from customers, sellers, and riders who use our platform daily.</p>
-                
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Hear from our satisfied customers, sellers, and riders about their experience with IPATE Deliveries.</p>
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "As a small business owner, IPATE Deliveries has transformed how I serve my customers. The verification system gives me peace of mind, and the real-time tracking keeps everyone informed."
+                            "IPATE Deliveries has revolutionized how I run my small business. My products reach customers faster than ever before!"
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">JK</div>
+                            <div class="author-avatar">S</div>
                             <div class="author-info">
-                                <h4>Jane Kariuki</h4>
-                                <p>Boutique Owner, Westlands</p>
+                                <h4>Sarah Kimani</h4>
+                                <p>Small Business Owner</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "The rider verification process was thorough but straightforward. Now I earn a steady income delivering packages around Nairobi. The app is easy to use and payments are always on time."
+                            "As a rider, I love the flexibility and fair earnings. The app makes it easy to manage deliveries and track my income."
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">DM</div>
+                            <div class="author-avatar">J</div>
                             <div class="author-info">
-                                <h4>David Mwangi</h4>
-                                <p>Verified Rider, 6 months</p>
+                                <h4>John Otieno</h4>
+                                <p>Delivery Rider</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "I use IPATE Deliveries for both my business and personal needs. The platform is reliable, the riders are professional, and I love being able to track my deliveries in real-time."
+                            "The real-time tracking feature gives me peace of mind. I always know exactly when my delivery will arrive."
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">SO</div>
+                            <div class="author-avatar">M</div>
                             <div class="author-info">
-                                <h4>Sarah Ochieng</h4>
-                                <p>Regular Customer, Kilimani</p>
+                                <h4>Mary Wanjiku</h4>
+                                <p>Regular Customer</p>
                             </div>
                         </div>
                     </div>
@@ -1575,1442 +1115,252 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
         <section class="faq-section">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-subtitle">Find answers to common questions about our delivery platform.</p>
-                
+                <p class="section-subtitle">Find answers to the most common questions about our delivery services.</p>
                 <div class="faq-container">
                     <div class="faq-item">
                         <div class="faq-question">
-                            How does the verification process work?
+                            How fast can I get my delivery?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            Our verification process is comprehensive and ensures the safety of all platform users. For sellers, we verify business registration, tax compliance, and physical location. For riders, we verify identity, driving credentials, and vehicle documentation. The process typically takes 2-5 business days.
+                            Most deliveries within Nairobi are completed within 1-3 hours, depending on distance and traffic conditions. We offer express delivery options for urgent packages.
                         </div>
                     </div>
-                    
                     <div class="faq-item">
                         <div class="faq-question">
-                            What areas do you serve in Nairobi?
+                            What areas do you serve?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            We currently serve all major areas in Nairobi including CBD, Westlands, Kilimani, Karen, Lavington, Parklands, and surrounding neighborhoods. Our coverage is expanding weekly as we onboard more verified riders.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            How are delivery fees calculated?
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Delivery fees are calculated based on distance, package size/weight, and delivery urgency. Our algorithm considers real-time traffic conditions to provide the most accurate pricing. You'll see the exact fee before confirming your order.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            What payment methods do you accept?
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            We accept M-PESA, credit/debit cards, and cash on delivery. All digital payments are processed securely through encrypted channels. For business accounts, we also offer invoicing and bank transfer options.
+                            We currently serve all major areas in Nairobi including CBD, Westlands, Karen, Lang'ata, Kileleshwa, Kilimani, Lavington, Parklands, and many more. We're continuously expanding our coverage.
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- Services Page -->
-    <div class="page" id="services-page">
-        <section class="legal-page">
+        <!-- Footer -->
+        <footer>
             <div class="container">
-                <div class="legal-content">
-                    <h1>Our Services</h1>
-                    <p>IPATE Deliveries offers a comprehensive suite of delivery solutions tailored to meet the needs of customers, sellers, and riders in Nairobi.</p>
-                    
-                    <h2>For Customers</h2>
-                    <ul>
-                        <li><strong>Fast Delivery:</strong> Get your packages delivered quickly with our optimized routing system.</li>
-                        <li><strong>Real-Time Tracking:</strong> Track your deliveries live with GPS updates and ETA notifications.</li>
-                        <li><strong>Multiple Payment Options:</strong> Pay with M-PESA, cards, or cash on delivery.</li>
-                        <li><strong>Verified Sellers:</strong> Shop with confidence from our thoroughly vetted business partners.</li>
-                        <li><strong>Secure Transactions:</strong> All payments and personal data are protected with bank-level security.</li>
-                    </ul>
-                    
-                    <h2>For Sellers</h2>
-                    <ul>
-                        <li><strong>Delivery Management:</strong> Seamlessly manage orders, inventory, and deliveries from one dashboard.</li>
-                        <li><strong>Verified Rider Network:</strong> Access our network of background-checked delivery riders.</li>
-                        <li><strong>Business Analytics:</strong> Gain insights into your sales, delivery performance, and customer behavior.</li>
-                        <li><strong>Secure Payouts:</strong> Receive timely payments through M-PESA or bank transfers.</li>
-                        <li><strong>Customer Communication:</strong> Keep customers informed with automated status updates.</li>
-                    </ul>
-                    
-                    <h2>For Riders</h2>
-                    <ul>
-                        <li><strong>Flexible Earnings:</strong> Choose your delivery schedule and maximize your earning potential.</li>
-                        <li><strong>Optimized Routes:</strong> Our algorithm suggests the most efficient delivery routes.</li>
-                        <li><strong>Secure Payments:</strong> Get paid promptly with transparent earning calculations.</li>
-                        <li><strong>Support System:</strong> Access rider support and resources to help you succeed.</li>
-                        <li><strong>Performance Bonuses:</strong> Earn additional rewards for excellent service ratings.</li>
-                    </ul>
-                    
-                    <h2>Delivery Options</h2>
-                    <ul>
-                        <li><strong>Express Delivery:</strong> Get your packages delivered within 1-2 hours for urgent needs.</li>
-                        <li><strong>Same-Day Delivery:</strong> Standard delivery completed on the same day for orders placed before 3 PM.</li>
-                        <li><strong>Scheduled Delivery:</strong> Plan deliveries in advance for specific dates and times.</li>
-                        <li><strong>Bulk Delivery:</strong> Specialized service for businesses with multiple deliveries.</li>
-                        <li><strong>Special Handling:</strong> Careful handling for fragile, valuable, or temperature-sensitive items.</li>
-                    </ul>
-                    
-                    <div class="text-center" style="margin-top: 40px;">
-                        <button class="btn btn-primary btn-large" onclick="showAuthModal()">
-                            <i class="fas fa-rocket"></i> Get Started Today
-                        </button>
+                <div class="footer-grid">
+                    <div class="footer-logo">
+                        <i class="fas fa-truck-fast"></i>
+                        IPATE Deliveries
                     </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- About Page -->
-    <div class="page" id="about-page">
-        <section class="legal-page">
-            <div class="container">
-                <div class="legal-content">
-                    <h1>About IPATE Deliveries</h1>
-                    <p>IPATE Deliveries is a Nairobi-based delivery platform that connects customers, sellers, and riders through a seamless, secure, and efficient ecosystem.</p>
-                    
-                    <h2>Our Mission</h2>
-                    <p>To transform urban logistics in Kenya by creating the most reliable, transparent, and user-friendly delivery platform that empowers businesses, creates earning opportunities, and simplifies life for customers.</p>
-                    
-                    <h2>Our Vision</h2>
-                    <p>To become East Africa's leading delivery platform, known for innovation, reliability, and commitment to community development.</p>
-                    
-                    <h2>Our Values</h2>
-                    <ul>
-                        <li><strong>Reliability:</strong> We deliver on our promises, every time.</li>
-                        <li><strong>Transparency:</strong> We believe in open communication and clear processes.</li>
-                        <li><strong>Security:</strong> We prioritize the safety of our users and their assets.</li>
-                        <li><strong>Innovation:</strong> We continuously improve our technology and services.</li>
-                        <li><strong>Community:</strong> We invest in the growth and development of our users.</li>
-                    </ul>
-                    
-                    <h2>Our Story</h2>
-                    <p>Founded in 2023, IPATE Deliveries was born from the recognition that Nairobi's growing e-commerce sector needed a more reliable, secure, and efficient delivery solution. Our founders, with backgrounds in technology, logistics, and finance, set out to create a platform that would address the key pain points in last-mile delivery.</p>
-                    
-                    <p>Through rigorous verification processes, advanced technology, and a user-centric approach, we've built a delivery ecosystem that serves the diverse needs of Nairobi's residents and businesses. Today, we're proud to connect hundreds of sellers with thousands of customers through our network of verified riders.</p>
-                    
-                    <h2>Our Team</h2>
-                    <p>Our team brings together expertise from technology, logistics, finance, and customer service. We're united by a shared passion for solving complex problems and creating positive impact in our community.</p>
-                    
-                    <div class="text-center" style="margin-top: 40px;">
-                        <button class="btn btn-primary btn-large" onclick="showPage('contact')">
-                            <i class="fas fa-envelope"></i> Contact Us
-                        </button>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a onclick="showPage('landingPage')"><i class="fas fa-chevron-right"></i> Home</a></li>
+                            <li><a onclick="scrollToSection('features')"><i class="fas fa-chevron-right"></i> Features</a></li>
+                            <li><a onclick="showPage('aboutPage')"><i class="fas fa-chevron-right"></i> About</a></li>
+                            <li><a onclick="showPage('contactPage')"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Contact Page -->
-    <div class="page" id="contact-page">
-        <section class="contact-page">
-            <div class="container">
-                <h2 class="section-title">Contact Us</h2>
-                <p class="section-subtitle">Get in touch with our team for any questions or support needs.</p>
-                
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <h3>Get In Touch</h3>
-                        <p>We're here to help! Reach out to us through any of the following channels:</p>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <h4>Our Location</h4>
-                                <p>Westlands Business District<br>Nairobi, Kenya</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <div>
-                                <h4>Phone Number</h4>
-                                <p>+254 700 123 456</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4>Email Address</h4>
-                                <p>support@ipatedeliveries.co.ke</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div>
-                                <h4>Working Hours</h4>
-                                <p>Monday - Friday: 8:00 AM - 8:00 PM<br>Saturday: 9:00 AM - 6:00 PM</p>
-                            </div>
-                        </div>
-                        
+                    <div class="footer-links">
+                        <h4>Contact Info</h4>
+                        <ul>
+                            <li><a href="tel:+254748894671"><i class="fas fa-phone"></i> +254 748 894 671</a></li>
+                            <li><a href="mailto:info@ipatedeliveries.com"><i class="fas fa-envelope"></i> info@ipatedeliveries.com</a></li>
+                            <li><a><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</a></li>
+                        </ul>
                         <div class="social-links">
-                            <a class="social-link">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="social-link">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="social-link">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a class="social-link">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
-                    
-                    <div class="contact-form">
-                        <h3>Send Us a Message</h3>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Your Email" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Subject" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">
-                                <i class="fas fa-paper-plane"></i> Send Message
-                            </button>
-                        </form>
-                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 IPATE Deliveries. All rights reserved.</p>
                 </div>
             </div>
-        </section>
+        </footer>
     </div>
 
-    <!-- Customer Dashboard -->
-    <div class="page" id="customer-dashboard">
-        <div class="dashboard">
-            <div class="dashboard-header">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo" onclick="showPage('home')">
-                            <i class="fas fa-shipping-fast logo-icon"></i>
-                            <span class="logo-text">IPATE Deliveries</span>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-avatar" id="customerAvatar">CU</div>
-                            <div>
-                                <div id="customerName">Customer User</div>
-                                <div style="font-size: 12px; opacity: 0.8;">Customer</div>
-                            </div>
-                            <button class="btn btn-outline btn-sm" onclick="logout()">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="dashboard-content">
-                <div class="container">
-                    <h1 style="color: white; margin-bottom: 20px;">Customer Dashboard</h1>
-                    
-                    <div class="dashboard-nav-links">
-                        <div class="dashboard-nav-link active" onclick="switchDashboardTab('customer-overview')">Overview</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('customer-orders')">My Orders</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('customer-products')">Products</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('customer-profile')">Profile</div>
-                    </div>
-                    
-                    <!-- Customer Overview Tab -->
-                    <div class="dashboard-tab active" id="customer-overview">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value" id="customerOrdersCount">0</div>
-                                <div class="stat-label">Total Orders</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="customerPendingOrders">0</div>
-                                <div class="stat-label">Pending Orders</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="customerDeliveredOrders">0</div>
-                                <div class="stat-label">Delivered Orders</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="customerTotalSpent">0</span></div>
-                                <div class="stat-label">Total Spent</div>
-                            </div>
-                        </div>
-                        
-                        <h2 style="color: white; margin: 40px 0 20px;">Recent Orders</h2>
-                        <div id="customerRecentOrders">
-                            <div class="empty-state">
-                                <i class="fas fa-shopping-bag"></i>
-                                <h3>No Orders Yet</h3>
-                                <p>You haven't placed any orders yet. Start shopping now!</p>
-                                <button class="btn btn-primary" onclick="switchDashboardTab('customer-products')">
-                                    <i class="fas fa-shopping-cart"></i> Browse Products
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Customer Orders Tab -->
-                    <div class="dashboard-tab" id="customer-orders">
-                        <h2 style="color: white; margin-bottom: 20px;">My Orders</h2>
-                        <div id="customerOrdersList">
-                            <div class="empty-state">
-                                <i class="fas fa-shopping-bag"></i>
-                                <h3>No Orders Yet</h3>
-                                <p>You haven't placed any orders yet. Start shopping now!</p>
-                                <button class="btn btn-primary" onclick="switchDashboardTab('customer-products')">
-                                    <i class="fas fa-shopping-cart"></i> Browse Products
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Customer Products Tab -->
-                    <div class="dashboard-tab" id="customer-products">
-                        <h2 style="color: white; margin-bottom: 20px;">Available Products</h2>
-                        <div class="products-grid" id="customerProductsGrid">
-                            <!-- Products will be loaded here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Customer Profile Tab -->
-                    <div class="dashboard-tab" id="customer-profile">
-                        <div class="product-form">
-                            <h3>Profile Information</h3>
-                            <form id="customerProfileForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control" id="customerProfileName" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" id="customerProfileEmail" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="tel" class="form-control" id="customerProfilePhone" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <input type="text" class="form-control" id="customerProfileAddress" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Update Profile
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seller Dashboard -->
-    <div class="page" id="seller-dashboard">
-        <div class="dashboard">
-            <div class="dashboard-header">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo" onclick="showPage('home')">
-                            <i class="fas fa-shipping-fast logo-icon"></i>
-                            <span class="logo-text">IPATE Deliveries</span>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-avatar" id="sellerAvatar">SE</div>
-                            <div>
-                                <div id="sellerName">Seller User</div>
-                                <div style="font-size: 12px; opacity: 0.8;">Seller</div>
-                            </div>
-                            <button class="btn btn-outline btn-sm" onclick="logout()">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="dashboard-content">
-                <div class="container">
-                    <h1 style="color: white; margin-bottom: 20px;">Seller Dashboard</h1>
-                    
-                    <div class="dashboard-nav-links">
-                        <div class="dashboard-nav-link active" onclick="switchDashboardTab('seller-overview')">Overview</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('seller-orders')">Orders</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('seller-products')">Products</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('seller-verification')">Verification</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('seller-profile')">Profile</div>
-                    </div>
-                    
-                    <!-- Seller Overview Tab -->
-                    <div class="dashboard-tab active" id="seller-overview">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value" id="sellerOrdersCount">0</div>
-                                <div class="stat-label">Total Orders</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="sellerPendingOrders">0</div>
-                                <div class="stat-label">Pending Orders</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="sellerRevenue">0</span></div>
-                                <div class="stat-label">Total Revenue</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="sellerProductsCount">0</div>
-                                <div class="stat-label">Products</div>
-                            </div>
-                        </div>
-                        
-                        <h2 style="color: white; margin: 40px 0 20px;">Recent Orders</h2>
-                        <div id="sellerRecentOrders">
-                            <div class="empty-state">
-                                <i class="fas fa-shopping-bag"></i>
-                                <h3>No Orders Yet</h3>
-                                <p>You haven't received any orders yet. Add products to get started!</p>
-                                <button class="btn btn-primary" onclick="switchDashboardTab('seller-products')">
-                                    <i class="fas fa-plus"></i> Add Products
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Seller Orders Tab -->
-                    <div class="dashboard-tab" id="seller-orders">
-                        <h2 style="color: white; margin-bottom: 20px;">Order Management</h2>
-                        <div id="sellerOrdersList">
-                            <div class="empty-state">
-                                <i class="fas fa-shopping-bag"></i>
-                                <h3>No Orders Yet</h3>
-                                <p>You haven't received any orders yet.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Seller Products Tab -->
-                    <div class="dashboard-tab" id="seller-products">
-                        <div class="seller-actions">
-                            <button class="btn btn-primary" onclick="showProductForm()">
-                                <i class="fas fa-plus"></i> Add New Product
-                            </button>
-                        </div>
-                        
-                        <div class="product-form" id="productForm" style="display: none;">
-                            <h3 id="productFormTitle">Add New Product</h3>
-                            <form id="sellerProductForm">
-                                <input type="hidden" id="productId">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Product Name</label>
-                                        <input type="text" class="form-control" id="productName" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <select class="form-control" id="productCategory" required>
-                                            <option value="">Select Category</option>
-                                            <option value="Electronics">Electronics</option>
-                                            <option value="Fashion">Fashion</option>
-                                            <option value="Home & Kitchen">Home & Kitchen</option>
-                                            <option value="Beauty & Personal Care">Beauty & Personal Care</option>
-                                            <option value="Food & Groceries">Food & Groceries</option>
-                                            <option value="Books & Media">Books & Media</option>
-                                            <option value="Sports & Outdoors">Sports & Outdoors</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Price (KSh)</label>
-                                        <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Stock Quantity</label>
-                                        <input type="number" class="form-control" id="productStock" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control" id="productDescription" rows="3" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Product Image URL</label>
-                                    <input type="url" class="form-control" id="productImage" placeholder="https://example.com/image.jpg">
-                                </div>
-                                <div class="form-row">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Save Product
-                                    </button>
-                                    <button type="button" class="btn btn-outline" onclick="hideProductForm()">
-                                        <i class="fas fa-times"></i> Cancel
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <h2 style="color: white; margin: 30px 0 20px;">My Products</h2>
-                        <div class="products-grid" id="sellerProductsGrid">
-                            <div class="empty-state">
-                                <i class="fas fa-box-open"></i>
-                                <h3>No Products Yet</h3>
-                                <p>You haven't added any products yet. Start by adding your first product!</p>
-                                <button class="btn btn-primary" onclick="showProductForm()">
-                                    <i class="fas fa-plus"></i> Add Product
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Seller Verification Tab -->
-                    <div class="dashboard-tab" id="seller-verification">
-                        <h2 style="color: white; margin-bottom: 20px;">Seller Verification</h2>
-                        <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 30px;">
-                            Complete the verification process to become a fully verified seller on IPATE Deliveries. This helps build trust with customers and unlocks all platform features.
-                        </p>
-                        
-                        <div class="verification-steps">
-                            <div class="verification-step step-completed">
-                                <div class="step-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Business Registration</div>
-                                    <div class="step-description">Provide your business details and registration documents</div>
-                                </div>
-                                <div class="step-status status-completed">Completed</div>
-                            </div>
-                            
-                            <div class="verification-step step-completed">
-                                <div class="step-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Identity Verification</div>
-                                    <div class="step-description">Verify your identity with government-issued ID</div>
-                                </div>
-                                <div class="step-status status-completed">Completed</div>
-                            </div>
-                            
-                            <div class="verification-step step-active">
-                                <div class="step-icon">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Business Validation</div>
-                                    <div class="step-description">Validate your business location and operations</div>
-                                </div>
-                                <div class="step-status status-active">In Progress</div>
-                            </div>
-                            
-                            <div class="verification-step">
-                                <div class="step-icon">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Onboarding & Training</div>
-                                    <div class="step-description">Complete platform training and policy agreement</div>
-                                </div>
-                                <div class="step-status status-pending">Pending</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-form" style="margin-top: 40px;">
-                            <h3>Business Validation Documents</h3>
-                            <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">
-                                Please upload the following documents to complete your business validation:
-                            </p>
-                            
-                            <div class="form-group">
-                                <label>Business Permit</label>
-                                <input type="file" class="form-control" id="businessPermit">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>KRA PIN Certificate</label>
-                                <input type="file" class="form-control" id="kraPinCertificate">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Business Location Photos</label>
-                                <input type="file" class="form-control" id="businessLocationPhotos" multiple>
-                            </div>
-                            
-                            <button class="btn btn-primary">
-                                <i class="fas fa-upload"></i> Upload Documents
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Seller Profile Tab -->
-                    <div class="dashboard-tab" id="seller-profile">
-                        <div class="product-form">
-                            <h3>Business Profile</h3>
-                            <form id="sellerProfileForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Business Name</label>
-                                        <input type="text" class="form-control" id="sellerBusinessName" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Business Type</label>
-                                        <select class="form-control" id="sellerBusinessType" required>
-                                            <option value="">Select Business Type</option>
-                                            <option value="Individual">Individual</option>
-                                            <option value="Partnership">Partnership</option>
-                                            <option value="Corporation">Corporation</option>
-                                            <option value="LLC">LLC</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Contact Email</label>
-                                        <input type="email" class="form-control" id="sellerContactEmail" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="tel" class="form-control" id="sellerPhone" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Business Address</label>
-                                    <input type="text" class="form-control" id="sellerAddress" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Business Description</label>
-                                    <textarea class="form-control" id="sellerDescription" rows="3" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Update Profile
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rider Dashboard -->
-    <div class="page" id="rider-dashboard">
-        <div class="dashboard">
-            <div class="dashboard-header">
-                <div class="container">
-                    <div class="dashboard-nav">
-                        <div class="logo" onclick="showPage('home')">
-                            <i class="fas fa-shipping-fast logo-icon"></i>
-                            <span class="logo-text">IPATE Deliveries</span>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-avatar" id="riderAvatar">RI</div>
-                            <div>
-                                <div id="riderName">Rider User</div>
-                                <div style="font-size: 12px; opacity: 0.8;">Rider</div>
-                            </div>
-                            <button class="btn btn-outline btn-sm" onclick="logout()">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="dashboard-content">
-                <div class="container">
-                    <h1 style="color: white; margin-bottom: 20px;">Rider Dashboard</h1>
-                    
-                    <div class="dashboard-nav-links">
-                        <div class="dashboard-nav-link active" onclick="switchDashboardTab('rider-overview')">Overview</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('rider-deliveries')">Deliveries</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('rider-earnings')">Earnings</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('rider-verification')">Verification</div>
-                        <div class="dashboard-nav-link" onclick="switchDashboardTab('rider-profile')">Profile</div>
-                    </div>
-                    
-                    <!-- Rider Overview Tab -->
-                    <div class="dashboard-tab active" id="rider-overview">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value" id="riderDeliveriesCount">0</div>
-                                <div class="stat-label">Total Deliveries</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="riderActiveDeliveries">0</div>
-                                <div class="stat-label">Active Deliveries</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="riderEarnings">0</span></div>
-                                <div class="stat-label">Total Earnings</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="riderRating">0.0</div>
-                                <div class="stat-label">Average Rating</div>
-                            </div>
-                        </div>
-                        
-                        <h2 style="color: white; margin: 40px 0 20px;">Available Deliveries</h2>
-                        <div id="riderAvailableDeliveries">
-                            <div class="empty-state">
-                                <i class="fas fa-shipping-fast"></i>
-                                <h3>No Available Deliveries</h3>
-                                <p>There are no available deliveries in your area at the moment.</p>
-                                <button class="btn btn-primary" onclick="switchDashboardTab('rider-deliveries')">
-                                    <i class="fas fa-sync-alt"></i> Check Again
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Rider Deliveries Tab -->
-                    <div class="dashboard-tab" id="rider-deliveries">
-                        <h2 style="color: white; margin-bottom: 20px;">My Deliveries</h2>
-                        <div id="riderDeliveriesList">
-                            <div class="empty-state">
-                                <i class="fas fa-shipping-fast"></i>
-                                <h3>No Deliveries Yet</h3>
-                                <p>You haven't accepted any deliveries yet.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Rider Earnings Tab -->
-                    <div class="dashboard-tab" id="rider-earnings">
-                        <h2 style="color: white; margin-bottom: 20px;">Earnings Overview</h2>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="riderWeeklyEarnings">0</span></div>
-                                <div class="stat-label">This Week</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="riderMonthlyEarnings">0</span></div>
-                                <div class="stat-label">This Month</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value" id="riderCompletedDeliveries">0</div>
-                                <div class="stat-label">Completed Deliveries</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">KSh <span id="riderPendingPayout">0</span></div>
-                                <div class="stat-label">Pending Payout</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-form" style="margin-top: 40px;">
-                            <h3>Payout Information</h3>
-                            <form id="riderPayoutForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>M-PESA Number</label>
-                                        <input type="tel" class="form-control" id="riderMpesaNumber" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Bank Account (Optional)</label>
-                                        <input type="text" class="form-control" id="riderBankAccount">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Update Payout Info
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <!-- Rider Verification Tab -->
-                    <div class="dashboard-tab" id="rider-verification">
-                        <h2 style="color: white; margin-bottom: 20px;">Rider Verification</h2>
-                        <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 30px;">
-                            Complete the verification process to become a fully verified rider on IPATE Deliveries. This ensures the safety of our customers and unlocks all platform features.
-                        </p>
-                        
-                        <div class="verification-steps">
-                            <div class="verification-step step-completed">
-                                <div class="step-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Personal Documentation</div>
-                                    <div class="step-description">Provide your ID, KRA PIN, and proof of address</div>
-                                </div>
-                                <div class="step-status status-completed">Completed</div>
-                            </div>
-                            
-                            <div class="verification-step step-completed">
-                                <div class="step-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Vehicle Verification</div>
-                                    <div class="step-description">Verify your vehicle registration and insurance</div>
-                                </div>
-                                <div class="step-status status-completed">Completed</div>
-                            </div>
-                            
-                            <div class="verification-step step-active">
-                                <div class="step-icon">
-                                    <i class="fas fa-id-card"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">License & Certification</div>
-                                    <div class="step-description">Submit driving license and NTSA certification</div>
-                                </div>
-                                <div class="step-status status-active">In Progress</div>
-                            </div>
-                            
-                            <div class="verification-step">
-                                <div class="step-icon">
-                                    <i class="fas fa-road"></i>
-                                </div>
-                                <div class="step-info">
-                                    <div class="step-title">Practical Assessment</div>
-                                    <div class="step-description">Complete navigation and delivery assessment</div>
-                                </div>
-                                <div class="step-status status-pending">Pending</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-form" style="margin-top: 40px;">
-                            <h3>License & Certification Documents</h3>
-                            <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">
-                                Please upload the following documents to complete your license verification:
-                            </p>
-                            
-                            <div class="form-group">
-                                <label>Driving License</label>
-                                <input type="file" class="form-control" id="drivingLicense">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>NTSA Road Safety Certificate</label>
-                                <input type="file" class="form-control" id="ntsaCertificate">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Good Conduct Certificate</label>
-                                <input type="file" class="form-control" id="goodConductCertificate">
-                            </div>
-                            
-                            <button class="btn btn-primary">
-                                <i class="fas fa-upload"></i> Upload Documents
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Rider Profile Tab -->
-                    <div class="dashboard-tab" id="rider-profile">
-                        <div class="product-form">
-                            <h3>Rider Profile</h3>
-                            <form id="riderProfileForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control" id="riderFullName" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" id="riderEmail" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="tel" class="form-control" id="riderPhone" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Vehicle Type</label>
-                                        <select class="form-control" id="riderVehicleType" required>
-                                            <option value="">Select Vehicle Type</option>
-                                            <option value="Motorcycle">Motorcycle</option>
-                                            <option value="Car">Car</option>
-                                            <option value="Bicycle">Bicycle</option>
-                                            <option value="Truck">Truck</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Vehicle Registration</label>
-                                    <input type="text" class="form-control" id="riderVehicleReg" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Home Address</label>
-                                    <input type="text" class="form-control" id="riderAddress" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Update Profile
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Auth Modal -->
+    <!-- Authentication Modal -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAuthModal()">&times;</span>
-            <h2 style="color: white; text-align: center; margin-bottom: 30px;">Welcome to IPATE Deliveries</h2>
-            
             <div class="auth-tabs">
                 <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
-                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+                <div class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</div>
             </div>
-            
-            <!-- Login Form -->
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" id="loginEmail" required>
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" id="loginPassword" required>
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
                 </div>
                 <div class="form-group">
-                    <label>User Type</label>
-                    <select class="form-control" id="loginUserType" required>
-                        <option value="">Select User Type</option>
+                    <label for="loginUserType">Account Type</label>
+                    <select id="loginUserType" class="form-control" required>
+                        <option value="">Select account type</option>
                         <option value="customer">Customer</option>
                         <option value="seller">Seller</option>
                         <option value="rider">Rider</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="#" style="color: var(--primary);">Forgot your password?</a>
-                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
-            
-            <!-- Register Form -->
-            <form class="auth-form" id="registerForm">
+            <form class="auth-form" id="signupForm">
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-control" id="registerName" required>
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" id="registerEmail" required>
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" class="form-control" id="registerPhone" required>
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" class="form-control" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" id="registerPassword" required>
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
                 </div>
                 <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" class="form-control" id="registerConfirmPassword" required>
-                </div>
-                <div class="form-group">
-                    <label>User Type</label>
-                    <select class="form-control" id="registerUserType" required>
-                        <option value="">Select User Type</option>
+                    <label for="signupUserType">Account Type</label>
+                    <select id="signupUserType" class="form-control" required>
+                        <option value="">Select account type</option>
                         <option value="customer">Customer</option>
                         <option value="seller">Seller</option>
                         <option value="rider">Rider</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label style="font-weight: normal;">
-                        <input type="checkbox" required> I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-user-plus"></i> Create Account
-                </button>
+                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
             </form>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo">
-                        <i class="fas fa-shipping-fast"></i>
-                        IPATE Deliveries
-                    </div>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px;">
-                        Fast, reliable, and secure delivery services in Nairobi. Connecting customers, sellers, and riders through our verified platform.
-                    </p>
-                    <div class="social-links">
-                        <a class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a onclick="showPage('home')">Home</a></li>
-                        <li><a onclick="showPage('services')">Services</a></li>
-                        <li><a onclick="showPage('about')">About Us</a></li>
-                        <li><a onclick="showPage('contact')">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a>Customer Delivery</a></li>
-                        <li><a>Seller Platform</a></li>
-                        <li><a>Rider Network</a></li>
-                        <li><a>Business Solutions</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a>Help Center</a></li>
-                        <li><a>FAQs</a></li>
-                        <li><a>Privacy Policy</a></li>
-                        <li><a>Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2023 IPATE Deliveries. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://xbwvsswycdskxkorharu.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
 
-        // Initialize Supabase
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Global State
+        // Global variables
+        let supabase;
         let currentUser = null;
-        let currentUserType = null;
+        let userRole = null;
 
         // DOM Elements
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const notification = document.getElementById('notification');
-        const header = document.getElementById('header');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const authModal = document.getElementById('authModal');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
+        let loadingSpinner, notification, authModal, loginForm, registerForm;
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
-            setupEventListeners();
-            checkAuthState();
         });
 
-        // Initialize the application
-        function initializeApp() {
-            // Setup FAQ accordion
-            setupFAQAccordion();
-            
-            // Setup forms
-            setupForms();
-            
-            // Load sample data if needed
-            loadSampleData();
+        async function initializeApp() {
+            initializeDOMElements();
+            await initializeSupabase();
+            setupEventListeners();
+            await checkAuthState();
+            setupFAQ();
         }
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Mobile menu toggle
-            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            
-            // Header scroll effect
-            window.addEventListener('scroll', handleHeaderScroll);
-            
-            // Auth forms
-            loginForm.addEventListener('submit', handleLogin);
-            registerForm.addEventListener('submit', handleRegister);
-            
-            // Contact form
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', handleContactSubmit);
+        function initializeDOMElements() {
+            loadingSpinner = document.getElementById('loadingSpinner');
+            notification = document.getElementById('notification');
+            authModal = document.getElementById('authModal');
+            loginForm = document.getElementById('loginForm');
+            registerForm = document.getElementById('registerForm');
+        }
+
+        async function initializeSupabase() {
+            try {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+                    auth: {
+                        autoRefreshToken: true,
+                        persistSession: true,
+                        detectSessionInUrl: true
+                    }
+                });
+                console.log('✅ Supabase initialized successfully');
+            } catch (error) {
+                console.error('❌ Supabase initialization failed:', error);
+                showNotification('Using demo mode - some features limited', 'warning');
             }
         }
 
-        // Setup FAQ accordion
-        function setupFAQAccordion() {
-            const faqItems = document.querySelectorAll('.faq-item');
+        function setupEventListeners() {
+            // Auth forms
+            if (loginForm) loginForm.addEventListener('submit', handleLogin);
+            if (registerForm) registerForm.addEventListener('submit', handleRegister);
             
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target === authModal) {
+                    closeAuthModal();
+                }
+            });
+        }
+
+        function setupFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
-                
                 question.addEventListener('click', () => {
-                    // Close all other items
                     faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('active');
-                        }
+                        if (otherItem !== item) otherItem.classList.remove('active');
                     });
-                    
-                    // Toggle current item
                     item.classList.toggle('active');
                 });
             });
         }
 
-        // Setup forms
-        function setupForms() {
-            // Customer profile form
-            const customerProfileForm = document.getElementById('customerProfileForm');
-            if (customerProfileForm) {
-                customerProfileForm.addEventListener('submit', handleCustomerProfileUpdate);
-            }
-            
-            // Seller profile form
-            const sellerProfileForm = document.getElementById('sellerProfileForm');
-            if (sellerProfileForm) {
-                sellerProfileForm.addEventListener('submit', handleSellerProfileUpdate);
-            }
-            
-            // Seller product form
-            const sellerProductForm = document.getElementById('sellerProductForm');
-            if (sellerProductForm) {
-                sellerProductForm.addEventListener('submit', handleSellerProductSubmit);
-            }
-            
-            // Rider profile form
-            const riderProfileForm = document.getElementById('riderProfileForm');
-            if (riderProfileForm) {
-                riderProfileForm.addEventListener('submit', handleRiderProfileUpdate);
-            }
-            
-            // Rider payout form
-            const riderPayoutForm = document.getElementById('riderPayoutForm');
-            if (riderPayoutForm) {
-                riderPayoutForm.addEventListener('submit', handleRiderPayoutUpdate);
-            }
-        }
-
-        // Load sample data
-        function loadSampleData() {
-            // This would be replaced with actual data from Supabase
-            // For now, we'll use sample data for demonstration
-            
-            // Sample products for customer view
-            const sampleProducts = [
-                {
-                    id: 1,
-                    name: "Wireless Bluetooth Headphones",
-                    price: 2499,
-                    description: "High-quality wireless headphones with noise cancellation",
-                    category: "Electronics",
-                    seller: "TechHub Kenya",
-                    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-                },
-                {
-                    id: 2,
-                    name: "Organic Coffee Beans",
-                    price: 850,
-                    description: "Premium organic coffee beans from Kenyan highlands",
-                    category: "Food & Groceries",
-                    seller: "Kenya Coffee Co.",
-                    image: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-                },
-                {
-                    id: 3,
-                    name: "Handcrafted Leather Bag",
-                    price: 3200,
-                    description: "Beautiful handcrafted leather bag with multiple compartments",
-                    category: "Fashion",
-                    seller: "Nairobi Leatherworks",
-                    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-                },
-                {
-                    id: 4,
-                    name: "Smart Fitness Watch",
-                    price: 4500,
-                    description: "Track your fitness goals with this advanced smartwatch",
-                    category: "Electronics",
-                    seller: "TechHub Kenya",
-                    image: "https://images.unsplash.com/photo-1544117519-31a4b719223d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-                }
-            ];
-            
-            // If we're on the customer products page, render sample products
-            const customerProductsGrid = document.getElementById('customerProductsGrid');
-            if (customerProductsGrid) {
-                renderProducts(sampleProducts, customerProductsGrid);
-            }
-            
-            // If we're on the seller dashboard, render seller's products
-            const sellerProductsGrid = document.getElementById('sellerProductsGrid');
-            if (sellerProductsGrid) {
-                // For demo, we'll show the same products but with edit/delete options
-                renderSellerProducts(sampleProducts, sellerProductsGrid);
-            }
-        }
-
-        // Render products for customer view
-        function renderProducts(products, container) {
-            if (products.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <h3>No Products Available</h3>
-                        <p>There are no products available at the moment.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('${product.image}')">
-                        <i class="fas fa-box-open" style="font-size: 48px; z-index: 2; position: relative;"></i>
-                    </div>
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <div class="product-price">KSh ${product.price.toLocaleString()}</div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                            <span style="font-size: 14px; opacity: 0.8;">Sold by: ${product.seller}</span>
-                            <button class="btn btn-primary btn-sm" onclick="addToCart(${product.id})">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render products for seller view
-        function renderSellerProducts(products, container) {
-            if (products.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <h3>No Products Yet</h3>
-                        <p>You haven't added any products yet. Start by adding your first product!</p>
-                        <button class="btn btn-primary" onclick="showProductForm()">
-                            <i class="fas fa-plus"></i> Add Product
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="product-image" style="background-image: url('${product.image}')">
-                        <i class="fas fa-box-open" style="font-size: 48px; z-index: 2; position: relative;"></i>
-                    </div>
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <div class="product-price">KSh ${product.price.toLocaleString()}</div>
-                        <div style="display: flex; gap: 10px; margin-top: 15px;">
-                            <button class="btn btn-primary btn-sm" onclick="editProduct(${product.id})">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Check authentication state
         async function checkAuthState() {
             try {
-                const { data: { session }, error } = await supabase.auth.getSession();
+                if (!supabase) return;
                 
-                if (error) {
-                    console.error('Error checking auth state:', error);
-                    return;
-                }
+                const { data: { session }, error } = await supabase.auth.getSession();
+                if (error) throw error;
                 
                 if (session) {
-                    // User is logged in
                     currentUser = session.user;
-                    
-                    // Get user type from database
-                    const { data: userData, error: userError } = await supabase
-                        .from('users')
-                        .select('user_type')
-                        .eq('id', currentUser.id)
-                        .single();
-                    
-                    if (userError) {
-                        console.error('Error fetching user data:', userError);
-                        return;
-                    }
-                    
-                    currentUserType = userData.user_type;
-                    
-                    // Update UI based on user type
-                    updateUIForUser(currentUserType);
-                    
-                    // Show appropriate dashboard
-                    showUserDashboard(currentUserType);
-                } else {
-                    // User is not logged in
-                    currentUser = null;
-                    currentUserType = null;
-                    
-                    // Show home page
-                    showPage('home');
+                    await loadUserProfile();
+                    updateUIForUser();
+                    showNotification('Welcome back!', 'success');
                 }
             } catch (error) {
-                console.error('Error in checkAuthState:', error);
+                console.error('Auth check error:', error);
             }
         }
 
-        // Update UI based on user type
-        function updateUIForUser(userType) {
-            const authButtons = document.querySelector('.auth-buttons');
-            const mobileAuthButtons = document.querySelector('.mobile-auth-buttons');
+        async function loadUserProfile() {
+            if (!supabase || !currentUser) return;
             
-            if (userType) {
-                // User is logged in
-                if (authButtons) {
-                    authButtons.innerHTML = `
-                        <button class="btn btn-outline" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    `;
-                }
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+                    
+                if (error) throw error;
                 
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <button class="btn btn-outline btn-block" onclick="logout(); toggleMobileMenu()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    `;
-                }
+                userRole = data.user_type;
+                currentUser.profile = data;
                 
-                // Update user info in dashboard
-                updateUserInfo(userType);
-            } else {
-                // User is not logged in
-                if (authButtons) {
-                    authButtons.innerHTML = `
-                        <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
-                        <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
-                    `;
-                }
-                
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <button class="btn btn-outline btn-block" onclick="showAuthModal(); toggleMobileMenu()">Login</button>
-                        <button class="btn btn-primary btn-block" onclick="showAuthModal(); toggleMobileMenu()">Sign Up</button>
-                    `;
-                }
+            } catch (error) {
+                console.error('Failed to load user profile:', error);
             }
         }
 
-        // Update user info in dashboard
-        function updateUserInfo(userType) {
-            let avatarElement, nameElement;
-            
-            switch (userType) {
-                case 'customer':
-                    avatarElement = document.getElementById('customerAvatar');
-                    nameElement = document.getElementById('customerName');
-                    break;
-                case 'seller':
-                    avatarElement = document.getElementById('sellerAvatar');
-                    nameElement = document.getElementById('sellerName');
-                    break;
-                case 'rider':
-                    avatarElement = document.getElementById('riderAvatar');
-                    nameElement = document.getElementById('riderName');
-                    break;
-            }
-            
-            if (avatarElement && currentUser) {
-                // Set avatar with user initials
-                const initials = currentUser.email ? currentUser.email.substring(0, 2).toUpperCase() : 'US';
-                avatarElement.textContent = initials;
-            }
-            
-            if (nameElement && currentUser) {
-                // Set user name (for demo, using email username)
-                const name = currentUser.email ? currentUser.email.split('@')[0] : 'User';
-                nameElement.textContent = name;
-            }
-        }
-
-        // Show user dashboard based on type
-        function showUserDashboard(userType) {
-            switch (userType) {
-                case 'customer':
-                    showPage('customer-dashboard');
-                    break;
-                case 'seller':
-                    showPage('seller-dashboard');
-                    break;
-                case 'rider':
-                    showPage('rider-dashboard');
-                    break;
-                default:
-                    showPage('home');
-            }
-        }
-
-        // Handle login
         async function handleLogin(e) {
             e.preventDefault();
             
@@ -3026,68 +1376,60 @@
             showLoading(true);
             
             try {
+                if (!supabase) {
+                    // Demo login
+                    handleDemoLogin(email, password, userType);
+                    return;
+                }
+                
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email,
                     password
                 });
                 
-                if (error) {
-                    showNotification(error.message, 'error');
-                    return;
-                }
+                if (error) throw error;
                 
-                // Verify user type matches
+                // Verify user type
                 const { data: userData, error: userError } = await supabase
                     .from('users')
                     .select('user_type')
                     .eq('id', data.user.id)
                     .single();
-                
-                if (userError) {
-                    showNotification('Error verifying user account', 'error');
-                    return;
-                }
+                    
+                if (userError) throw userError;
                 
                 if (userData.user_type !== userType) {
-                    showNotification(`This account is not registered as a ${userType}`, 'error');
                     await supabase.auth.signOut();
+                    showNotification(`This account is registered as a ${userData.user_type}, not a ${userType}`, 'error');
                     return;
                 }
                 
                 currentUser = data.user;
-                currentUserType = userType;
+                userRole = userType;
                 
                 showNotification('Login successful!', 'success');
                 closeAuthModal();
-                updateUIForUser(userType);
-                showUserDashboard(userType);
+                updateUIForUser();
                 
             } catch (error) {
                 console.error('Login error:', error);
-                showNotification('An error occurred during login', 'error');
+                showNotification(error.message, 'error');
             } finally {
                 showLoading(false);
             }
         }
 
-        // Handle registration
         async function handleRegister(e) {
             e.preventDefault();
             
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const phone = document.getElementById('registerPhone').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            const userType = document.getElementById('registerUserType').value;
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const userType = document.getElementById('signupUserType').value;
             
-            if (!name || !email || !phone || !password || !confirmPassword || !userType) {
+            if (!name || !email || !phone || !password || !userType) {
                 showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showNotification('Passwords do not match', 'error');
                 return;
             }
             
@@ -3099,7 +1441,12 @@
             showLoading(true);
             
             try {
-                // Register user with Supabase Auth
+                if (!supabase) {
+                    // Demo registration
+                    handleDemoRegister(name, email, phone, password, userType);
+                    return;
+                }
+                
                 const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
@@ -3112,743 +1459,263 @@
                     }
                 });
                 
-                if (error) {
-                    showNotification(error.message, 'error');
-                    return;
+                if (error) throw error;
+                
+                if (data.user) {
+                    // Create user profile
+                    const { error: dbError } = await supabase
+                        .from('users')
+                        .insert([
+                            {
+                                id: data.user.id,
+                                email: data.user.email,
+                                name: name,
+                                phone: phone,
+                                user_type: userType,
+                                created_at: new Date().toISOString()
+                            }
+                        ]);
+                        
+                    if (dbError) throw dbError;
+                    
+                    showNotification('Registration successful! Please check your email for verification.', 'success');
+                    closeAuthModal();
                 }
-                
-                // Create user record in database
-                const { error: dbError } = await supabase
-                    .from('users')
-                    .insert([
-                        {
-                            id: data.user.id,
-                            email,
-                            name,
-                            phone,
-                            user_type: userType,
-                            created_at: new Date()
-                        }
-                    ]);
-                
-                if (dbError) {
-                    console.error('Error creating user record:', dbError);
-                    showNotification('Error creating user account', 'error');
-                    return;
-                }
-                
-                showNotification('Registration successful! Please check your email for verification.', 'success');
-                closeAuthModal();
                 
             } catch (error) {
                 console.error('Registration error:', error);
-                showNotification('An error occurred during registration', 'error');
+                showNotification(error.message, 'error');
             } finally {
                 showLoading(false);
             }
         }
 
-        // Handle logout
+        // Demo functions for when Supabase is not available
+        function handleDemoLogin(email, password, userType) {
+            const demoAccounts = {
+                'customer@example.com': { password: 'password123', type: 'customer', name: 'Demo Customer' },
+                'seller@example.com': { password: 'password123', type: 'seller', name: 'Demo Seller' },
+                'rider@example.com': { password: 'password123', type: 'rider', name: 'Demo Rider' }
+            };
+            
+            const account = demoAccounts[email];
+            
+            if (account && account.password === password && account.type === userType) {
+                currentUser = {
+                    id: 'demo-' + Date.now(),
+                    email: email,
+                    user_metadata: { name: account.name }
+                };
+                userRole = userType;
+                
+                showNotification('Demo login successful!', 'success');
+                closeAuthModal();
+                updateUIForUser();
+            } else {
+                showNotification('Invalid demo credentials', 'error');
+            }
+            
+            showLoading(false);
+        }
+
+        function handleDemoRegister(name, email, phone, password, userType) {
+            currentUser = {
+                id: 'demo-' + Date.now(),
+                email: email,
+                user_metadata: { name: name }
+            };
+            userRole = userType;
+            
+            showNotification('Demo registration successful!', 'success');
+            closeAuthModal();
+            updateUIForUser();
+            showLoading(false);
+        }
+
         async function logout() {
             showLoading(true);
             
             try {
-                const { error } = await supabase.auth.signOut();
-                
-                if (error) {
-                    showNotification('Error during logout', 'error');
-                    return;
+                if (supabase) {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
                 }
                 
                 currentUser = null;
-                currentUserType = null;
+                userRole = null;
                 
                 showNotification('Logged out successfully', 'success');
-                updateUIForUser(null);
-                showPage('home');
+                updateUIForUser();
+                showPage('landingPage');
                 
             } catch (error) {
                 console.error('Logout error:', error);
-                showNotification('An error occurred during logout', 'error');
+                showNotification('Error during logout', 'error');
             } finally {
                 showLoading(false);
             }
         }
 
-        // Handle customer profile update
-        async function handleCustomerProfileUpdate(e) {
-            e.preventDefault();
+        function updateUIForUser() {
+            const authButtons = document.getElementById('authButtons');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
             
-            if (!currentUser) {
-                showNotification('Please log in to update your profile', 'error');
-                return;
-            }
-            
-            const name = document.getElementById('customerProfileName').value;
-            const email = document.getElementById('customerProfileEmail').value;
-            const phone = document.getElementById('customerProfilePhone').value;
-            const address = document.getElementById('customerProfileAddress').value;
-            
-            if (!name || !email || !phone || !address) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                // Update user record in database
-                const { error } = await supabase
-                    .from('users')
-                    .update({
-                        name,
-                        email,
-                        phone,
-                        address,
-                        updated_at: new Date()
-                    })
-                    .eq('id', currentUser.id);
+            if (currentUser) {
+                // User is logged in
+                const userName = currentUser.user_metadata?.name || currentUser.email;
                 
-                if (error) {
-                    showNotification('Error updating profile', 'error');
-                    return;
+                if (authButtons) {
+                    authButtons.innerHTML = `
+                        <button class="btn btn-outline" onclick="showUserMenu()">
+                            <i class="fas fa-user"></i> ${userName}
+                        </button>
+                        <button class="btn btn-primary" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    `;
                 }
                 
-                showNotification('Profile updated successfully', 'success');
-                
-            } catch (error) {
-                console.error('Profile update error:', error);
-                showNotification('An error occurred while updating your profile', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Handle seller profile update
-        async function handleSellerProfileUpdate(e) {
-            e.preventDefault();
-            
-            if (!currentUser) {
-                showNotification('Please log in to update your profile', 'error');
-                return;
-            }
-            
-            const businessName = document.getElementById('sellerBusinessName').value;
-            const businessType = document.getElementById('sellerBusinessType').value;
-            const contactEmail = document.getElementById('sellerContactEmail').value;
-            const phone = document.getElementById('sellerPhone').value;
-            const address = document.getElementById('sellerAddress').value;
-            const description = document.getElementById('sellerDescription').value;
-            
-            if (!businessName || !businessType || !contactEmail || !phone || !address || !description) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                // Update seller record in database
-                const { error } = await supabase
-                    .from('sellers')
-                    .update({
-                        business_name: businessName,
-                        business_type: businessType,
-                        contact_email: contactEmail,
-                        phone,
-                        address,
-                        description,
-                        updated_at: new Date()
-                    })
-                    .eq('user_id', currentUser.id);
-                
-                if (error) {
-                    // If seller record doesn't exist, create it
-                    if (error.code === 'PGRST116') {
-                        const { error: insertError } = await supabase
-                            .from('sellers')
-                            .insert([
-                                {
-                                    user_id: currentUser.id,
-                                    business_name: businessName,
-                                    business_type: businessType,
-                                    contact_email: contactEmail,
-                                    phone,
-                                    address,
-                                    description,
-                                    created_at: new Date()
-                                }
-                            ]);
-                        
-                        if (insertError) {
-                            showNotification('Error creating seller profile', 'error');
-                            return;
-                        }
-                    } else {
-                        showNotification('Error updating profile', 'error');
-                        return;
-                    }
+                if (mobileAuthButtons) {
+                    mobileAuthButtons.innerHTML = `
+                        <button class="btn btn-outline btn-block" onclick="showUserMenu(); hideMobileMenu()">
+                            <i class="fas fa-user"></i> ${userName}
+                        </button>
+                        <button class="btn btn-primary btn-block" onclick="logout(); hideMobileMenu()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    `;
                 }
-                
-                showNotification('Profile updated successfully', 'success');
-                
-            } catch (error) {
-                console.error('Profile update error:', error);
-                showNotification('An error occurred while updating your profile', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Handle seller product submission
-        async function handleSellerProductSubmit(e) {
-            e.preventDefault();
-            
-            if (!currentUser) {
-                showNotification('Please log in to add products', 'error');
-                return;
-            }
-            
-            const productId = document.getElementById('productId').value;
-            const name = document.getElementById('productName').value;
-            const category = document.getElementById('productCategory').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const stock = parseInt(document.getElementById('productStock').value);
-            const description = document.getElementById('productDescription').value;
-            const image = document.getElementById('productImage').value;
-            
-            if (!name || !category || !price || !stock || !description) {
-                showNotification('Please fill in all required fields', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                if (productId) {
-                    // Update existing product
-                    const { error } = await supabase
-                        .from('products')
-                        .update({
-                            name,
-                            category,
-                            price,
-                            stock,
-                            description,
-                            image,
-                            updated_at: new Date()
-                        })
-                        .eq('id', productId)
-                        .eq('seller_id', currentUser.id);
-                    
-                    if (error) {
-                        showNotification('Error updating product', 'error');
-                        return;
-                    }
-                    
-                    showNotification('Product updated successfully', 'success');
-                } else {
-                    // Create new product
-                    const { error } = await supabase
-                        .from('products')
-                        .insert([
-                            {
-                                seller_id: currentUser.id,
-                                name,
-                                category,
-                                price,
-                                stock,
-                                description,
-                                image,
-                                created_at: new Date()
-                            }
-                        ]);
-                    
-                    if (error) {
-                        showNotification('Error adding product', 'error');
-                        return;
-                    }
-                    
-                    showNotification('Product added successfully', 'success');
-                }
-                
-                // Reset form and hide it
-                hideProductForm();
-                
-                // Reload products
-                loadSellerProducts();
-                
-            } catch (error) {
-                console.error('Product submission error:', error);
-                showNotification('An error occurred while saving the product', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Handle rider profile update
-        async function handleRiderProfileUpdate(e) {
-            e.preventDefault();
-            
-            if (!currentUser) {
-                showNotification('Please log in to update your profile', 'error');
-                return;
-            }
-            
-            const fullName = document.getElementById('riderFullName').value;
-            const email = document.getElementById('riderEmail').value;
-            const phone = document.getElementById('riderPhone').value;
-            const vehicleType = document.getElementById('riderVehicleType').value;
-            const vehicleReg = document.getElementById('riderVehicleReg').value;
-            const address = document.getElementById('riderAddress').value;
-            
-            if (!fullName || !email || !phone || !vehicleType || !vehicleReg || !address) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                // Update rider record in database
-                const { error } = await supabase
-                    .from('riders')
-                    .update({
-                        full_name: fullName,
-                        email,
-                        phone,
-                        vehicle_type: vehicleType,
-                        vehicle_registration: vehicleReg,
-                        address,
-                        updated_at: new Date()
-                    })
-                    .eq('user_id', currentUser.id);
-                
-                if (error) {
-                    // If rider record doesn't exist, create it
-                    if (error.code === 'PGRST116') {
-                        const { error: insertError } = await supabase
-                            .from('riders')
-                            .insert([
-                                {
-                                    user_id: currentUser.id,
-                                    full_name: fullName,
-                                    email,
-                                    phone,
-                                    vehicle_type: vehicleType,
-                                    vehicle_registration: vehicleReg,
-                                    address,
-                                    created_at: new Date()
-                                }
-                            ]);
-                        
-                        if (insertError) {
-                            showNotification('Error creating rider profile', 'error');
-                            return;
-                        }
-                    } else {
-                        showNotification('Error updating profile', 'error');
-                        return;
-                    }
-                }
-                
-                showNotification('Profile updated successfully', 'success');
-                
-            } catch (error) {
-                console.error('Profile update error:', error);
-                showNotification('An error occurred while updating your profile', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Handle rider payout update
-        async function handleRiderPayoutUpdate(e) {
-            e.preventDefault();
-            
-            if (!currentUser) {
-                showNotification('Please log in to update payout information', 'error');
-                return;
-            }
-            
-            const mpesaNumber = document.getElementById('riderMpesaNumber').value;
-            const bankAccount = document.getElementById('riderBankAccount').value;
-            
-            if (!mpesaNumber) {
-                showNotification('M-PESA number is required', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                // Update rider payout information
-                const { error } = await supabase
-                    .from('riders')
-                    .update({
-                        mpesa_number: mpesaNumber,
-                        bank_account: bankAccount,
-                        updated_at: new Date()
-                    })
-                    .eq('user_id', currentUser.id);
-                
-                if (error) {
-                    showNotification('Error updating payout information', 'error');
-                    return;
-                }
-                
-                showNotification('Payout information updated successfully', 'success');
-                
-            } catch (error) {
-                console.error('Payout update error:', error);
-                showNotification('An error occurred while updating payout information', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Handle contact form submission
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            
-            // In a real application, this would send the form data to a server
-            showNotification('Thank you for your message! We will get back to you soon.', 'success');
-            
-            // Reset form
-            e.target.reset();
-        }
-
-        // Load seller products from database
-        async function loadSellerProducts() {
-            if (!currentUser) return;
-            
-            try {
-                const { data: products, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('seller_id', currentUser.id)
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('Error loading products:', error);
-                    return;
-                }
-                
-                // Render products
-                const sellerProductsGrid = document.getElementById('sellerProductsGrid');
-                if (sellerProductsGrid) {
-                    renderSellerProducts(products || [], sellerProductsGrid);
-                }
-                
-            } catch (error) {
-                console.error('Error in loadSellerProducts:', error);
-            }
-        }
-
-        // Show product form
-        function showProductForm(product = null) {
-            const productForm = document.getElementById('productForm');
-            const productFormTitle = document.getElementById('productFormTitle');
-            const productId = document.getElementById('productId');
-            const productName = document.getElementById('productName');
-            const productCategory = document.getElementById('productCategory');
-            const productPrice = document.getElementById('productPrice');
-            const productStock = document.getElementById('productStock');
-            const productDescription = document.getElementById('productDescription');
-            const productImage = document.getElementById('productImage');
-            
-            if (product) {
-                // Edit mode
-                productFormTitle.textContent = 'Edit Product';
-                productId.value = product.id;
-                productName.value = product.name;
-                productCategory.value = product.category;
-                productPrice.value = product.price;
-                productStock.value = product.stock;
-                productDescription.value = product.description;
-                productImage.value = product.image || '';
             } else {
-                // Add mode
-                productFormTitle.textContent = 'Add New Product';
-                productId.value = '';
-                productName.value = '';
-                productCategory.value = '';
-                productPrice.value = '';
-                productStock.value = '';
-                productDescription.value = '';
-                productImage.value = '';
-            }
-            
-            productForm.style.display = 'block';
-            productForm.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Hide product form
-        function hideProductForm() {
-            const productForm = document.getElementById('productForm');
-            productForm.style.display = 'none';
-        }
-
-        // Edit product
-        function editProduct(productId) {
-            // In a real application, this would fetch the product details from the database
-            // For demo purposes, we'll use a sample product
-            const sampleProduct = {
-                id: productId,
-                name: "Sample Product",
-                category: "Electronics",
-                price: 2499,
-                stock: 10,
-                description: "This is a sample product description",
-                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-            };
-            
-            showProductForm(sampleProduct);
-        }
-
-        // Delete product
-        async function deleteProduct(productId) {
-            if (!confirm('Are you sure you want to delete this product?')) {
-                return;
-            }
-            
-            if (!currentUser) {
-                showNotification('Please log in to delete products', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
-            try {
-                const { error } = await supabase
-                    .from('products')
-                    .delete()
-                    .eq('id', productId)
-                    .eq('seller_id', currentUser.id);
-                
-                if (error) {
-                    showNotification('Error deleting product', 'error');
-                    return;
+                // User is not logged in
+                if (authButtons) {
+                    authButtons.innerHTML = `
+                        <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
+                        <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
+                    `;
                 }
                 
-                showNotification('Product deleted successfully', 'success');
-                
-                // Reload products
-                loadSellerProducts();
-                
-            } catch (error) {
-                console.error('Product deletion error:', error);
-                showNotification('An error occurred while deleting the product', 'error');
-            } finally {
-                showLoading(false);
+                if (mobileAuthButtons) {
+                    mobileAuthButtons.innerHTML = `
+                        <button class="btn btn-outline btn-block" onclick="showAuthModal(); hideMobileMenu()">Login</button>
+                        <button class="btn btn-primary btn-block" onclick="showAuthModal(); hideMobileMenu()">Sign Up</button>
+                    `;
+                }
             }
         }
 
-        // Add to cart
-        function addToCart(productId) {
-            if (!currentUser) {
-                showNotification('Please log in to add items to cart', 'error');
-                showAuthModal();
-                return;
-            }
-            
-            showNotification('Product added to cart', 'success');
-        }
-
-        // Show page
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            const selectedPage = document.getElementById(pageId + '-page');
-            if (selectedPage) {
-                selectedPage.classList.add('active');
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-                
-                // Update active nav link
-                updateActiveNavLink(pageId);
-            }
-        }
-
-        // Update active nav link
-        function updateActiveNavLink(pageId) {
-            const navLinks = document.querySelectorAll('.nav-links a, .mobile-nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // For demo purposes, we'll just highlight the home link when on home page
-            if (pageId === 'home') {
-                const homeLinks = document.querySelectorAll('.nav-links a, .mobile-nav-links a');
-                homeLinks.forEach(link => {
-                    if (link.textContent === 'Home') {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        }
-
-        // Switch dashboard tab
-        function switchDashboardTab(tabId) {
-            // Get all tabs in the current dashboard
-            const dashboard = document.querySelector('.dashboard-content');
-            if (!dashboard) return;
-            
-            const tabs = dashboard.querySelectorAll('.dashboard-tab');
-            const navLinks = dashboard.querySelectorAll('.dashboard-nav-link');
-            
-            // Hide all tabs and remove active class from nav links
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Show selected tab and activate corresponding nav link
-            const selectedTab = document.getElementById(tabId);
-            const selectedNavLink = Array.from(navLinks).find(link => 
-                link.getAttribute('onclick').includes(tabId)
-            );
-            
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-            
-            if (selectedNavLink) {
-                selectedNavLink.classList.add('active');
-            }
-        }
-
-        // Show auth modal
+        // UI Functions
         function showAuthModal() {
-            authModal.style.display = 'flex';
-            switchAuthTab('login');
+            if (authModal) authModal.style.display = 'flex';
         }
 
-        // Close auth modal
         function closeAuthModal() {
-            authModal.style.display = 'none';
+            if (authModal) authModal.style.display = 'none';
         }
 
-        // Switch auth tab
         function switchAuthTab(tab) {
             const tabs = document.querySelectorAll('.auth-tab');
             const forms = document.querySelectorAll('.auth-form');
             
-            tabs.forEach(tabElement => {
-                tabElement.classList.remove('active');
-            });
+            tabs.forEach(tabEl => tabEl.classList.remove('active'));
+            forms.forEach(form => form.classList.remove('active'));
             
-            forms.forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // Activate selected tab and form
-            const selectedTab = Array.from(tabs).find(tabElement => 
-                tabElement.textContent.toLowerCase().includes(tab)
-            );
-            
-            const selectedForm = document.getElementById(tab + 'Form');
-            
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-            
-            if (selectedForm) {
-                selectedForm.classList.add('active');
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('signupForm').classList.add('active');
             }
         }
 
-        // Toggle mobile menu
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            
+            hideMobileMenu();
+        }
+
         function toggleMobileMenu() {
-            mobileMenu.classList.toggle('active');
-            
-            // Change icon
-            const icon = mobileMenuBtn.querySelector('i');
-            if (mobileMenu.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('active');
             }
         }
 
-        // Handle header scroll
-        function handleHeaderScroll() {
-            if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
+        function hideMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.classList.remove('active');
             }
         }
 
-        // Show loading spinner
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
         function showLoading(show) {
-            if (show) {
-                loadingSpinner.style.display = 'flex';
-            } else {
-                loadingSpinner.style.display = 'none';
+            if (loadingSpinner) {
+                loadingSpinner.style.display = show ? 'flex' : 'none';
             }
         }
 
-        // Show notification
         function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            const notificationIcon = notification.querySelector('i');
-            const notificationTitle = notification.querySelector('h4');
-            const notificationMessage = notification.querySelector('p');
+            if (!notification) return;
             
-            // Set notification content
-            notificationMessage.textContent = message;
+            const icon = notification.querySelector('i');
+            const title = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
             
-            // Set notification type
+            messageEl.textContent = message;
+            
             notification.className = 'notification';
-            notification.classList.add('notification-' + type);
-            
-            // Set icon based on type
-            if (type === 'success') {
-                notificationIcon.className = 'fas fa-check-circle';
-                notificationTitle.textContent = 'Success!';
-            } else if (type === 'error') {
-                notificationIcon.className = 'fas fa-exclamation-circle';
-                notificationTitle.textContent = 'Error!';
-            } else if (type === 'warning') {
-                notificationIcon.className = 'fas fa-exclamation-triangle';
-                notificationTitle.textContent = 'Warning!';
-            } else {
-                notificationIcon.className = 'fas fa-info-circle';
-                notificationTitle.textContent = 'Info';
-            }
-            
-            // Show notification
             notification.classList.add('show');
             
-            // Auto hide after 5 seconds
+            if (type === 'success') {
+                notification.classList.add('notification-success');
+                icon.className = 'fas fa-check-circle';
+                title.textContent = 'Success!';
+            } else if (type === 'error') {
+                notification.classList.add('notification-error');
+                icon.className = 'fas fa-exclamation-circle';
+                title.textContent = 'Error!';
+            } else if (type === 'warning') {
+                icon.className = 'fas fa-exclamation-triangle';
+                title.textContent = 'Warning!';
+            }
+            
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 5000);
         }
 
-        // Close notification when clicked
-        notification.addEventListener('click', () => {
-            notification.classList.remove('show');
-        });
+        function showUserMenu() {
+            showNotification('User menu would open here', 'success');
+        }
 
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                closeAuthModal();
-            }
-        });
+        // Make functions globally available
+        window.showAuthModal = showAuthModal;
+        window.closeAuthModal = closeAuthModal;
+        window.switchAuthTab = switchAuthTab;
+        window.showPage = showPage;
+        window.toggleMobileMenu = toggleMobileMenu;
+        window.hideMobileMenu = hideMobileMenu;
+        window.logout = logout;
+        window.showUserMenu = showUserMenu;
+        window.scrollToSection = scrollToSection;
     </script>
 </body>
 </html>
