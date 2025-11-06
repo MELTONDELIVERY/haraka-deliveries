@@ -92,8 +92,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            text-decoration: none;
-            cursor: pointer;
         }
 
         .logo-icon {
@@ -124,7 +122,6 @@
             border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
-            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -233,50 +230,6 @@
             font-size: 24px;
             cursor: pointer;
             color: white;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            z-index: 999;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .mobile-menu.active {
-            display: block;
-        }
-
-        .mobile-nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .mobile-nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 12px 15px;
-            border-radius: 10px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .mobile-nav-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-auth-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
         }
 
         /* Hero Section */
@@ -574,7 +527,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
         }
 
         .footer-links a:hover {
@@ -758,6 +710,8 @@
             font-weight: bold;
             font-size: 18px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background-size: cover;
+            background-position: center;
         }
 
         .dashboard-content {
@@ -829,6 +783,8 @@
             align-items: center;
             justify-content: center;
             color: white;
+            background-size: cover;
+            background-position: center;
             position: relative;
         }
 
@@ -931,6 +887,45 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Dashboard Navigation */
+        .dashboard-nav-links {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-nav-link {
+            padding: 12px 24px;
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s;
+        }
+
+        .dashboard-nav-link:hover, .dashboard-nav-link.active {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 30px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            margin-bottom: 25px;
+            opacity: 0.5;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
             display: none;
@@ -962,172 +957,548 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Seller Dashboard Styles */
+        .seller-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .product-form {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+
+        .product-form h3 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Rider Dashboard Styles */
+        .delivery-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .delivery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .delivery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .delivery-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: rgba(251, 197, 49, 0.2);
+            color: var(--warning);
+        }
+
+        .status-accepted {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .status-picked_up {
+            background: rgba(116, 185, 255, 0.2);
+            color: var(--info);
+        }
+
+        .status-delivered {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .status-cancelled {
+            background: rgba(232, 65, 24, 0.2);
+            color: var(--danger);
+        }
+
+        /* Legal Pages */
+        .legal-page {
+            padding: 120px 0 80px;
+            color: white;
+        }
+
+        .legal-content {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .legal-content h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-content h2 {
+            margin: 30px 0 15px;
+            color: white;
+        }
+
+        .legal-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .legal-content ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Contact Page */
+        .contact-page {
+            padding: 120px 0 80px;
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-form {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .message-sent {
+            background: var(--gradient-primary);
+            margin-left: auto;
+        }
+
+        .message-received {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .chat-input button {
+            padding: 15px 25px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Verification Progress */
+        .verification-steps {
+            margin: 30px 0;
+        }
+
+        .verification-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-completed .step-icon {
+            background: var(--success);
+        }
+
+        .step-active .step-icon {
+            background: var(--primary);
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Order Tracking */
+        .order-tracking {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .tracking-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            transition: all 0.3s;
+        }
+
+        .step-active .step-indicator {
+            background: var(--primary);
+            box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.2);
+        }
+
+        .step-completed .step-indicator {
+            background: var(--success);
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .step-active .step-label {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card {
+                padding: 25px 20px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+            
+            .auth-tab {
+                padding: 12px 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Loading Spinner -->
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner"></div>
-        <p>Loading...</p>
+        <p>Loading IPATE Deliveries...</p>
     </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
-        <div>
-            <h4 id="notificationTitle">Success</h4>
-            <p id="notificationMessage">Operation completed successfully</p>
+        <div class="notification-content">
+            <h4>Success!</h4>
+            <p>Your action was completed successfully.</p>
         </div>
     </div>
 
-    <!-- Landing Page -->
-    <div class="page active" id="landingPage">
-        <!-- Header -->
-        <header id="mainHeader">
-            <div class="container">
-                <div class="header-content">
-                    <div class="logo" onclick="showPage('landingPage')">
-                        <i class="fas fa-truck-fast logo-icon"></i>
-                        <span class="logo-text">IPATE Deliveries</span>
-                    </div>
-                    <nav class="nav-links">
-                        <a onclick="showPage('landingPage')">Home</a>
-                        <a onclick="scrollToSection('features')">Features</a>
-                        <a onclick="showPage('aboutPage')">About</a>
-                        <a onclick="showPage('contactPage')">Contact</a>
-                    </nav>
-                    <div class="auth-buttons" id="authButtons">
-                        <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
-                        <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
-                    </div>
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">
-                        <i class="fas fa-bars"></i>
-                    </button>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🚚</div>
+                    <div class="logo-text">IPATE</div>
                 </div>
-            </div>
-        </header>
-
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-nav-links">
-                <a onclick="showPage('landingPage'); hideMobileMenu()">Home</a>
-                <a onclick="scrollToSection('features'); hideMobileMenu()">Features</a>
-                <a onclick="showPage('aboutPage'); hideMobileMenu()">About</a>
-                <a onclick="showPage('contactPage'); hideMobileMenu()">Contact</a>
-            </div>
-            <div class="mobile-auth-buttons" id="mobileAuthButtons">
-                <button class="btn btn-outline btn-block" onclick="showAuthModal(); hideMobileMenu()">Login</button>
-                <button class="btn btn-primary btn-block" onclick="showAuthModal(); hideMobileMenu()">Sign Up</button>
+                <nav class="nav-links">
+                    <a href="#" onclick="showPage('home')">Home</a>
+                    <a href="#" onclick="showPage('services')">Services</a>
+                    <a href="#" onclick="showPage('about')">About</a>
+                    <a href="#" onclick="showPage('contact')">Contact</a>
+                </nav>
+                <div class="auth-buttons" id="authButtons">
+                    <button class="btn btn-outline" onclick="openAuthModal()">Login</button>
+                    <button class="btn btn-primary" onclick="openAuthModal()">Sign Up</button>
+                </div>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div>
+                        <div id="userName"></div>
+                        <div id="userRole" style="font-size: 12px; opacity: 0.8;"></div>
+                    </div>
+                    <button class="btn btn-sm btn-outline" onclick="logout()">Logout</button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
+    </header>
 
-        <!-- Hero Section -->
-        <section class="hero">
+    <!-- Home Page -->
+    <section class="page active" id="home">
+        <div class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>Fast & Reliable Deliveries in Nairobi</h1>
-                    <p>Get your goods delivered quickly and safely with our trusted network of verified riders. From food to documents, we've got you covered.</p>
+                    <h1>Fast Nairobi Delivery in Minutes</h1>
+                    <p>Get anything delivered - from food and groceries to documents and packages. Fast, reliable, and affordable delivery services across Nairobi.</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary btn-large" onclick="showAuthModal()">
-                            <i class="fas fa-rocket"></i> Get Started Now
+                        <button class="btn btn-primary btn-large" onclick="openAuthModal()">
+                            <i class="fas fa-shipping-fast"></i> Start Delivering
                         </button>
-                        <button class="btn btn-outline btn-large" onclick="scrollToSection('features')">
+                        <button class="btn btn-outline btn-large" onclick="showPage('services')">
                             <i class="fas fa-info-circle"></i> Learn More
                         </button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Features Section -->
-        <section class="features" id="features">
+        <div class="features">
             <div class="container">
-                <h2 class="section-title">Why Choose IPATE Deliveries?</h2>
-                <p class="section-subtitle">We provide the fastest, most reliable delivery service in Nairobi with cutting-edge technology and dedicated professionals.</p>
+                <h2 class="section-title">Why Choose IPATE?</h2>
+                <p class="section-subtitle">We're revolutionizing delivery services in Nairobi with cutting-edge technology and exceptional service.</p>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <i class="fas fa-bolt feature-icon"></i>
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
                         <h3>Lightning Fast</h3>
-                        <p>Our riders are strategically located across Nairobi to ensure your deliveries arrive in record time.</p>
+                        <p>Average delivery time of 30 minutes in Nairobi. Our optimized routes and dedicated riders ensure your items arrive quickly.</p>
                     </div>
                     <div class="feature-card">
-                        <i class="fas fa-shield-alt feature-icon"></i>
-                        <h3>Secure & Safe</h3>
-                        <p>All our riders are verified and your items are insured for complete peace of mind.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Fully Verified</h3>
+                        <p>All our sellers and riders undergo rigorous verification including KRA, NTSA, and background checks for your safety.</p>
                     </div>
                     <div class="feature-card">
-                        <i class="fas fa-map-marker-alt feature-icon"></i>
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
                         <h3>Real-Time Tracking</h3>
-                        <p>Track your delivery in real-time from pickup to drop-off with our advanced tracking system.</p>
+                        <p>Track your delivery in real-time with live GPS updates. Know exactly when your order will arrive.</p>
                     </div>
                     <div class="feature-card">
-                        <i class="fas fa-money-bill-wave feature-icon"></i>
-                        <h3>Affordable Pricing</h3>
-                        <p>Competitive pricing with no hidden fees. Pay only for the distance your delivery travels.</p>
+                        <div class="feature-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Best Prices</h3>
+                        <p>Competitive pricing with transparent fees. No hidden charges and multiple payment options including M-PESA.</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Testimonials Section -->
-        <section class="testimonials">
+        <div class="testimonials">
             <div class="container">
                 <h2 class="section-title">What Our Customers Say</h2>
-                <p class="section-subtitle">Hear from our satisfied customers, sellers, and riders about their experience with IPATE Deliveries.</p>
+                <p class="section-subtitle">Join thousands of satisfied customers and businesses using IPATE for their delivery needs.</p>
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "IPATE Deliveries has revolutionized how I run my small business. My products reach customers faster than ever before!"
+                            "IPATE has transformed my restaurant business. Orders come in seamlessly and deliveries are always on time. The rider verification gives me peace of mind."
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">S</div>
+                            <div class="author-avatar">JM</div>
                             <div class="author-info">
-                                <h4>Sarah Kimani</h4>
-                                <p>Small Business Owner</p>
+                                <h4>James Mwangi</h4>
+                                <p>Restaurant Owner, Westlands</p>
                             </div>
                         </div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "As a rider, I love the flexibility and fair earnings. The app makes it easy to manage deliveries and track my income."
+                            "As a rider, I love the transparency of IPATE. I know exactly what I'm earning and the app makes it easy to find the best routes. The verification process was thorough but fair."
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">J</div>
+                            <div class="author-avatar">SN</div>
                             <div class="author-info">
-                                <h4>John Otieno</h4>
-                                <p>Delivery Rider</p>
+                                <h4>Susan Njoroge</h4>
+                                <p>IPATE Rider, Nairobi</p>
                             </div>
                         </div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-content">
-                            "The real-time tracking feature gives me peace of mind. I always know exactly when my delivery will arrive."
+                            "I use IPATE multiple times a week for grocery deliveries. The real-time tracking is amazing and the riders are always professional. Highly recommended!"
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">M</div>
+                            <div class="author-avatar">AK</div>
                             <div class="author-info">
-                                <h4>Mary Wanjiku</h4>
-                                <p>Regular Customer</p>
+                                <h4>Alice Kamau</h4>
+                                <p>Customer, Kilimani</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- FAQ Section -->
-        <section class="faq-section">
+        <div class="faq-section">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-subtitle">Find answers to the most common questions about our delivery services.</p>
                 <div class="faq-container">
                     <div class="faq-item">
                         <div class="faq-question">
-                            How fast can I get my delivery?
+                            How fast are your deliveries?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            Most deliveries within Nairobi are completed within 1-3 hours, depending on distance and traffic conditions. We offer express delivery options for urgent packages.
+                            Our average delivery time in Nairobi is 30 minutes. Delivery times may vary based on distance, traffic, and order complexity.
                         </div>
                     </div>
                     <div class="faq-item">
@@ -1136,280 +1507,1281 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            We currently serve all major areas in Nairobi including CBD, Westlands, Karen, Lang'ata, Kileleshwa, Kilimani, Lavington, Parklands, and many more. We're continuously expanding our coverage.
+                            We currently serve all major areas in Nairobi including CBD, Westlands, Kilimani, Lavington, Karen, and surrounding neighborhoods.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How does the verification process work?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Our verification includes document validation (KRA PIN, National ID), background checks, and in some cases physical verification to ensure safety and reliability.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What payment methods do you accept?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            We accept M-PESA, credit/debit cards, and cash on delivery for certain orders. All digital payments are secure and encrypted.
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Footer -->
-        <footer>
+    <!-- Services Page -->
+    <section class="page" id="services">
+        <div class="legal-page">
             <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-logo">
-                        <i class="fas fa-truck-fast"></i>
-                        IPATE Deliveries
+                <div class="legal-content">
+                    <h1>Our Services</h1>
+                    <p>IPATE offers a comprehensive suite of delivery services tailored to meet the needs of individuals and businesses across Nairobi.</p>
+                    
+                    <h2>Food Delivery</h2>
+                    <p>Get your favorite meals from restaurants across Nairobi delivered fast to your doorstep. We partner with top restaurants to bring you the best dining experience at home.</p>
+                    
+                    <h2>Grocery Delivery</h2>
+                    <p>Shop from your favorite supermarkets and grocery stores without leaving home. Fresh produce, household items, and more delivered in under 60 minutes.</p>
+                    
+                    <h2>Document Delivery</h2>
+                    <p>Secure and timely delivery of important documents, parcels, and packages across Nairobi. Real-time tracking and delivery confirmation included.</p>
+                    
+                    <h2>Business Logistics</h2>
+                    <p>Comprehensive delivery solutions for businesses including inventory distribution, product deliveries, and supply chain management.</p>
+                    
+                    <h2>Specialized Deliveries</h2>
+                    <p>Special handling for fragile items, pharmaceuticals, high-value goods, and temperature-sensitive products with specialized riders and vehicles.</p>
+                    
+                    <div class="hero-buttons" style="justify-content: flex-start; margin-top: 40px;">
+                        <button class="btn btn-primary" onclick="openAuthModal()">
+                            <i class="fas fa-user-plus"></i> Sign Up Now
+                        </button>
                     </div>
-                    <div class="footer-links">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a onclick="showPage('landingPage')"><i class="fas fa-chevron-right"></i> Home</a></li>
-                            <li><a onclick="scrollToSection('features')"><i class="fas fa-chevron-right"></i> Features</a></li>
-                            <li><a onclick="showPage('aboutPage')"><i class="fas fa-chevron-right"></i> About</a></li>
-                            <li><a onclick="showPage('contactPage')"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                        </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section class="page" id="about">
+        <div class="legal-page">
+            <div class="container">
+                <div class="legal-content">
+                    <h1>About IPATE</h1>
+                    <p>IPATE is Nairobi's fastest-growing delivery platform, connecting customers, sellers, and riders through cutting-edge technology and exceptional service.</p>
+                    
+                    <h2>Our Mission</h2>
+                    <p>To revolutionize urban logistics in Kenya by providing fast, reliable, and affordable delivery services while creating economic opportunities for riders and sellers.</p>
+                    
+                    <h2>Our Vision</h2>
+                    <p>To become East Africa's leading delivery platform, known for innovation, reliability, and community impact.</p>
+                    
+                    <h2>Our Values</h2>
+                    <ul>
+                        <li><strong>Reliability:</strong> We deliver on our promises, every time</li>
+                        <li><strong>Innovation:</strong> We continuously improve our technology and services</li>
+                        <li><strong>Safety:</strong> We prioritize the safety of our customers, riders, and partners</li>
+                        <li><strong>Transparency:</strong> We believe in open communication and honest pricing</li>
+                        <li><strong>Community:</strong> We're building a platform that benefits everyone involved</li>
+                    </ul>
+                    
+                    <h2>Our Story</h2>
+                    <p>Founded in 2023, IPATE was born from the need for a more reliable, transparent, and efficient delivery service in Nairobi. Our founders, experienced in both technology and logistics, saw an opportunity to create a platform that would benefit customers, businesses, and delivery riders alike.</p>
+                    
+                    <p>Today, we're proud to serve thousands of customers and partner with hundreds of businesses across Nairobi, with plans to expand to other major Kenyan cities in the near future.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section class="page" id="contact">
+        <div class="contact-page">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">Get in touch with our team for any questions, support, or partnership opportunities.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Get In Touch</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Our Office</h4>
+                                <p>Westlands Business Center<br>Nairobi, Kenya</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+254 700 123 456</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@ipate.co.ke</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4>Business Hours</h4>
+                                <p>Monday - Sunday: 6:00 AM - 11:00 PM</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="footer-links">
-                        <h4>Contact Info</h4>
-                        <ul>
-                            <li><a href="tel:+254748894671"><i class="fas fa-phone"></i> +254 748 894 671</a></li>
-                            <li><a href="mailto:info@ipatedeliveries.com"><i class="fas fa-envelope"></i> info@ipatedeliveries.com</a></li>
-                            <li><a><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</a></li>
-                        </ul>
-                        <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    
+                    <div class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Dashboard -->
+    <section class="page" id="customerDashboard">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div class="container">
+                    <div class="dashboard-nav">
+                        <div class="logo">
+                            <div class="logo-icon">🚚</div>
+                            <div class="logo-text">IPATE</div>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-avatar" id="customerAvatar"></div>
+                            <div>
+                                <div id="customerName"></div>
+                                <div style="font-size: 12px; opacity: 0.8;">Customer</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="showPage('home')">
+                                <i class="fas fa-home"></i> Home
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="logout()">Logout</button>
                         </div>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 IPATE Deliveries. All rights reserved.</p>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="container">
+                    <h2 style="color: white; margin-bottom: 20px;">Customer Dashboard</h2>
+                    
+                    <div class="dashboard-nav-links">
+                        <a href="#" class="dashboard-nav-link active" onclick="showCustomerTab('products')">Products</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showCustomerTab('orders')">My Orders</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showCustomerTab('tracking')">Order Tracking</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showCustomerTab('profile')">Profile</a>
+                    </div>
+                    
+                    <!-- Products Tab -->
+                    <div class="dashboard-tab active" id="productsTab">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalProducts">0</div>
+                                <div class="stat-label">Available Products</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalOrders">0</div>
+                                <div class="stat-label">My Orders</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="pendingOrders">0</div>
+                                <div class="stat-label">Pending Orders</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="completedOrders">0</div>
+                                <div class="stat-label">Completed Orders</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="color: white; margin: 30px 0 20px;">Available Products</h3>
+                        
+                        <div class="products-grid" id="productsGrid">
+                            <!-- Products will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Tab -->
+                    <div class="dashboard-tab" id="ordersTab">
+                        <h3 style="color: white; margin-bottom: 20px;">My Orders</h3>
+                        
+                        <div id="ordersList">
+                            <!-- Orders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tracking Tab -->
+                    <div class="dashboard-tab" id="trackingTab">
+                        <h3 style="color: white; margin-bottom: 20px;">Order Tracking</h3>
+                        
+                        <div class="order-tracking">
+                            <h4 style="margin-bottom: 15px;">Track Your Delivery</h4>
+                            <div class="map-container">
+                                <i class="fas fa-map-marked-alt"></i> Live tracking will appear here
+                            </div>
+                            
+                            <div class="tracking-steps">
+                                <div class="tracking-step step-completed">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="step-label">Order Placed</div>
+                                </div>
+                                <div class="tracking-step step-completed">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="step-label">Confirmed</div>
+                                </div>
+                                <div class="tracking-step step-active">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-shipping-fast"></i>
+                                    </div>
+                                    <div class="step-label">On the Way</div>
+                                </div>
+                                <div class="tracking-step">
+                                    <div class="step-indicator">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="step-label">Delivered</div>
+                                </div>
+                            </div>
+                            
+                            <div class="delivery-info">
+                                <p><strong>Estimated Delivery:</strong> 30 minutes</p>
+                                <p><strong>Rider:</strong> John M. (4.8 ★)</p>
+                                <p><strong>Vehicle:</strong> Motorcycle - KCR 123A</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Tab -->
+                    <div class="dashboard-tab" id="profileTab">
+                        <h3 style="color: white; margin-bottom: 20px;">My Profile</h3>
+                        
+                        <div class="product-form">
+                            <h4>Personal Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" class="form-control" id="customerFullName" placeholder="Your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="customerEmail" placeholder="Your email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" class="form-control" id="customerPhone" placeholder="Your phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" id="customerAddress" placeholder="Your delivery address">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="updateCustomerProfile()">Update Profile</button>
+                        </div>
+                        
+                        <div class="product-form">
+                            <h4>Payment Methods</h4>
+                            <div class="payment-methods">
+                                <div class="payment-method">
+                                    <i class="fab fa-mpesa"></i>
+                                    <span>M-PESA</span>
+                                    <button class="btn btn-sm btn-outline">Set as Default</button>
+                                </div>
+                                <div class="payment-method">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Credit/Debit Card</span>
+                                    <button class="btn btn-sm btn-outline">Add Card</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
 
-    <!-- Authentication Modal -->
+    <!-- Seller Dashboard -->
+    <section class="page" id="sellerDashboard">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div class="container">
+                    <div class="dashboard-nav">
+                        <div class="logo">
+                            <div class="logo-icon">🚚</div>
+                            <div class="logo-text">IPATE</div>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-avatar" id="sellerAvatar"></div>
+                            <div>
+                                <div id="sellerName"></div>
+                                <div style="font-size: 12px; opacity: 0.8;">Seller</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="showPage('home')">
+                                <i class="fas fa-home"></i> Home
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="logout()">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="container">
+                    <h2 style="color: white; margin-bottom: 20px;">Seller Dashboard</h2>
+                    
+                    <div class="dashboard-nav-links">
+                        <a href="#" class="dashboard-nav-link active" onclick="showSellerTab('overview')">Overview</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showSellerTab('products')">Products</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showSellerTab('orders')">Orders</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showSellerTab('verification')">Verification</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showSellerTab('analytics')">Analytics</a>
+                    </div>
+                    
+                    <!-- Overview Tab -->
+                    <div class="dashboard-tab active" id="overviewTab">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="sellerTotalOrders">0</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="sellerPendingOrders">0</div>
+                                <div class="stat-label">Pending Orders</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="sellerEarnings">KSh 0</div>
+                                <div class="stat-label">Total Earnings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="sellerProducts">0</div>
+                                <div class="stat-label">Active Products</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="color: white; margin: 30px 0 20px;">Recent Orders</h3>
+                        
+                        <div id="sellerRecentOrders">
+                            <!-- Recent orders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Products Tab -->
+                    <div class="dashboard-tab" id="productsTabSeller">
+                        <div class="seller-actions">
+                            <button class="btn btn-primary" onclick="showProductForm()">
+                                <i class="fas fa-plus"></i> Add New Product
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-file-export"></i> Export Products
+                            </button>
+                        </div>
+                        
+                        <div class="product-form" id="productForm" style="display: none;">
+                            <h3>Add New Product</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control" id="productCategory">
+                                        <option value="">Select category</option>
+                                        <option value="food">Food & Beverages</option>
+                                        <option value="grocery">Groceries</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="clothing">Clothing</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Price (KSh)</label>
+                                    <input type="number" class="form-control" id="productPrice" placeholder="Enter price">
+                                </div>
+                                <div class="form-group">
+                                    <label>Stock Quantity</label>
+                                    <input type="number" class="form-control" id="productStock" placeholder="Enter stock quantity">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Image URL</label>
+                                <input type="text" class="form-control" id="productImage" placeholder="Enter image URL">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" onclick="addProduct()">Add Product</button>
+                                <button class="btn btn-outline" onclick="hideProductForm()">Cancel</button>
+                            </div>
+                        </div>
+                        
+                        <h3 style="color: white; margin: 30px 0 20px;">My Products</h3>
+                        
+                        <div class="products-grid" id="sellerProductsGrid">
+                            <!-- Seller products will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Tab -->
+                    <div class="dashboard-tab" id="ordersTabSeller">
+                        <h3 style="color: white; margin-bottom: 20px;">Order Management</h3>
+                        
+                        <div id="sellerOrdersList">
+                            <!-- Seller orders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Verification Tab -->
+                    <div class="dashboard-tab" id="verificationTab">
+                        <h3 style="color: white; margin-bottom: 20px;">Seller Verification</h3>
+                        
+                        <div class="product-form">
+                            <h4>Verification Status: <span id="verificationStatus" style="color: var(--warning);">Pending</span></h4>
+                            <p>Complete the verification process to start selling on IPATE. This helps build trust with customers and ensures compliance with regulations.</p>
+                            
+                            <div class="verification-steps">
+                                <div class="verification-step step-completed">
+                                    <div class="step-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Business Registration</h5>
+                                        <p>Business name, type, and registration details</p>
+                                    </div>
+                                </div>
+                                <div class="verification-step step-active">
+                                    <div class="step-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Identity Verification</h5>
+                                        <p>National ID, KRA PIN, and address verification</p>
+                                        <button class="btn btn-sm btn-primary" style="margin-top: 10px;">Upload Documents</button>
+                                    </div>
+                                </div>
+                                <div class="verification-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Business Validation</h5>
+                                        <p>Business permits, licenses, and location verification</p>
+                                    </div>
+                                </div>
+                                <div class="verification-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Onboarding & Training</h5>
+                                        <p>Platform training and policy agreement</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Tab -->
+                    <div class="dashboard-tab" id="analyticsTab">
+                        <h3 style="color: white; margin-bottom: 20px;">Sales Analytics</h3>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="weeklySales">KSh 0</div>
+                                <div class="stat-label">Weekly Sales</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="monthlySales">KSh 0</div>
+                                <div class="stat-label">Monthly Sales</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalCustomers">0</div>
+                                <div class="stat-label">Total Customers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="conversionRate">0%</div>
+                                <div class="stat-label">Conversion Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-form" style="margin-top: 30px;">
+                            <h4>Sales Overview</h4>
+                            <div style="height: 300px; background: rgba(255,255,255,0.1); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-chart-bar"></i> Sales chart will appear here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rider Dashboard -->
+    <section class="page" id="riderDashboard">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div class="container">
+                    <div class="dashboard-nav">
+                        <div class="logo">
+                            <div class="logo-icon">🚚</div>
+                            <div class="logo-text">IPATE</div>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-avatar" id="riderAvatar"></div>
+                            <div>
+                                <div id="riderName"></div>
+                                <div style="font-size: 12px; opacity: 0.8;">Rider</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="showPage('home')">
+                                <i class="fas fa-home"></i> Home
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="logout()">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="container">
+                    <h2 style="color: white; margin-bottom: 20px;">Rider Dashboard</h2>
+                    
+                    <div class="dashboard-nav-links">
+                        <a href="#" class="dashboard-nav-link active" onclick="showRiderTab('deliveries')">Available Deliveries</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderTab('active')">Active Deliveries</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderTab('earnings')">Earnings</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderTab('verification')">Verification</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderTab('profile')">Profile</a>
+                    </div>
+                    
+                    <!-- Deliveries Tab -->
+                    <div class="dashboard-tab active" id="deliveriesTab">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="availableDeliveries">0</div>
+                                <div class="stat-label">Available Deliveries</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="completedToday">0</div>
+                                <div class="stat-label">Completed Today</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalEarnings">KSh 0</div>
+                                <div class="stat-label">Total Earnings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="rating">0.0</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="color: white; margin: 30px 0 20px;">Available Deliveries</h3>
+                        
+                        <div id="availableDeliveriesList">
+                            <!-- Available deliveries will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Active Deliveries Tab -->
+                    <div class="dashboard-tab" id="activeTab">
+                        <h3 style="color: white; margin-bottom: 20px;">Active Deliveries</h3>
+                        
+                        <div id="activeDeliveriesList">
+                            <!-- Active deliveries will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Earnings Tab -->
+                    <div class="dashboard-tab" id="earningsTab">
+                        <h3 style="color: white; margin-bottom: 20px;">Earnings Overview</h3>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="weeklyEarnings">KSh 0</div>
+                                <div class="stat-label">This Week</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="monthlyEarnings">KSh 0</div>
+                                <div class="stat-label">This Month</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalDeliveries">0</div>
+                                <div class="stat-label">Total Deliveries</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="avgEarning">KSh 0</div>
+                                <div class="stat-label">Avg. per Delivery</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-form" style="margin-top: 30px;">
+                            <h4>Earnings Breakdown</h4>
+                            <div style="height: 300px; background: rgba(255,255,255,0.1); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-chart-pie"></i> Earnings chart will appear here
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Verification Tab -->
+                    <div class="dashboard-tab" id="verificationTabRider">
+                        <h3 style="color: white; margin-bottom: 20px;">Rider Verification</h3>
+                        
+                        <div class="product-form">
+                            <h4>Verification Status: <span id="riderVerificationStatus" style="color: var(--warning);">In Progress</span></h4>
+                            <p>Complete the verification process to start delivering with IPATE. This ensures safety and compliance with regulations.</p>
+                            
+                            <div class="verification-steps">
+                                <div class="verification-step step-completed">
+                                    <div class="step-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Personal Documentation</h5>
+                                        <p>National ID, KRA PIN, and address verification</p>
+                                    </div>
+                                </div>
+                                <div class="verification-step step-active">
+                                    <div class="step-icon">
+                                        <i class="fas fa-motorcycle"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Vehicle Verification</h5>
+                                        <p>Vehicle registration, insurance, and inspection</p>
+                                        <button class="btn btn-sm btn-primary" style="margin-top: 10px;">Upload Documents</button>
+                                    </div>
+                                </div>
+                                <div class="verification-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div>
+                                        <h5>License & Certification</h5>
+                                        <p>Driving license, good conduct certificate</p>
+                                    </div>
+                                </div>
+                                <div class="verification-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-tasks"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Practical Assessment</h5>
+                                        <p>Navigation test and delivery simulation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Tab -->
+                    <div class="dashboard-tab" id="profileTabRider">
+                        <h3 style="color: white; margin-bottom: 20px;">Rider Profile</h3>
+                        
+                        <div class="product-form">
+                            <h4>Personal Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" class="form-control" id="riderFullName" placeholder="Your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="riderEmail" placeholder="Your email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" class="form-control" id="riderPhone" placeholder="Your phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" id="riderAddress" placeholder="Your address">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="updateRiderProfile()">Update Profile</button>
+                        </div>
+                        
+                        <div class="product-form">
+                            <h4>Vehicle Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Vehicle Type</label>
+                                    <select class="form-control" id="vehicleType">
+                                        <option value="motorcycle">Motorcycle</option>
+                                        <option value="bicycle">Bicycle</option>
+                                        <option value="car">Car</option>
+                                        <option value="van">Van</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>License Plate</label>
+                                    <input type="text" class="form-control" id="licensePlate" placeholder="Vehicle license plate">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Vehicle Color</label>
+                                    <input type="text" class="form-control" id="vehicleColor" placeholder="Vehicle color">
+                                </div>
+                                <div class="form-group">
+                                    <label>Vehicle Model</label>
+                                    <input type="text" class="form-control" id="vehicleModel" placeholder="Vehicle model">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="updateVehicleInfo()">Update Vehicle Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color: white; margin-bottom: 30px; text-align: center;">Welcome to IPATE</h2>
+            
             <div class="auth-tabs">
                 <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
-                <div class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
             </div>
+            
+            <!-- Login Form -->
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
                 </div>
-                <div class="form-group">
-                    <label for="loginUserType">Account Type</label>
-                    <select id="loginUserType" class="form-control" required>
-                        <option value="">Select account type</option>
-                        <option value="customer">Customer</option>
-                        <option value="seller">Seller</option>
-                        <option value="rider">Rider</option>
-                    </select>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" style="color: var(--primary);">Forgot password?</a>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
+                
+                <div style="text-align: center; margin-top: 20px; color: rgba(255,255,255,0.7);">
+                    Or login with
+                </div>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" style="flex: 1;">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn btn-outline" style="flex: 1;">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                </div>
             </form>
-            <form class="auth-form" id="signupForm">
+            
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm">
                 <div class="form-group">
-                    <label for="signupName">Full Name</label>
-                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" id="registerName" placeholder="Enter your full name" required>
                 </div>
                 <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
-                    <label for="signupPhone">Phone Number</label>
-                    <input type="tel" id="signupPhone" class="form-control" placeholder="Enter your phone number" required>
+                    <label>Phone Number</label>
+                    <input type="tel" class="form-control" id="registerPhone" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupUserType">Account Type</label>
-                    <select id="signupUserType" class="form-control" required>
-                        <option value="">Select account type</option>
+                    <label>User Type</label>
+                    <select class="form-control" id="registerType" required>
+                        <option value="">Select user type</option>
                         <option value="customer">Customer</option>
                         <option value="seller">Seller</option>
                         <option value="rider">Rider</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="registerPassword" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Confirm your password" required>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a></label>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Create Account</button>
             </form>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-links">
+                    <div class="footer-logo">
+                        <div class="logo-icon">🚚</div>
+                        IPATE
+                    </div>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">Fast, reliable, and affordable delivery services across Nairobi.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Food Delivery</a></li>
+                        <li><a href="#">Grocery Delivery</a></li>
+                        <li><a href="#">Document Delivery</a></li>
+                        <li><a href="#">Business Logistics</a></li>
+                        <li><a href="#">Specialized Deliveries</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 IPATE Deliveries. All rights reserved. | <a href="#" style="color: rgba(255,255,255,0.7);">Privacy Policy</a> | <a href="#" style="color: rgba(255,255,255,0.7);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://xbwvsswycdskxkorharu.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhid3Zzc3d5Y2Rza3hrb3JoYXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyNDI4MjcsImV4cCI6MjA3NzgxODgyN30.8PWNCjErZ4194dBT48ph4PyMWTO0EqLsZIDK8j2O1yc';
-
-        // Global variables
-        let supabase;
+        
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Global state
         let currentUser = null;
-        let userRole = null;
-
-        // DOM Elements
-        let loadingSpinner, notification, authModal, loginForm, registerForm;
-
+        let currentPage = 'home';
+        let products = [];
+        let orders = [];
+        let deliveries = [];
+        
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
-        });
-
-        async function initializeApp() {
-            initializeDOMElements();
-            await initializeSupabase();
             setupEventListeners();
-            await checkAuthState();
-            setupFAQ();
+            checkAuthState();
+        });
+        
+        // Initialize the application
+        function initializeApp() {
+            // Show loading spinner
+            showLoading(true);
+            
+            // Initialize FAQ functionality
+            initializeFAQ();
+            
+            // Hide loading spinner after 2 seconds
+            setTimeout(() => {
+                showLoading(false);
+            }, 2000);
         }
-
-        function initializeDOMElements() {
-            loadingSpinner = document.getElementById('loadingSpinner');
-            notification = document.getElementById('notification');
-            authModal = document.getElementById('authModal');
-            loginForm = document.getElementById('loginForm');
-            registerForm = document.getElementById('registerForm');
-        }
-
-        async function initializeSupabase() {
-            try {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-                    auth: {
-                        autoRefreshToken: true,
-                        persistSession: true,
-                        detectSessionInUrl: true
-                    }
-                });
-                console.log('✅ Supabase initialized successfully');
-            } catch (error) {
-                console.error('❌ Supabase initialization failed:', error);
-                showNotification('Using demo mode - some features limited', 'warning');
-            }
-        }
-
+        
+        // Setup event listeners
         function setupEventListeners() {
-            // Auth forms
-            if (loginForm) loginForm.addEventListener('submit', handleLogin);
-            if (registerForm) registerForm.addEventListener('submit', handleRegister);
+            // Header scroll effect
+            window.addEventListener('scroll', handleHeaderScroll);
             
-            // Mobile menu
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            }
+            // Auth form submissions
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
             
-            // Close modal when clicking outside
-            document.addEventListener('click', function(e) {
-                if (e.target === authModal) {
-                    closeAuthModal();
-                }
-            });
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
         }
-
-        function setupFAQ() {
+        
+        // Handle header scroll effect
+        function handleHeaderScroll() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        }
+        
+        // Initialize FAQ functionality
+        function initializeFAQ() {
             const faqItems = document.querySelectorAll('.faq-item');
+            
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
+                
                 question.addEventListener('click', () => {
+                    // Close all other FAQ items
                     faqItems.forEach(otherItem => {
-                        if (otherItem !== item) otherItem.classList.remove('active');
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
                     });
+                    
+                    // Toggle current item
                     item.classList.toggle('active');
                 });
             });
         }
-
+        
+        // Show/hide loading spinner
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = show ? 'flex' : 'none';
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = notification.querySelector('i');
+            const content = notification.querySelector('.notification-content');
+            
+            // Set notification content
+            content.querySelector('h4').textContent = type === 'success' ? 'Success!' : 'Error!';
+            content.querySelector('p').textContent = message;
+            
+            // Set notification style
+            notification.className = 'notification';
+            notification.classList.add(type === 'success' ? 'notification-success' : 'notification-error');
+            
+            // Set icon
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update current page
+            currentPage = pageId;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Load page-specific data
+            if (pageId === 'customerDashboard' && currentUser) {
+                loadCustomerDashboard();
+            } else if (pageId === 'sellerDashboard' && currentUser) {
+                loadSellerDashboard();
+            } else if (pageId === 'riderDashboard' && currentUser) {
+                loadRiderDashboard();
+            }
+        }
+        
+        // Customer dashboard tabs
+        function showCustomerTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('#customerDashboard .dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('#customerDashboard .dashboard-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Load tab-specific data
+            if (tabId === 'products') {
+                loadProducts();
+            } else if (tabId === 'orders') {
+                loadCustomerOrders();
+            }
+        }
+        
+        // Seller dashboard tabs
+        function showSellerTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('#sellerDashboard .dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('#sellerDashboard .dashboard-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Load tab-specific data
+            if (tabId === 'products') {
+                loadSellerProducts();
+            } else if (tabId === 'orders') {
+                loadSellerOrders();
+            } else if (tabId === 'overview') {
+                loadSellerOverview();
+            }
+        }
+        
+        // Rider dashboard tabs
+        function showRiderTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('#riderDashboard .dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('#riderDashboard .dashboard-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Load tab-specific data
+            if (tabId === 'deliveries') {
+                loadAvailableDeliveries();
+            } else if (tabId === 'active') {
+                loadActiveDeliveries();
+            } else if (tabId === 'earnings') {
+                loadRiderEarnings();
+            }
+        }
+        
+        // Auth modal functions
+        function openAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+        
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+        
+        function switchAuthTab(tab) {
+            // Update tabs
+            document.querySelectorAll('.auth-tab').forEach(authTab => {
+                authTab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            authButtons.style.display = authButtons.style.display === 'flex' ? 'none' : 'flex';
+        }
+        
+        // Check authentication state
         async function checkAuthState() {
             try {
-                if (!supabase) return;
-                
                 const { data: { session }, error } = await supabase.auth.getSession();
-                if (error) throw error;
+                
+                if (error) {
+                    console.error('Error checking auth state:', error);
+                    return;
+                }
                 
                 if (session) {
+                    // User is logged in
                     currentUser = session.user;
                     await loadUserProfile();
-                    updateUIForUser();
-                    showNotification('Welcome back!', 'success');
+                    showUserUI();
+                } else {
+                    // User is not logged in
+                    showAuthUI();
                 }
             } catch (error) {
-                console.error('Auth check error:', error);
+                console.error('Error checking auth state:', error);
+                showAuthUI();
             }
         }
-
-        async function loadUserProfile() {
-            if (!supabase || !currentUser) return;
+        
+        // Show user UI (logged in)
+        function showUserUI() {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'flex';
             
+            // Show appropriate dashboard based on user role
+            if (currentUser.user_metadata?.role === 'customer') {
+                showPage('customerDashboard');
+            } else if (currentUser.user_metadata?.role === 'seller') {
+                showPage('sellerDashboard');
+            } else if (currentUser.user_metadata?.role === 'rider') {
+                showPage('riderDashboard');
+            } else {
+                // Default to customer dashboard if role is not set
+                showPage('customerDashboard');
+            }
+        }
+        
+        // Show auth UI (logged out)
+        function showAuthUI() {
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('userInfo').style.display = 'none';
+            
+            // Show home page if not already on a public page
+            if (!['home', 'services', 'about', 'contact'].includes(currentPage)) {
+                showPage('home');
+            }
+        }
+        
+        // Load user profile
+        async function loadUserProfile() {
             try {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('*')
-                    .eq('id', currentUser.id)
-                    .single();
-                    
-                if (error) throw error;
+                // In a real app, you would fetch the user profile from your database
+                // For now, we'll use the user metadata from auth
                 
-                userRole = data.user_type;
-                currentUser.profile = data;
+                const userMetadata = currentUser.user_metadata;
+                const userName = userMetadata?.full_name || currentUser.email.split('@')[0];
+                const userRole = userMetadata?.role || 'customer';
+                
+                // Update UI with user info
+                document.getElementById('userName').textContent = userName;
+                document.getElementById('userRole').textContent = userRole.charAt(0).toUpperCase() + userRole.slice(1);
+                
+                // Set avatar
+                const avatarElement = document.getElementById('userAvatar');
+                avatarElement.textContent = userName.charAt(0).toUpperCase();
+                
+                // Update dashboard-specific user info
+                document.getElementById('customerName').textContent = userName;
+                document.getElementById('customerAvatar').textContent = userName.charAt(0).toUpperCase();
+                
+                document.getElementById('sellerName').textContent = userName;
+                document.getElementById('sellerAvatar').textContent = userName.charAt(0).toUpperCase();
+                
+                document.getElementById('riderName').textContent = userName;
+                document.getElementById('riderAvatar').textContent = userName.charAt(0).toUpperCase();
                 
             } catch (error) {
-                console.error('Failed to load user profile:', error);
+                console.error('Error loading user profile:', error);
             }
         }
-
+        
+        // Handle login
         async function handleLogin(e) {
             e.preventDefault();
             
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            const userType = document.getElementById('loginUserType').value;
-            
-            if (!email || !password || !userType) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            showLoading(true);
             
             try {
-                if (!supabase) {
-                    // Demo login
-                    handleDemoLogin(email, password, userType);
-                    return;
-                }
+                showLoading(true);
                 
                 const { data, error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password
+                    email: email,
+                    password: password
                 });
                 
-                if (error) throw error;
-                
-                // Verify user type
-                const { data: userData, error: userError } = await supabase
-                    .from('users')
-                    .select('user_type')
-                    .eq('id', data.user.id)
-                    .single();
-                    
-                if (userError) throw userError;
-                
-                if (userData.user_type !== userType) {
-                    await supabase.auth.signOut();
-                    showNotification(`This account is registered as a ${userData.user_type}, not a ${userType}`, 'error');
-                    return;
+                if (error) {
+                    throw error;
                 }
                 
+                // Login successful
                 currentUser = data.user;
-                userRole = userType;
-                
-                showNotification('Login successful!', 'success');
+                await loadUserProfile();
+                showUserUI();
                 closeAuthModal();
-                updateUIForUser();
+                showNotification('Login successful!');
                 
             } catch (error) {
                 console.error('Login error:', error);
@@ -1418,69 +2790,57 @@
                 showLoading(false);
             }
         }
-
+        
+        // Handle registration
         async function handleRegister(e) {
             e.preventDefault();
             
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const phone = document.getElementById('signupPhone').value;
-            const password = document.getElementById('signupPassword').value;
-            const userType = document.getElementById('signupUserType').value;
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const userType = document.getElementById('registerType').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
             
-            if (!name || !email || !phone || !password || !userType) {
-                showNotification('Please fill in all fields', 'error');
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
                 return;
             }
-            
-            if (password.length < 6) {
-                showNotification('Password must be at least 6 characters', 'error');
-                return;
-            }
-            
-            showLoading(true);
             
             try {
-                if (!supabase) {
-                    // Demo registration
-                    handleDemoRegister(name, email, phone, password, userType);
-                    return;
-                }
+                showLoading(true);
                 
                 const { data, error } = await supabase.auth.signUp({
-                    email,
-                    password,
+                    email: email,
+                    password: password,
                     options: {
                         data: {
-                            name,
-                            phone,
-                            user_type: userType
+                            full_name: name,
+                            phone: phone,
+                            role: userType
                         }
                     }
                 });
                 
-                if (error) throw error;
-                
-                if (data.user) {
-                    // Create user profile
-                    const { error: dbError } = await supabase
-                        .from('users')
-                        .insert([
-                            {
-                                id: data.user.id,
-                                email: data.user.email,
-                                name: name,
-                                phone: phone,
-                                user_type: userType,
-                                created_at: new Date().toISOString()
-                            }
-                        ]);
-                        
-                    if (dbError) throw dbError;
-                    
-                    showNotification('Registration successful! Please check your email for verification.', 'success');
-                    closeAuthModal();
+                if (error) {
+                    throw error;
                 }
+                
+                // Registration successful
+                showNotification('Registration successful! Please check your email for verification.');
+                closeAuthModal();
+                
+                // Switch to login tab
+                document.querySelectorAll('.auth-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector('.auth-tab').classList.add('active');
+                
+                document.querySelectorAll('.auth-form').forEach(form => {
+                    form.classList.remove('active');
+                });
+                document.getElementById('loginForm').classList.add('active');
                 
             } catch (error) {
                 console.error('Registration error:', error);
@@ -1489,233 +2849,794 @@
                 showLoading(false);
             }
         }
-
-        // Demo functions for when Supabase is not available
-        function handleDemoLogin(email, password, userType) {
-            const demoAccounts = {
-                'customer@example.com': { password: 'password123', type: 'customer', name: 'Demo Customer' },
-                'seller@example.com': { password: 'password123', type: 'seller', name: 'Demo Seller' },
-                'rider@example.com': { password: 'password123', type: 'rider', name: 'Demo Rider' }
-            };
+        
+        // Handle contact form submission
+        function handleContactSubmit(e) {
+            e.preventDefault();
             
-            const account = demoAccounts[email];
-            
-            if (account && account.password === password && account.type === userType) {
-                currentUser = {
-                    id: 'demo-' + Date.now(),
-                    email: email,
-                    user_metadata: { name: account.name }
-                };
-                userRole = userType;
-                
-                showNotification('Demo login successful!', 'success');
-                closeAuthModal();
-                updateUIForUser();
-            } else {
-                showNotification('Invalid demo credentials', 'error');
-            }
-            
-            showLoading(false);
+            // In a real app, you would send this data to your backend
+            showNotification('Your message has been sent successfully! We will get back to you soon.');
+            e.target.reset();
         }
-
-        function handleDemoRegister(name, email, phone, password, userType) {
-            currentUser = {
-                id: 'demo-' + Date.now(),
-                email: email,
-                user_metadata: { name: name }
-            };
-            userRole = userType;
-            
-            showNotification('Demo registration successful!', 'success');
-            closeAuthModal();
-            updateUIForUser();
-            showLoading(false);
-        }
-
+        
+        // Logout
         async function logout() {
-            showLoading(true);
-            
             try {
-                if (supabase) {
-                    const { error } = await supabase.auth.signOut();
-                    if (error) throw error;
+                const { error } = await supabase.auth.signOut();
+                
+                if (error) {
+                    throw error;
                 }
                 
+                // Logout successful
                 currentUser = null;
-                userRole = null;
-                
-                showNotification('Logged out successfully', 'success');
-                updateUIForUser();
-                showPage('landingPage');
+                showAuthUI();
+                showNotification('Logged out successfully');
                 
             } catch (error) {
                 console.error('Logout error:', error);
-                showNotification('Error during logout', 'error');
-            } finally {
-                showLoading(false);
+                showNotification(error.message, 'error');
             }
         }
-
-        function updateUIForUser() {
-            const authButtons = document.getElementById('authButtons');
-            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+        
+        // Load customer dashboard
+        async function loadCustomerDashboard() {
+            // Load products and orders
+            await loadProducts();
+            await loadCustomerOrders();
             
-            if (currentUser) {
-                // User is logged in
-                const userName = currentUser.user_metadata?.name || currentUser.email;
+            // Update stats
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(order => order.status === 'pending').length;
+            document.getElementById('completedOrders').textContent = orders.filter(order => order.status === 'delivered').length;
+        }
+        
+        // Load products
+        async function loadProducts() {
+            try {
+                // In a real app, you would fetch products from your database
+                // For now, we'll use mock data
                 
-                if (authButtons) {
-                    authButtons.innerHTML = `
-                        <button class="btn btn-outline" onclick="showUserMenu()">
-                            <i class="fas fa-user"></i> ${userName}
-                        </button>
-                        <button class="btn btn-primary" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    `;
-                }
+                products = [
+                    {
+                        id: 1,
+                        name: 'Fresh Groceries Package',
+                        description: 'A package of fresh vegetables, fruits, and essentials',
+                        price: 1500,
+                        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        seller: 'FreshMart Supermarket',
+                        category: 'grocery'
+                    },
+                    {
+                        id: 2,
+                        name: 'Restaurant Meal Deal',
+                        description: 'Delicious meal from a top Nairobi restaurant',
+                        price: 1200,
+                        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        seller: 'Nairobi Bistro',
+                        category: 'food'
+                    },
+                    {
+                        id: 3,
+                        name: 'Electronics Package',
+                        description: 'Carefully packaged electronics delivery',
+                        price: 500,
+                        image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        seller: 'TechHub Kenya',
+                        category: 'electronics'
+                    },
+                    {
+                        id: 4,
+                        name: 'Document Express',
+                        description: 'Secure document delivery anywhere in Nairobi',
+                        price: 300,
+                        image: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                        seller: 'QuickDocs Kenya',
+                        category: 'documents'
+                    }
+                ];
                 
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <button class="btn btn-outline btn-block" onclick="showUserMenu(); hideMobileMenu()">
-                            <i class="fas fa-user"></i> ${userName}
-                        </button>
-                        <button class="btn btn-primary btn-block" onclick="logout(); hideMobileMenu()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    `;
-                }
-            } else {
-                // User is not logged in
-                if (authButtons) {
-                    authButtons.innerHTML = `
-                        <button class="btn btn-outline" onclick="showAuthModal()">Login</button>
-                        <button class="btn btn-primary" onclick="showAuthModal()">Sign Up</button>
-                    `;
-                }
+                // Render products
+                const productsGrid = document.getElementById('productsGrid');
+                productsGrid.innerHTML = '';
                 
-                if (mobileAuthButtons) {
-                    mobileAuthButtons.innerHTML = `
-                        <button class="btn btn-outline btn-block" onclick="showAuthModal(); hideMobileMenu()">Login</button>
-                        <button class="btn btn-primary btn-block" onclick="showAuthModal(); hideMobileMenu()">Sign Up</button>
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image" style="background-image: url('${product.image}')">
+                            <i class="fas fa-box-open" style="font-size: 48px; z-index: 2; position: relative;"></i>
+                        </div>
+                        <div class="product-info">
+                            <h4>${product.name}</h4>
+                            <p>${product.description}</p>
+                            <div class="product-price">KSh ${product.price}</div>
+                            <p><small>Sold by: ${product.seller}</small></p>
+                            <button class="btn btn-primary btn-block" onclick="addToCart(${product.id})">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
                     `;
-                }
-            }
-        }
-
-        // UI Functions
-        function showAuthModal() {
-            if (authModal) authModal.style.display = 'flex';
-        }
-
-        function closeAuthModal() {
-            if (authModal) authModal.style.display = 'none';
-        }
-
-        function switchAuthTab(tab) {
-            const tabs = document.querySelectorAll('.auth-tab');
-            const forms = document.querySelectorAll('.auth-form');
-            
-            tabs.forEach(tabEl => tabEl.classList.remove('active'));
-            forms.forEach(form => form.classList.remove('active'));
-            
-            if (tab === 'login') {
-                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
-                document.getElementById('loginForm').classList.add('active');
-            } else {
-                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
-                document.getElementById('signupForm').classList.add('active');
-            }
-        }
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                window.scrollTo(0, 0);
-            }
-            
-            hideMobileMenu();
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (mobileMenu) {
-                mobileMenu.classList.toggle('active');
-            }
-        }
-
-        function hideMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (mobileMenu) {
-                mobileMenu.classList.remove('active');
-            }
-        }
-
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                    productsGrid.appendChild(productCard);
                 });
+                
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showNotification('Error loading products', 'error');
             }
         }
-
-        function showLoading(show) {
-            if (loadingSpinner) {
-                loadingSpinner.style.display = show ? 'flex' : 'none';
+        
+        // Load customer orders
+        async function loadCustomerOrders() {
+            try {
+                // In a real app, you would fetch orders from your database
+                // For now, we'll use mock data
+                
+                orders = [
+                    {
+                        id: 1,
+                        product: 'Fresh Groceries Package',
+                        seller: 'FreshMart Supermarket',
+                        price: 1500,
+                        status: 'delivered',
+                        date: '2023-11-15',
+                        rider: 'John M.'
+                    },
+                    {
+                        id: 2,
+                        product: 'Restaurant Meal Deal',
+                        seller: 'Nairobi Bistro',
+                        price: 1200,
+                        status: 'in_progress',
+                        date: '2023-11-16',
+                        rider: 'Susan K.'
+                    },
+                    {
+                        id: 3,
+                        product: 'Document Express',
+                        seller: 'QuickDocs Kenya',
+                        price: 300,
+                        status: 'pending',
+                        date: '2023-11-17',
+                        rider: null
+                    }
+                ];
+                
+                // Render orders
+                const ordersList = document.getElementById('ordersList');
+                ordersList.innerHTML = '';
+                
+                if (orders.length === 0) {
+                    ordersList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>No Orders Yet</h3>
+                            <p>You haven't placed any orders yet. Start shopping now!</p>
+                            <button class="btn btn-primary" onclick="showCustomerTab('products')">Browse Products</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                orders.forEach(order => {
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'delivery-card';
+                    
+                    let statusClass = '';
+                    let statusText = '';
+                    
+                    switch (order.status) {
+                        case 'pending':
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                            break;
+                        case 'in_progress':
+                            statusClass = 'status-accepted';
+                            statusText = 'In Progress';
+                            break;
+                        case 'delivered':
+                            statusClass = 'status-delivered';
+                            statusText = 'Delivered';
+                            break;
+                        default:
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                    }
+                    
+                    orderCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>${order.product}</h4>
+                            <span class="delivery-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <p><strong>Seller:</strong> ${order.seller}</p>
+                        <p><strong>Price:</strong> KSh ${order.price}</p>
+                        <p><strong>Date:</strong> ${order.date}</p>
+                        ${order.rider ? `<p><strong>Rider:</strong> ${order.rider}</p>` : ''}
+                        <div style="margin-top: 15px;">
+                            ${order.status !== 'delivered' ? `
+                                <button class="btn btn-sm btn-outline" onclick="trackOrder(${order.id})">
+                                    <i class="fas fa-map-marker-alt"></i> Track Order
+                                </button>
+                            ` : `
+                                <button class="btn btn-sm btn-outline" onclick="rateOrder(${order.id})">
+                                    <i class="fas fa-star"></i> Rate Delivery
+                                </button>
+                            `}
+                        </div>
+                    `;
+                    ordersList.appendChild(orderCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                showNotification('Error loading orders', 'error');
             }
         }
-
-        function showNotification(message, type = 'success') {
-            if (!notification) return;
+        
+        // Load seller dashboard
+        async function loadSellerDashboard() {
+            // Load seller products and orders
+            await loadSellerProducts();
+            await loadSellerOrders();
+            await loadSellerOverview();
+        }
+        
+        // Load seller products
+        async function loadSellerProducts() {
+            try {
+                // In a real app, you would fetch seller products from your database
+                // For now, we'll use mock data
+                
+                const sellerProducts = [
+                    {
+                        id: 1,
+                        name: 'Fresh Groceries Package',
+                        description: 'A package of fresh vegetables, fruits, and essentials',
+                        price: 1500,
+                        stock: 25,
+                        category: 'grocery',
+                        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+                    },
+                    {
+                        id: 2,
+                        name: 'Premium Groceries Bundle',
+                        description: 'Premium selection of organic products',
+                        price: 2500,
+                        stock: 15,
+                        category: 'grocery',
+                        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+                    }
+                ];
+                
+                // Update product count
+                document.getElementById('sellerProducts').textContent = sellerProducts.length;
+                
+                // Render products
+                const productsGrid = document.getElementById('sellerProductsGrid');
+                productsGrid.innerHTML = '';
+                
+                sellerProducts.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image" style="background-image: url('${product.image}')">
+                            <i class="fas fa-box-open" style="font-size: 48px; z-index: 2; position: relative;"></i>
+                        </div>
+                        <div class="product-info">
+                            <h4>${product.name}</h4>
+                            <p>${product.description}</p>
+                            <div class="product-price">KSh ${product.price}</div>
+                            <p><small>Stock: ${product.stock} | Category: ${product.category}</small></p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn btn-sm btn-outline" onclick="editProduct(${product.id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productsGrid.appendChild(productCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading seller products:', error);
+                showNotification('Error loading products', 'error');
+            }
+        }
+        
+        // Load seller orders
+        async function loadSellerOrders() {
+            try {
+                // In a real app, you would fetch seller orders from your database
+                // For now, we'll use mock data
+                
+                const sellerOrders = [
+                    {
+                        id: 1,
+                        product: 'Fresh Groceries Package',
+                        customer: 'Alice Kamau',
+                        price: 1500,
+                        status: 'delivered',
+                        date: '2023-11-15',
+                        rider: 'John M.'
+                    },
+                    {
+                        id: 2,
+                        product: 'Premium Groceries Bundle',
+                        customer: 'David Omondi',
+                        price: 2500,
+                        status: 'in_progress',
+                        date: '2023-11-16',
+                        rider: 'Susan K.'
+                    },
+                    {
+                        id: 3,
+                        product: 'Fresh Groceries Package',
+                        customer: 'Grace Wanjiku',
+                        price: 1500,
+                        status: 'pending',
+                        date: '2023-11-17',
+                        rider: null
+                    }
+                ];
+                
+                // Render orders
+                const ordersList = document.getElementById('sellerOrdersList');
+                ordersList.innerHTML = '';
+                
+                sellerOrders.forEach(order => {
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'delivery-card';
+                    
+                    let statusClass = '';
+                    let statusText = '';
+                    
+                    switch (order.status) {
+                        case 'pending':
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                            break;
+                        case 'in_progress':
+                            statusClass = 'status-accepted';
+                            statusText = 'In Progress';
+                            break;
+                        case 'delivered':
+                            statusClass = 'status-delivered';
+                            statusText = 'Delivered';
+                            break;
+                        default:
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                    }
+                    
+                    orderCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>${order.product}</h4>
+                            <span class="delivery-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <p><strong>Customer:</strong> ${order.customer}</p>
+                        <p><strong>Price:</strong> KSh ${order.price}</p>
+                        <p><strong>Date:</strong> ${order.date}</p>
+                        ${order.rider ? `<p><strong>Rider:</strong> ${order.rider}</p>` : ''}
+                        <div style="margin-top: 15px;">
+                            ${order.status === 'pending' ? `
+                                <button class="btn btn-sm btn-primary" onclick="acceptOrder(${order.id})">
+                                    <i class="fas fa-check"></i> Accept Order
+                                </button>
+                            ` : ''}
+                            ${order.status === 'in_progress' ? `
+                                <button class="btn btn-sm btn-secondary" onclick="markOrderReady(${order.id})">
+                                    <i class="fas fa-box"></i> Mark Ready
+                                </button>
+                            ` : ''}
+                            <button class="btn btn-sm btn-outline" onclick="viewOrderDetails(${order.id})">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    ordersList.appendChild(orderCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading seller orders:', error);
+                showNotification('Error loading orders', 'error');
+            }
+        }
+        
+        // Load seller overview
+        async function loadSellerOverview() {
+            try {
+                // In a real app, you would fetch seller overview data from your database
+                // For now, we'll use mock data
+                
+                document.getElementById('sellerTotalOrders').textContent = '15';
+                document.getElementById('sellerPendingOrders').textContent = '3';
+                document.getElementById('sellerEarnings').textContent = 'KSh 28,500';
+                
+                // Load recent orders
+                const recentOrdersContainer = document.getElementById('sellerRecentOrders');
+                recentOrdersContainer.innerHTML = '';
+                
+                const recentOrders = [
+                    { id: 1, customer: 'Alice Kamau', product: 'Fresh Groceries', status: 'Delivered', amount: 1500 },
+                    { id: 2, customer: 'David Omondi', product: 'Premium Bundle', status: 'In Progress', amount: 2500 },
+                    { id: 3, customer: 'Grace Wanjiku', product: 'Fresh Groceries', status: 'Pending', amount: 1500 }
+                ];
+                
+                recentOrders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.className = 'delivery-card';
+                    orderElement.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>${order.product}</h4>
+                            <span>KSh ${order.amount}</span>
+                        </div>
+                        <p><strong>Customer:</strong> ${order.customer}</p>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                    `;
+                    recentOrdersContainer.appendChild(orderElement);
+                });
+                
+            } catch (error) {
+                console.error('Error loading seller overview:', error);
+            }
+        }
+        
+        // Load rider dashboard
+        async function loadRiderDashboard() {
+            // Load available and active deliveries
+            await loadAvailableDeliveries();
+            await loadActiveDeliveries();
+            await loadRiderEarnings();
+        }
+        
+        // Load available deliveries
+        async function loadAvailableDeliveries() {
+            try {
+                // In a real app, you would fetch available deliveries from your database
+                // For now, we'll use mock data
+                
+                const availableDeliveries = [
+                    {
+                        id: 1,
+                        pickup: 'FreshMart Supermarket, Westlands',
+                        delivery: 'Kilimani, Nairobi',
+                        distance: '5.2 km',
+                        earnings: 250,
+                        urgency: 'high'
+                    },
+                    {
+                        id: 2,
+                        pickup: 'Nairobi Bistro, CBD',
+                        delivery: 'Lavington, Nairobi',
+                        distance: '7.8 km',
+                        earnings: 350,
+                        urgency: 'medium'
+                    },
+                    {
+                        id: 3,
+                        pickup: 'TechHub Kenya, Upper Hill',
+                        delivery: 'Karen, Nairobi',
+                        distance: '12.3 km',
+                        earnings: 500,
+                        urgency: 'low'
+                    }
+                ];
+                
+                // Update available deliveries count
+                document.getElementById('availableDeliveries').textContent = availableDeliveries.length;
+                
+                // Render deliveries
+                const deliveriesList = document.getElementById('availableDeliveriesList');
+                deliveriesList.innerHTML = '';
+                
+                availableDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    
+                    let urgencyClass = '';
+                    let urgencyText = '';
+                    
+                    switch (delivery.urgency) {
+                        case 'high':
+                            urgencyClass = 'status-pending';
+                            urgencyText = 'Urgent';
+                            break;
+                        case 'medium':
+                            urgencyClass = 'status-accepted';
+                            urgencyText = 'Medium';
+                            break;
+                        case 'low':
+                            urgencyClass = 'status-delivered';
+                            urgencyText = 'Low';
+                            break;
+                        default:
+                            urgencyClass = 'status-pending';
+                            urgencyText = 'Medium';
+                    }
+                    
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status ${urgencyClass}">${urgencyText}</span>
+                        </div>
+                        <p><strong>Pickup:</strong> ${delivery.pickup}</p>
+                        <p><strong>Delivery:</strong> ${delivery.delivery}</p>
+                        <p><strong>Distance:</strong> ${delivery.distance}</p>
+                        <p><strong>Earnings:</strong> KSh ${delivery.earnings}</p>
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-sm btn-primary" onclick="acceptDelivery(${delivery.id})">
+                                <i class="fas fa-check"></i> Accept Delivery
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="viewDeliveryDetails(${delivery.id})">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    deliveriesList.appendChild(deliveryCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading available deliveries:', error);
+                showNotification('Error loading deliveries', 'error');
+            }
+        }
+        
+        // Load active deliveries
+        async function loadActiveDeliveries() {
+            try {
+                // In a real app, you would fetch active deliveries from your database
+                // For now, we'll use mock data
+                
+                const activeDeliveries = [
+                    {
+                        id: 1,
+                        pickup: 'FreshMart Supermarket, Westlands',
+                        delivery: 'Kilimani, Nairobi',
+                        customer: 'Alice Kamau',
+                        status: 'picked_up',
+                        earnings: 250
+                    }
+                ];
+                
+                // Render deliveries
+                const deliveriesList = document.getElementById('activeDeliveriesList');
+                deliveriesList.innerHTML = '';
+                
+                if (activeDeliveries.length === 0) {
+                    deliveriesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-shipping-fast"></i>
+                            <h3>No Active Deliveries</h3>
+                            <p>You don't have any active deliveries at the moment.</p>
+                            <button class="btn btn-primary" onclick="showRiderTab('deliveries')">Find Deliveries</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                activeDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    
+                    let statusClass = '';
+                    let statusText = '';
+                    
+                    switch (delivery.status) {
+                        case 'accepted':
+                            statusClass = 'status-accepted';
+                            statusText = 'Accepted';
+                            break;
+                        case 'picked_up':
+                            statusClass = 'status-picked_up';
+                            statusText = 'Picked Up';
+                            break;
+                        case 'delivered':
+                            statusClass = 'status-delivered';
+                            statusText = 'Delivered';
+                            break;
+                        default:
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                    }
+                    
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <p><strong>Pickup:</strong> ${delivery.pickup}</p>
+                        <p><strong>Delivery:</strong> ${delivery.delivery}</p>
+                        <p><strong>Customer:</strong> ${delivery.customer}</p>
+                        <p><strong>Earnings:</strong> KSh ${delivery.earnings}</p>
+                        <div style="margin-top: 15px;">
+                            ${delivery.status === 'accepted' ? `
+                                <button class="btn btn-sm btn-primary" onclick="markPickedUp(${delivery.id})">
+                                    <i class="fas fa-box"></i> Mark Picked Up
+                                </button>
+                            ` : ''}
+                            ${delivery.status === 'picked_up' ? `
+                                <button class="btn btn-sm btn-secondary" onclick="markDelivered(${delivery.id})">
+                                    <i class="fas fa-check-circle"></i> Mark Delivered
+                                </button>
+                            ` : ''}
+                            <button class="btn btn-sm btn-outline" onclick="viewDeliveryDetails(${delivery.id})">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    deliveriesList.appendChild(deliveryCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading active deliveries:', error);
+                showNotification('Error loading deliveries', 'error');
+            }
+        }
+        
+        // Load rider earnings
+        async function loadRiderEarnings() {
+            try {
+                // In a real app, you would fetch rider earnings from your database
+                // For now, we'll use mock data
+                
+                document.getElementById('weeklyEarnings').textContent = 'KSh 8,500';
+                document.getElementById('monthlyEarnings').textContent = 'KSh 32,000';
+                document.getElementById('totalDeliveries').textContent = '45';
+                document.getElementById('avgEarning').textContent = 'KSh 350';
+                document.getElementById('completedToday').textContent = '3';
+                document.getElementById('totalEarnings').textContent = 'KSh 15,750';
+                document.getElementById('rating').textContent = '4.8';
+                
+            } catch (error) {
+                console.error('Error loading rider earnings:', error);
+            }
+        }
+        
+        // Product management functions
+        function showProductForm() {
+            document.getElementById('productForm').style.display = 'block';
+        }
+        
+        function hideProductForm() {
+            document.getElementById('productForm').style.display = 'none';
+        }
+        
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const price = document.getElementById('productPrice').value;
+            const stock = document.getElementById('productStock').value;
+            const description = document.getElementById('productDescription').value;
+            const image = document.getElementById('productImage').value;
             
-            const icon = notification.querySelector('i');
-            const title = document.getElementById('notificationTitle');
-            const messageEl = document.getElementById('notificationMessage');
-            
-            messageEl.textContent = message;
-            
-            notification.className = 'notification';
-            notification.classList.add('show');
-            
-            if (type === 'success') {
-                notification.classList.add('notification-success');
-                icon.className = 'fas fa-check-circle';
-                title.textContent = 'Success!';
-            } else if (type === 'error') {
-                notification.classList.add('notification-error');
-                icon.className = 'fas fa-exclamation-circle';
-                title.textContent = 'Error!';
-            } else if (type === 'warning') {
-                icon.className = 'fas fa-exclamation-triangle';
-                title.textContent = 'Warning!';
+            // Validate form
+            if (!name || !category || !price || !stock || !description) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
             }
             
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
+            // In a real app, you would send this data to your backend
+            showNotification('Product added successfully!');
+            hideProductForm();
+            
+            // Reset form
+            document.getElementById('productForm').reset();
+            
+            // Reload products
+            loadSellerProducts();
         }
-
-        function showUserMenu() {
-            showNotification('User menu would open here', 'success');
+        
+        function editProduct(productId) {
+            // In a real app, you would fetch the product details and populate the form
+            showNotification('Edit product functionality would be implemented here');
         }
-
-        // Make functions globally available
-        window.showAuthModal = showAuthModal;
-        window.closeAuthModal = closeAuthModal;
-        window.switchAuthTab = switchAuthTab;
-        window.showPage = showPage;
-        window.toggleMobileMenu = toggleMobileMenu;
-        window.hideMobileMenu = hideMobileMenu;
-        window.logout = logout;
-        window.showUserMenu = showUserMenu;
-        window.scrollToSection = scrollToSection;
+        
+        function deleteProduct(productId) {
+            // In a real app, you would send a delete request to your backend
+            if (confirm('Are you sure you want to delete this product?')) {
+                showNotification('Product deleted successfully!');
+                loadSellerProducts();
+            }
+        }
+        
+        // Order management functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                showNotification(`${product.name} added to cart!`);
+                
+                // In a real app, you would add the product to the user's cart
+            }
+        }
+        
+        function trackOrder(orderId) {
+            // In a real app, you would show the order tracking page
+            showCustomerTab('tracking');
+            showNotification('Order tracking would be implemented here');
+        }
+        
+        function rateOrder(orderId) {
+            // In a real app, you would show a rating modal
+            showNotification('Rating functionality would be implemented here');
+        }
+        
+        function acceptOrder(orderId) {
+            // In a real app, you would update the order status in your database
+            showNotification('Order accepted successfully!');
+            loadSellerOrders();
+        }
+        
+        function markOrderReady(orderId) {
+            // In a real app, you would update the order status in your database
+            showNotification('Order marked as ready for pickup!');
+            loadSellerOrders();
+        }
+        
+        function viewOrderDetails(orderId) {
+            // In a real app, you would show the order details modal
+            showNotification('Order details would be shown here');
+        }
+        
+        // Delivery management functions
+        function acceptDelivery(deliveryId) {
+            // In a real app, you would update the delivery status in your database
+            showNotification('Delivery accepted successfully!');
+            loadAvailableDeliveries();
+            loadActiveDeliveries();
+        }
+        
+        function markPickedUp(deliveryId) {
+            // In a real app, you would update the delivery status in your database
+            showNotification('Delivery marked as picked up!');
+            loadActiveDeliveries();
+        }
+        
+        function markDelivered(deliveryId) {
+            // In a real app, you would update the delivery status in your database
+            showNotification('Delivery marked as completed!');
+            loadActiveDeliveries();
+            loadRiderEarnings();
+        }
+        
+        function viewDeliveryDetails(deliveryId) {
+            // In a real app, you would show the delivery details modal
+            showNotification('Delivery details would be shown here');
+        }
+        
+        // Profile update functions
+        function updateCustomerProfile() {
+            const fullName = document.getElementById('customerFullName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            
+            // In a real app, you would send this data to your backend
+            showNotification('Profile updated successfully!');
+        }
+        
+        function updateRiderProfile() {
+            const fullName = document.getElementById('riderFullName').value;
+            const email = document.getElementById('riderEmail').value;
+            const phone = document.getElementById('riderPhone').value;
+            const address = document.getElementById('riderAddress').value;
+            
+            // In a real app, you would send this data to your backend
+            showNotification('Profile updated successfully!');
+        }
+        
+        function updateVehicleInfo() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const licensePlate = document.getElementById('licensePlate').value;
+            const vehicleColor = document.getElementById('vehicleColor').value;
+            const vehicleModel = document.getElementById('vehicleModel').value;
+            
+            // In a real app, you would send this data to your backend
+            showNotification('Vehicle information updated successfully!');
+        }
     </script>
 </body>
 </html>
