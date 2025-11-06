@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPATE Deliveries - Fast Nairobi Delivery</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚚</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ðŸšš</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -3110,7 +3110,7 @@
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
@@ -3121,11 +3121,11 @@
             <form class="auth-form" id="signupForm">
                 <div class="form-group">
                     <label for="signupName">Full Name</label>
-                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
@@ -3814,7 +3814,7 @@
             }
         }
 
-        // Create user profile - improved version
+        // Create user profile - fixed version
         async function createUserProfile(user, role, name) {
             try {
                 const profileData = {
@@ -3836,6 +3836,8 @@
                     profileData.is_available = true;
                 }
                 
+                console.log('Creating profile for user:', user.id);
+                
                 const { data, error } = await supabase
                     .from('profiles')
                     .insert([profileData])
@@ -3845,8 +3847,9 @@
                 if (error) {
                     console.error('Error creating user profile:', error);
                     
-                    // If profile might already exist, try to fetch it
-                    if (error.code === '23505') { // Unique violation
+                    // If profile already exists, try to fetch it
+                    if (error.code === '23505') {
+                        console.log('Profile already exists, fetching...');
                         const { data: existingProfile } = await supabase
                             .from('profiles')
                             .select('*')
@@ -3861,16 +3864,11 @@
                     throw error;
                 }
                 
+                console.log('Profile created successfully:', data);
                 return data;
             } catch (error) {
                 console.error('Failed to create user profile:', error);
-                
-                // Provide more user-friendly error messages
-                if (error.code === '42501') {
-                    showNotification('Error', 'Registration failed due to security restrictions. Please contact support.', 'error');
-                } else {
-                    showNotification('Error', 'Failed to create user profile: ' + error.message, 'error');
-                }
+                showNotification('Error', 'Failed to create user profile: ' + error.message, 'error');
                 throw error;
             }
         }
@@ -4611,23 +4609,23 @@
                             
                             <div class="tracking-progress">
                                 <div class="progress-step ${delivery.status === 'pending' || delivery.status === 'accepted' || delivery.status === 'picked_up' || delivery.status === 'in_transit' || delivery.status === 'delivered' ? 'completed' : ''}">
-                                    <div class="step-icon">📦</div>
+                                    <div class="step-icon">ðŸ“¦</div>
                                     <div class="step-label">Order Received</div>
                                 </div>
                                 <div class="progress-step ${delivery.status === 'accepted' || delivery.status === 'picked_up' || delivery.status === 'in_transit' || delivery.status === 'delivered' ? 'completed' : ''}">
-                                    <div class="step-icon">🚴</div>
+                                    <div class="step-icon">ðŸš´</div>
                                     <div class="step-label">Rider Assigned</div>
                                 </div>
                                 <div class="progress-step ${delivery.status === 'picked_up' || delivery.status === 'in_transit' || delivery.status === 'delivered' ? 'completed' : ''}">
-                                    <div class="step-icon">📱</div>
+                                    <div class="step-icon">ðŸ“±</div>
                                     <div class="step-label">Picked Up</div>
                                 </div>
                                 <div class="progress-step ${delivery.status === 'in_transit' || delivery.status === 'delivered' ? 'active' : ''} ${delivery.status === 'delivered' ? 'completed' : ''}">
-                                    <div class="step-icon">🚚</div>
+                                    <div class="step-icon">ðŸšš</div>
                                     <div class="step-label">On the Way</div>
                                 </div>
                                 <div class="progress-step ${delivery.status === 'delivered' ? 'completed' : ''}">
-                                    <div class="step-icon">✅</div>
+                                    <div class="step-icon">âœ…</div>
                                     <div class="step-label">Delivered</div>
                                 </div>
                             </div>
@@ -6739,3 +6737,4 @@
     </script>
 </body>
 </html>
+
