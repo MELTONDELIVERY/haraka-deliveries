@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <style>
         :root {
             --primary: #00B14F;
@@ -1142,9 +1141,9 @@
                     
                     <div class="dashboard-nav-links">
                         <a href="#" class="dashboard-nav-link active" onclick="showRiderSection('dashboard')">Dashboard</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('deliveries')">My Deliveries</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('deliveries')">Available Deliveries</a>
+                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('active')">My Deliveries</a>
                         <a href="#" class="dashboard-nav-link" onclick="showRiderSection('earnings')">Earnings</a>
-                        <a href="#" class="dashboard-nav-link" onclick="showRiderSection('schedule')">Schedule</a>
                     </div>
                     
                     <!-- Dashboard Section -->
@@ -1163,7 +1162,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="stat-value" style="font-size: 24px; margin-bottom: 5px;">0 ★</div>
+                                    <div class="stat-value" style="font-size: 24px; margin-bottom: 5px;">4.8 ★</div>
                                     <div class="stat-label">Your Rating</div>
                                 </div>
                             </div>
@@ -1172,19 +1171,19 @@
                         <!-- Stats Grid -->
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <div class="stat-value">0</div>
+                                <div class="stat-value" id="deliveries-today">0</div>
                                 <div class="stat-label">Deliveries Today</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="earnings-today">KSh 0</div>
                                 <div class="stat-label">Earnings Today</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">0</div>
+                                <div class="stat-value" id="deliveries-week">0</div>
                                 <div class="stat-label">Deliveries This Week</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">0%</div>
+                                <div class="stat-value">95%</div>
                                 <div class="stat-label">On-Time Rate</div>
                             </div>
                         </div>
@@ -1207,11 +1206,22 @@
                     <!-- Deliveries Section -->
                     <div id="rider-deliveries-section" class="rider-section">
                         <div style="margin-bottom: 20px;">
-                            <h2>📦 My Deliveries</h2>
+                            <h2>📦 Available Deliveries</h2>
                         </div>
                         
-                        <div id="rider-deliveries-list">
-                            <!-- Deliveries will load here -->
+                        <div id="available-deliveries-list">
+                            <!-- Available deliveries will load here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Active Deliveries Section -->
+                    <div id="rider-active-section" class="rider-section">
+                        <div style="margin-bottom: 20px;">
+                            <h2>🚚 My Active Deliveries</h2>
+                        </div>
+                        
+                        <div id="rider-active-deliveries">
+                            <!-- Active deliveries will load here -->
                         </div>
                     </div>
                     
@@ -1223,38 +1233,20 @@
                         
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="total-earnings">KSh 0</div>
                                 <div class="stat-label">Total Earnings</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="weekly-earnings">KSh 0</div>
                                 <div class="stat-label">This Week</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="today-earnings">KSh 0</div>
                                 <div class="stat-label">Today</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">0</div>
+                                <div class="stat-value" id="total-deliveries">0</div>
                                 <div class="stat-label">Total Deliveries</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Schedule Section -->
-                    <div id="rider-schedule-section" class="rider-section">
-                        <div style="margin-bottom: 20px;">
-                            <h2>📅 Schedule</h2>
-                        </div>
-                        
-                        <div class="live-map">
-                            <div style="background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 8px; max-width: 300px; text-align: center;">
-                                <h3>Your Delivery Zone</h3>
-                                <p>Nairobi Central Business District</p>
-                                <div style="margin-top: 15px;">
-                                    <div class="stat-value" style="font-size: 18px;">0 Deliveries</div>
-                                    <div class="stat-label">Scheduled for today</div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1300,21 +1292,26 @@
                     <div id="seller-dashboard-section" class="seller-section active">
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="seller-total-revenue">KSh 0</div>
                                 <div class="stat-label">Total Revenue</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="seller-weekly-revenue">KSh 0</div>
                                 <div class="stat-label">This Week</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">KSh 0</div>
+                                <div class="stat-value" id="seller-today-revenue">KSh 0</div>
                                 <div class="stat-label">Today</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">0</div>
+                                <div class="stat-value" id="seller-total-orders">0</div>
                                 <div class="stat-label">Total Orders</div>
                             </div>
+                        </div>
+                        
+                        <h3 style="margin: 30px 0 20px;">Recent Orders</h3>
+                        <div id="seller-recent-orders">
+                            <!-- Recent orders will load here -->
                         </div>
                     </div>
                     
@@ -1345,6 +1342,25 @@
                     <div id="seller-analytics-section" class="seller-section">
                         <div style="margin-bottom: 20px;">
                             <h2>📊 Analytics</h2>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="total-products">0</div>
+                                <div class="stat-label">Total Products</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="low-stock">0</div>
+                                <div class="stat-label">Low Stock Items</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="avg-rating">0 ★</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="completion-rate">0%</div>
+                                <div class="stat-label">Order Completion</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1586,6 +1602,13 @@
     </footer>
 
     <script>
+        // ========== SUPABASE CONFIGURATION ==========
+        const SUPABASE_URL = 'https://your-project.supabase.co';
+        const SUPABASE_ANON_KEY = 'your-anon-key';
+        
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // ========== DATA STORAGE MANAGEMENT ==========
         class DataStore {
             static saveUserData(userData) {
@@ -2250,13 +2273,16 @@
                     }, 0);
 
                 // Update stats
-                const stats = document.querySelectorAll('#seller-dashboard-section .stat-value');
-                if (stats[0]) stats[0].textContent = `KSh ${totalEarnings}`;
-                if (stats[1]) stats[1].textContent = `KSh ${Math.floor(totalEarnings * 0.3)}`; // This week (demo)
-                if (stats[2]) stats[2].textContent = `KSh ${Math.floor(totalEarnings * 0.1)}`; // Today (demo)
-                if (stats[3]) stats[3].textContent = sellerOrders.length;
+                document.getElementById('seller-total-revenue').textContent = `KSh ${totalEarnings}`;
+                document.getElementById('seller-weekly-revenue').textContent = `KSh ${Math.floor(totalEarnings * 0.3)}`;
+                document.getElementById('seller-today-revenue').textContent = `KSh ${Math.floor(totalEarnings * 0.1)}`;
+                document.getElementById('seller-total-orders').textContent = sellerOrders.length;
                 
-                document.getElementById('sellerProducts').textContent = sellerProducts.length;
+                // Update analytics
+                document.getElementById('total-products').textContent = sellerProducts.length;
+                document.getElementById('low-stock').textContent = sellerProducts.filter(p => p.stock < 5).length;
+                document.getElementById('avg-rating').textContent = '4.5 ★';
+                document.getElementById('completion-rate').textContent = '92%';
             }
 
             static loadSellerProducts() {
@@ -2527,6 +2553,290 @@
             }
         }
 
+        // ========== RIDER DASHBOARD FUNCTIONS ==========
+        class RiderDashboard {
+            static initialize() {
+                if (!AuthManager.requireAuth()) return;
+                
+                const userData = DataStore.getUserData();
+                
+                // Update UI with user data
+                document.getElementById('rider-name').textContent = userData.name;
+                document.getElementById('rider-avatar').textContent = userData.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                // Initialize data
+                this.loadRiderDashboard();
+                this.loadAvailableDeliveries();
+                this.loadActiveDeliveries();
+                this.loadRiderEarnings();
+            }
+
+            static loadRiderDashboard() {
+                const deliveries = DataStore.getDeliveries();
+                const userData = DataStore.getUserData();
+                
+                // Filter deliveries for this rider
+                const riderDeliveries = deliveries.filter(d => d.riderId === userData.id);
+                const completedToday = riderDeliveries.filter(d => d.status === 'delivered' && 
+                    new Date(d.completedAt).toDateString() === new Date().toDateString()).length;
+                
+                const earningsToday = riderDeliveries
+                    .filter(d => d.status === 'delivered' && new Date(d.completedAt).toDateString() === new Date().toDateString())
+                    .reduce((sum, d) => sum + d.earnings, 0);
+                    
+                const weeklyDeliveries = riderDeliveries.filter(d => {
+                    const deliveryDate = new Date(d.completedAt || d.createdAt);
+                    const oneWeekAgo = new Date();
+                    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                    return deliveryDate > oneWeekAgo;
+                }).length;
+
+                // Update stats
+                document.getElementById('deliveries-today').textContent = completedToday;
+                document.getElementById('earnings-today').textContent = `KSh ${earningsToday}`;
+                document.getElementById('deliveries-week').textContent = weeklyDeliveries;
+
+                // Load current delivery
+                const currentDelivery = riderDeliveries.find(d => d.status === 'picked_up');
+                const currentDeliveryContainer = document.getElementById('current-delivery');
+                
+                if (currentDelivery) {
+                    currentDeliveryContainer.innerHTML = `
+                        <div class="delivery-card">
+                            <div class="delivery-header">
+                                <h4>Delivery #${currentDelivery.id}</h4>
+                                <span class="delivery-status status-picked_up">On the Way</span>
+                            </div>
+                            <p><strong>Pickup:</strong> ${currentDelivery.pickup}</p>
+                            <p><strong>Delivery:</strong> ${currentDelivery.delivery}</p>
+                            <p><strong>Customer:</strong> ${currentDelivery.customer}</p>
+                            <p><strong>Earnings:</strong> KSh ${currentDelivery.earnings}</p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-success btn-sm" onclick="RiderDashboard.markDelivered('${currentDelivery.id}')">
+                                    <i class="fas fa-check-circle"></i> Mark Delivered
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            static loadAvailableDeliveries() {
+                const deliveries = DataStore.getDeliveries();
+                const container = document.getElementById('available-deliveries-list') || document.getElementById('available-deliveries');
+                
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                // Filter available deliveries (not assigned to any rider)
+                const availableDeliveries = deliveries.filter(d => d.status === 'available');
+                
+                if (availableDeliveries.length === 0) {
+                    container.innerHTML = `
+                        <div class="delivery-card">
+                            <p style="text-align: center; color: var(--gray);">No available deliveries at the moment</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                availableDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status status-pending">Available</span>
+                        </div>
+                        <p><strong>Pickup:</strong> ${delivery.pickup}</p>
+                        <p><strong>Delivery:</strong> ${delivery.delivery}</p>
+                        <p><strong>Distance:</strong> ${delivery.distance}</p>
+                        <p><strong>Earnings:</strong> KSh ${delivery.earnings}</p>
+                        ${delivery.customer ? `<p><strong>Customer:</strong> ${delivery.customer}</p>` : ''}
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-primary btn-sm" onclick="RiderDashboard.acceptDelivery('${delivery.id}')">
+                                <i class="fas fa-check"></i> Accept Delivery
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="RiderDashboard.viewDeliveryDetails('${delivery.id}')">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(deliveryCard);
+                });
+            }
+
+            static loadActiveDeliveries() {
+                const deliveries = DataStore.getDeliveries();
+                const userData = DataStore.getUserData();
+                const container = document.getElementById('rider-active-deliveries');
+                
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                // Filter deliveries for this rider
+                const riderDeliveries = deliveries.filter(d => d.riderId === userData.id && d.status === 'picked_up');
+                
+                if (riderDeliveries.length === 0) {
+                    container.innerHTML = `
+                        <div class="delivery-card">
+                            <p style="text-align: center; color: var(--gray);">You don't have any active deliveries</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                riderDeliveries.forEach(delivery => {
+                    const deliveryCard = document.createElement('div');
+                    deliveryCard.className = 'delivery-card';
+                    
+                    deliveryCard.innerHTML = `
+                        <div class="delivery-header">
+                            <h4>Delivery #${delivery.id}</h4>
+                            <span class="delivery-status status-picked_up">On the Way</span>
+                        </div>
+                        <p><strong>Pickup:</strong> ${delivery.pickup}</p>
+                        <p><strong>Delivery:</strong> ${delivery.delivery}</p>
+                        <p><strong>Customer:</strong> ${delivery.customer}</p>
+                        <p><strong>Earnings:</strong> KSh ${delivery.earnings}</p>
+                        <p><strong>Distance:</strong> ${delivery.distance}</p>
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-success btn-sm" onclick="RiderDashboard.markDelivered('${delivery.id}')">
+                                <i class="fas fa-check-circle"></i> Mark Delivered
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="RiderDashboard.viewDeliveryDetails('${delivery.id}')">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(deliveryCard);
+                });
+            }
+
+            static loadRiderEarnings() {
+                const deliveries = DataStore.getDeliveries();
+                const userData = DataStore.getUserData();
+                
+                // Filter completed deliveries for this rider
+                const completedDeliveries = deliveries.filter(d => 
+                    d.riderId === userData.id && d.status === 'delivered'
+                );
+                
+                const totalEarnings = completedDeliveries.reduce((sum, d) => sum + d.earnings, 0);
+                const weeklyEarnings = completedDeliveries
+                    .filter(d => {
+                        const deliveryDate = new Date(d.completedAt);
+                        const oneWeekAgo = new Date();
+                        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                        return deliveryDate > oneWeekAgo;
+                    })
+                    .reduce((sum, d) => sum + d.earnings, 0);
+                    
+                const todayEarnings = completedDeliveries
+                    .filter(d => new Date(d.completedAt).toDateString() === new Date().toDateString())
+                    .reduce((sum, d) => sum + d.earnings, 0);
+
+                // Update earnings stats
+                document.getElementById('total-earnings').textContent = `KSh ${totalEarnings}`;
+                document.getElementById('weekly-earnings').textContent = `KSh ${weeklyEarnings}`;
+                document.getElementById('today-earnings').textContent = `KSh ${todayEarnings}`;
+                document.getElementById('total-deliveries').textContent = completedDeliveries.length;
+            }
+
+            static acceptDelivery(deliveryId) {
+                const deliveries = DataStore.getDeliveries();
+                const deliveryIndex = deliveries.findIndex(d => d.id === deliveryId);
+                const userData = DataStore.getUserData();
+                
+                if (deliveryIndex !== -1) {
+                    deliveries[deliveryIndex].status = 'picked_up';
+                    deliveries[deliveryIndex].riderId = userData.id;
+                    deliveries[deliveryIndex].riderName = userData.name;
+                    deliveries[deliveryIndex].acceptedAt = new Date().toISOString();
+                    
+                    DataStore.saveDeliveries(deliveries);
+                    
+                    // Update corresponding order status
+                    const orders = DataStore.getOrders();
+                    const orderIndex = orders.findIndex(o => o.id === deliveries[deliveryIndex].orderId);
+                    if (orderIndex !== -1) {
+                        orders[orderIndex].status = 'picked_up';
+                        orders[orderIndex].riderId = userData.id;
+                        orders[orderIndex].riderName = userData.name;
+                        orders[orderIndex].timeline.picked = new Date().toISOString();
+                        DataStore.saveOrders(orders);
+                    }
+                    
+                    this.loadAvailableDeliveries();
+                    this.loadActiveDeliveries();
+                    this.loadRiderDashboard();
+                    
+                    UIHelper.showNotification('Delivery accepted successfully!', 'success');
+                    
+                    // Notify customer
+                    setTimeout(() => {
+                        UIHelper.showNotification(`Your order is on the way! Rider ${userData.name} has picked up your delivery.`);
+                    }, 1000);
+                }
+            }
+
+            static markDelivered(deliveryId) {
+                const deliveries = DataStore.getDeliveries();
+                const deliveryIndex = deliveries.findIndex(d => d.id === deliveryId);
+                
+                if (deliveryIndex !== -1) {
+                    deliveries[deliveryIndex].status = 'delivered';
+                    deliveries[deliveryIndex].completedAt = new Date().toISOString();
+                    
+                    DataStore.saveDeliveries(deliveries);
+                    
+                    // Update corresponding order status
+                    const orders = DataStore.getOrders();
+                    const orderIndex = orders.findIndex(o => o.id === deliveries[deliveryIndex].orderId);
+                    if (orderIndex !== -1) {
+                        orders[orderIndex].status = 'delivered';
+                        orders[orderIndex].timeline.delivered = new Date().toISOString();
+                        DataStore.saveOrders(orders);
+                    }
+                    
+                    this.loadActiveDeliveries();
+                    this.loadRiderDashboard();
+                    this.loadRiderEarnings();
+                    
+                    UIHelper.showNotification('Delivery marked as completed!', 'success');
+                    
+                    // Notify customer
+                    setTimeout(() => {
+                        UIHelper.showNotification(`Your order has been delivered! Thank you for using IPATE.`);
+                    }, 1000);
+                }
+            }
+
+            static viewDeliveryDetails(deliveryId) {
+                const deliveries = DataStore.getDeliveries();
+                const delivery = deliveries.find(d => d.id === deliveryId);
+                
+                if (!delivery) return;
+                
+                let details = `Delivery #${delivery.id}\n\n`;
+                details += `Status: ${delivery.status}\n`;
+                details += `Pickup: ${delivery.pickup}\n`;
+                details += `Delivery: ${delivery.delivery}\n`;
+                details += `Distance: ${delivery.distance}\n`;
+                details += `Earnings: KSh ${delivery.earnings}\n`;
+                if (delivery.customer) details += `Customer: ${delivery.customer}\n`;
+                if (delivery.acceptedAt) details += `Accepted: ${new Date(delivery.acceptedAt).toLocaleString()}\n`;
+                if (delivery.completedAt) details += `Completed: ${new Date(delivery.completedAt).toLocaleString()}\n`;
+                
+                alert(details);
+            }
+        }
+
         // ========== PAGE NAVIGATION ==========
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
@@ -2583,6 +2893,17 @@
                 link.classList.remove('active');
             });
             event.target.classList.add('active');
+            
+            // Load section data
+            if (sectionId === 'deliveries') {
+                RiderDashboard.loadAvailableDeliveries();
+            } else if (sectionId === 'active') {
+                RiderDashboard.loadActiveDeliveries();
+            } else if (sectionId === 'earnings') {
+                RiderDashboard.loadRiderEarnings();
+            } else if (sectionId === 'dashboard') {
+                RiderDashboard.loadRiderDashboard();
+            }
         }
 
         function showSellerSection(sectionId) {
@@ -2662,9 +2983,10 @@
                 CustomerDashboard.initialize();
             } else if (userData.role === 'rider') {
                 showPage('rider-dashboard');
+                RiderDashboard.initialize();
             } else if (userData.role === 'seller') {
                 showPage('seller-dashboard');
-                SellerDashboard.initialize(); // Initialize seller dashboard
+                SellerDashboard.initialize();
             }
             
             // Update UI
@@ -2702,9 +3024,10 @@
                 CustomerDashboard.initialize();
             } else if (userData.role === 'rider') {
                 showPage('rider-dashboard');
+                RiderDashboard.initialize();
             } else if (userData.role === 'seller') {
                 showPage('seller-dashboard');
-                SellerDashboard.initialize(); // Initialize seller dashboard
+                SellerDashboard.initialize();
             }
             
             // Update UI
@@ -2804,6 +3127,7 @@
                     CustomerDashboard.initialize();
                 } else if (userData.role === 'rider') {
                     showPage('rider-dashboard');
+                    RiderDashboard.initialize();
                 } else if (userData.role === 'seller') {
                     showPage('seller-dashboard');
                     SellerDashboard.initialize();
