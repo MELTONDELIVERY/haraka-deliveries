@@ -35,6 +35,15 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+<script>
+function openAuthModal(mode = 'login') {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  document.getElementById('authMode').textContent =
+    mode === 'signup' ? 'Sign Up' : 'Sign In';
+}
+</script>
 
         body {
             background-color: var(--light);
@@ -3907,7 +3916,10 @@
         // Initialize the application when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
+    window.openAuthModal = AuthManager.openModal.bind(AuthManager);
+
 </body>
 </html>
+
 
 
