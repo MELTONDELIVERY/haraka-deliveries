@@ -745,6 +745,77 @@
             100% { box-shadow: 0 0 0 0 rgba(0, 177, 79, 0); }
         }
 
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        /* File Upload Styles */
+        .file-upload-container {
+            border: 2px dashed var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-upload-container:hover {
+            border-color: var(--primary);
+        }
+
+        .file-preview {
+            margin-top: 15px;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links, .auth-buttons {
@@ -1549,6 +1620,14 @@
                 return JSON.parse(localStorage.getItem('customerCart') || '[]');
             }
             
+            static saveDeliveries(deliveries) {
+                localStorage.setItem('deliveries', JSON.stringify(deliveries));
+            }
+            
+            static getDeliveries() {
+                return JSON.parse(localStorage.getItem('deliveries') || '[]');
+            }
+            
             static clearUserData() {
                 localStorage.removeItem('currentUser');
             }
@@ -1655,11 +1734,12 @@
                 const customerOrders = orders.filter(order => order.customerId === userData.id);
                 
                 // Update stats
-                document.querySelectorAll('#customer-stats .stat-value')[0].textContent = customerOrders.length;
-                document.querySelectorAll('#customer-stats .stat-value')[1].textContent = customerOrders.filter(order => 
+                const stats = document.querySelectorAll('#customer-stats .stat-value');
+                if (stats[0]) stats[0].textContent = customerOrders.length;
+                if (stats[1]) stats[1].textContent = customerOrders.filter(order => 
                     ['pending', 'accepted', 'ready', 'assigned', 'picked'].includes(order.status)
                 ).length;
-                document.querySelectorAll('#customer-stats .stat-value')[2].textContent = customerOrders.filter(order => 
+                if (stats[2]) stats[2].textContent = customerOrders.filter(order => 
                     order.status === 'delivered'
                 ).length;
             }
@@ -1837,7 +1917,7 @@
                     existingItem.quantity += 1;
                 } else {
                     this.cart.push({
-                        productId: productId,
+                        productId: product.id,
                         name: product.name,
                         price: product.price,
                         quantity: 1,
@@ -2027,12 +2107,12 @@
                 
                 const userData = DataStore.getUserData();
                 
-                // Create order
+                // Create order - IMPORTANT: Ensure seller information is preserved
                 const order = {
                     id: 'ORD' + Date.now(),
                     customerId: userData.id,
                     customerName: userData.name,
-                    items: [...this.cart],
+                    items: [...this.cart], // This now includes sellerId for each item
                     total: total,
                     status: 'pending',
                     paymentMethod: this.currentPaymentMethod,
@@ -2131,6 +2211,322 @@
             }
         }
 
+        // ========== SELLER DASHBOARD FUNCTIONS ==========
+        class SellerDashboard {
+            static initialize() {
+                if (!AuthManager.requireAuth()) return;
+                
+                const userData = DataStore.getUserData();
+                
+                // Update UI with user data
+                document.getElementById('seller-name').textContent = userData.name;
+                document.getElementById('seller-avatar').textContent = userData.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                // Initialize data
+                this.loadSellerOverview();
+                this.loadSellerProducts();
+                this.loadSellerOrders();
+            }
+
+            static loadSellerOverview() {
+                const userData = DataStore.getUserData();
+                const orders = DataStore.getOrders();
+                const products = DataStore.getProducts();
+                
+                // Filter orders for current seller
+                const sellerOrders = orders.filter(order => 
+                    order.items.some(item => item.sellerId === userData.id)
+                );
+                
+                // Filter products for current seller
+                const sellerProducts = products.filter(product => product.sellerId === userData.id);
+                
+                // Calculate earnings
+                const totalEarnings = sellerOrders
+                    .filter(order => order.status === 'delivered')
+                    .reduce((sum, order) => {
+                        const sellerItems = order.items.filter(item => item.sellerId === userData.id);
+                        return sum + sellerItems.reduce((itemSum, item) => itemSum + (item.price * item.quantity), 0);
+                    }, 0);
+
+                // Update stats
+                const stats = document.querySelectorAll('#seller-dashboard-section .stat-value');
+                if (stats[0]) stats[0].textContent = `KSh ${totalEarnings}`;
+                if (stats[1]) stats[1].textContent = `KSh ${Math.floor(totalEarnings * 0.3)}`; // This week (demo)
+                if (stats[2]) stats[2].textContent = `KSh ${Math.floor(totalEarnings * 0.1)}`; // Today (demo)
+                if (stats[3]) stats[3].textContent = sellerOrders.length;
+                
+                document.getElementById('sellerProducts').textContent = sellerProducts.length;
+            }
+
+            static loadSellerProducts() {
+                const userData = DataStore.getUserData();
+                const products = DataStore.getProducts();
+                const container = document.getElementById('seller-products-list');
+                
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                // Filter products for current seller
+                const sellerProducts = products.filter(product => product.sellerId === userData.id);
+                
+                if (sellerProducts.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--gray);">
+                            <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <h3>No products yet</h3>
+                            <p>Add your first product to start selling!</p>
+                            <button class="btn btn-primary" onclick="openAddProductModal()">Add Product</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                sellerProducts.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    
+                    let badge = '';
+                    if (product.stock === 0) {
+                        badge = '<div style="background: var(--danger); color: white; padding: 5px 10px; border-radius: 4px; position: absolute; top: 10px; right: 10px; font-size: 12px;">Out of Stock</div>';
+                    } else if (product.stock < 5) {
+                        badge = '<div style="background: var(--warning); color: white; padding: 5px 10px; border-radius: 4px; position: absolute; top: 10px; right: 10px; font-size: 12px;">Low Stock</div>';
+                    }
+                    
+                    productCard.innerHTML = `
+                        ${badge}
+                        <div class="product-image" style="background-image: url('${product.image}')">
+                            <i class="fas fa-box-open" style="font-size: 48px; z-index: 2; position: relative;"></i>
+                        </div>
+                        <div class="product-info">
+                            <h4>${product.name}</h4>
+                            <p style="color: var(--gray); font-size: 14px; margin: 10px 0;">${product.description}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="product-price">KSh ${product.price.toLocaleString()}</div>
+                                <div style="color: ${product.stock > 0 ? 'var(--success)' : 'var(--danger)'}; font-size: 14px;">
+                                    ${product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                <div style="color: var(--warning);">
+                                    <i class="fas fa-star"></i> ${product.rating || '4.5'}
+                                </div>
+                                <div style="color: var(--gray); font-size: 12px;">
+                                    ${product.category}
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <button class="btn btn-outline btn-sm" onclick="SellerDashboard.editProduct('${product.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="SellerDashboard.deleteProduct('${product.id}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(productCard);
+                });
+            }
+
+            static loadSellerOrders() {
+                const userData = DataStore.getUserData();
+                const orders = DataStore.getOrders();
+                const container = document.getElementById('seller-orders-list');
+                
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                // Filter orders that contain products from this seller
+                const sellerOrders = orders.filter(order => 
+                    order.items.some(item => item.sellerId === userData.id)
+                );
+                
+                if (sellerOrders.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--gray);">
+                            <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <h3>No orders yet</h3>
+                            <p>You haven't received any orders yet.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Sort orders by creation date (newest first)
+                sellerOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
+                sellerOrders.forEach(order => {
+                    // Get only items from this seller
+                    const sellerItems = order.items.filter(item => item.sellerId === userData.id);
+                    const sellerTotal = sellerItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'delivery-card';
+                    
+                    const statusClass = `status-${order.status}`;
+                    const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                    
+                    orderCard.innerHTML = `
+                        <div class="delivery-header">
+                            <div>
+                                <h4>Order #${order.id}</h4>
+                                <div style="color: var(--gray); font-size: 14px; margin-top: 5px;">
+                                    ${new Date(order.createdAt).toLocaleDateString()} • ${new Date(order.createdAt).toLocaleTimeString()}
+                                </div>
+                            </div>
+                            <span class="delivery-status ${statusClass}">${statusText}</span>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <p><strong>Customer:</strong> ${order.customerName}</p>
+                            <p><strong>Delivery Address:</strong> ${order.deliveryAddress}</p>
+                            ${order.deliveryInstructions ? `<p><strong>Instructions:</strong> ${order.deliveryInstructions}</p>` : ''}
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <h5>Your Items in this Order:</h5>
+                            ${sellerItems.map(item => `
+                                <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--light-gray);">
+                                    <span>${item.name} × ${item.quantity}</span>
+                                    <span>KSh ${(item.price * item.quantity).toLocaleString()}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="font-weight: bold; font-size: 16px; text-align: right;">
+                            Your Total: KSh ${sellerTotal.toLocaleString()}
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                            ${order.status === 'pending' ? `
+                                <button class="btn btn-primary btn-sm" onclick="SellerDashboard.acceptOrder('${order.id}')">
+                                    <i class="fas fa-check"></i> Accept Order
+                                </button>
+                            ` : ''}
+                            ${order.status === 'accepted' ? `
+                                <button class="btn btn-secondary btn-sm" onclick="SellerDashboard.markOrderReady('${order.id}')">
+                                    <i class="fas fa-box"></i> Mark Ready
+                                </button>
+                            ` : ''}
+                            <button class="btn btn-outline btn-sm" onclick="SellerDashboard.viewOrderDetails('${order.id}')">
+                                <i class="fas fa-eye"></i> Details
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(orderCard);
+                });
+                
+                // Update overview stats
+                this.loadSellerOverview();
+            }
+
+            static acceptOrder(orderId) {
+                const orders = DataStore.getOrders();
+                const orderIndex = orders.findIndex(o => o.id === orderId);
+                
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = 'accepted';
+                    orders[orderIndex].updatedAt = new Date().toISOString();
+                    orders[orderIndex].timeline.accepted = new Date().toISOString();
+                    
+                    DataStore.saveOrders(orders);
+                    
+                    this.loadSellerOrders();
+                    UIHelper.showNotification('Order accepted successfully!', 'success');
+                    
+                    // Simulate real-time update to customer
+                    setTimeout(() => {
+                        UIHelper.showNotification(`Your order #${orderId} has been accepted by the seller!`);
+                    }, 1000);
+                }
+            }
+
+            static markOrderReady(orderId) {
+                const orders = DataStore.getOrders();
+                const orderIndex = orders.findIndex(o => o.id === orderId);
+                
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = 'ready';
+                    orders[orderIndex].updatedAt = new Date().toISOString();
+                    orders[orderIndex].timeline.ready = new Date().toISOString();
+                    
+                    DataStore.saveOrders(orders);
+                    
+                    this.loadSellerOrders();
+                    UIHelper.showNotification('Order marked as ready for pickup!', 'success');
+                    
+                    // Create delivery opportunity for riders
+                    const deliveries = DataStore.getDeliveries() || [];
+                    const newDelivery = {
+                        id: 'delivery_' + Date.now(),
+                        orderId: orderId,
+                        pickup: 'Seller Location, Nairobi',
+                        delivery: orders[orderIndex].deliveryAddress,
+                        distance: (Math.random() * 10 + 2).toFixed(1) + ' km',
+                        earnings: Math.floor(orders[orderIndex].total * 0.2), // 20% of order value
+                        status: 'available',
+                        customer: orders[orderIndex].customerName
+                    };
+                    
+                    deliveries.push(newDelivery);
+                    DataStore.saveDeliveries(deliveries);
+                    
+                    // Simulate real-time update to customer
+                    setTimeout(() => {
+                        UIHelper.showNotification(`Your order #${orderId} is ready for pickup! Looking for a rider...`);
+                    }, 1000);
+                }
+            }
+
+            static viewOrderDetails(orderId) {
+                const orders = DataStore.getOrders();
+                const order = orders.find(o => o.id === orderId);
+                const userData = DataStore.getUserData();
+                
+                if (!order) return;
+                
+                // Get only items from this seller
+                const sellerItems = order.items.filter(item => item.sellerId === userData.id);
+                const sellerTotal = sellerItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                let details = `Order #${order.id}\n\n`;
+                details += `Customer: ${order.customerName}\n`;
+                details += `Status: ${order.status}\n`;
+                details += `Order Date: ${new Date(order.createdAt).toLocaleString()}\n`;
+                details += `Delivery Address: ${order.deliveryAddress}\n`;
+                if (order.deliveryInstructions) details += `Instructions: ${order.deliveryInstructions}\n`;
+                details += `\nYour Items:\n`;
+                
+                sellerItems.forEach(item => {
+                    details += `- ${item.name} × ${item.quantity}: KSh ${(item.price * item.quantity).toLocaleString()}\n`;
+                });
+                
+                details += `\nYour Total: KSh ${sellerTotal.toLocaleString()}`;
+                
+                alert(details);
+            }
+
+            static editProduct(productId) {
+                UIHelper.showNotification('Edit product functionality would open an edit form', 'info');
+            }
+
+            static deleteProduct(productId) {
+                if (confirm('Are you sure you want to delete this product?')) {
+                    const products = DataStore.getProducts();
+                    const updatedProducts = products.filter(p => p.id !== productId);
+                    DataStore.saveProducts(updatedProducts);
+                    
+                    this.loadSellerProducts();
+                    UIHelper.showNotification('Product deleted successfully!', 'success');
+                }
+            }
+        }
+
         // ========== PAGE NAVIGATION ==========
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
@@ -2201,6 +2597,15 @@
                 link.classList.remove('active');
             });
             event.target.classList.add('active');
+            
+            // Load section data
+            if (sectionId === 'products') {
+                SellerDashboard.loadSellerProducts();
+            } else if (sectionId === 'orders') {
+                SellerDashboard.loadSellerOrders();
+            } else if (sectionId === 'dashboard') {
+                SellerDashboard.loadSellerOverview();
+            }
         }
 
         // ========== AUTHENTICATION FUNCTIONS ==========
@@ -2259,6 +2664,7 @@
                 showPage('rider-dashboard');
             } else if (userData.role === 'seller') {
                 showPage('seller-dashboard');
+                SellerDashboard.initialize(); // Initialize seller dashboard
             }
             
             // Update UI
@@ -2298,6 +2704,7 @@
                 showPage('rider-dashboard');
             } else if (userData.role === 'seller') {
                 showPage('seller-dashboard');
+                SellerDashboard.initialize(); // Initialize seller dashboard
             }
             
             // Update UI
@@ -2399,6 +2806,7 @@
                     showPage('rider-dashboard');
                 } else if (userData.role === 'seller') {
                     showPage('seller-dashboard');
+                    SellerDashboard.initialize();
                 }
             }
             
