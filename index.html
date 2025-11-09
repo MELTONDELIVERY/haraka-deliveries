@@ -425,6 +425,28 @@
             margin: 15px 0;
         }
 
+        .seller-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .seller-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
         /* Notification Styles */
         .notification {
             position: fixed;
@@ -1326,6 +1348,9 @@
                     <div id="seller-orders-section" class="seller-section">
                         <div style="margin-bottom: 20px;">
                             <h2>📋 <span id="manage-orders-title">Manage Orders</span></h2>
+                            <button class="btn btn-outline" onclick="SellerDashboard.createDemoOrder()" style="margin-bottom: 20px;">
+                                <i class="fas fa-plus"></i> Create Demo Order (Testing)
+                            </button>
                         </div>
                         
                         <div id="seller-orders-list">
@@ -1520,11 +1545,11 @@
             <form id="login-form">
                 <div class="form-group">
                     <label for="login-email" class="form-label" id="email-label">Email</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
+                    <input type="email" id="login-email" class="form-control" placeholder="Enter your email" autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="login-password" class="form-label" id="password-label">Password</label>
-                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password" autocomplete="current-password">
                 </div>
                 <button type="button" class="btn btn-primary btn-block" onclick="login()" id="login-btn">Login</button>
                 <p style="text-align: center; margin-top: 15px;">
@@ -1536,15 +1561,15 @@
             <form id="signup-form" style="display: none;">
                 <div class="form-group">
                     <label for="signup-name" class="form-label" id="full-name-label">Full Name</label>
-                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name">
+                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name" autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label for="signup-email" class="form-label" id="email-label-2">Email</label>
-                    <input type="email" id="signup-email" class="form-control" placeholder="Enter your email">
+                    <input type="email" id="signup-email" class="form-control" placeholder="Enter your email" autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="signup-password" class="form-label" id="password-label-2">Password</label>
-                    <input type="password" id="signup-password" class="form-control" placeholder="Create a password">
+                    <input type="password" id="signup-password" class="form-control" placeholder="Create a password" autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <label for="signup-role" class="form-label" id="i-want-to-label">I want to:</label>
@@ -2306,7 +2331,8 @@
                                 category: 'Food',
                                 stock: 25,
                                 status: 'published',
-                                seller_id: 'demo-seller-1'
+                                seller_id: 'demo-seller-1',
+                                seller_name: 'FreshMart Supermarket'
                             },
                             {
                                 title: 'Restaurant Meal Deal',
@@ -2316,7 +2342,8 @@
                                 category: 'Food',
                                 stock: 15,
                                 status: 'published',
-                                seller_id: 'demo-seller-2'
+                                seller_id: 'demo-seller-2',
+                                seller_name: 'Nairobi Bistro'
                             },
                             {
                                 title: 'Electronics Package',
@@ -2326,7 +2353,8 @@
                                 category: 'Electronics',
                                 stock: 10,
                                 status: 'published',
-                                seller_id: 'demo-seller-3'
+                                seller_id: 'demo-seller-3',
+                                seller_name: 'TechHub Kenya'
                             },
                             {
                                 title: 'Personal Care Essentials',
@@ -2336,7 +2364,8 @@
                                 category: 'Personal Care',
                                 stock: 30,
                                 status: 'published',
-                                seller_id: 'demo-seller-4'
+                                seller_id: 'demo-seller-4',
+                                seller_name: 'CarePlus Store'
                             }
                         ];
 
@@ -3063,6 +3092,10 @@
                             <div class="product-info">
                                 <h4>${product.title}</h4>
                                 <p style="color: var(--gray); font-size: 14px; margin: 10px 0;">${product.short_description}</p>
+                                <div class="seller-info">
+                                    <div class="seller-avatar">${product.seller_name ? product.seller_name.split(' ').map(n => n[0]).join('').toUpperCase() : 'S'}</div>
+                                    <span>${product.seller_name || 'Seller'}</span>
+                                </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div class="product-price">${UIHelper.formatPrice(product.price)}</div>
                                     <div style="color: ${product.stock > 0 ? 'var(--success)' : 'var(--danger)'}; font-size: 14px;">
@@ -3718,6 +3751,10 @@
                             <div class="product-info">
                                 <h4>${product.title}</h4>
                                 <p style="color: var(--gray); font-size: 14px; margin: 10px 0;">${product.short_description}</p>
+                                <div class="seller-info">
+                                    <div class="seller-avatar">${window.currentUser.profile.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>
+                                    <span>${window.currentUser.profile.name}</span>
+                                </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div class="product-price">${UIHelper.formatPrice(product.price)}</div>
                                     <div style="color: ${product.stock > 0 ? 'var(--success)' : 'var(--danger)'}; font-size: 14px;">
@@ -3747,27 +3784,80 @@
                 if (!window.currentUser) return;
                 
                 try {
-                    const orders = await ApiClient.getOrders({ sellerId: window.currentUser.id });
+                    // For demo purposes, also show orders from the cart items
+                    const demoOrders = [];
+                    
+                    // Create demo orders from the customer's cart items for testing
+                    if (window.customerCart && window.customerCart.length > 0) {
+                        const cartItems = window.customerCart;
+                        const orderNumber = 'ORD' + Date.now();
+                        
+                        demoOrders.push({
+                            id: 'demo-order-' + Date.now(),
+                            order_number: orderNumber,
+                            customer_id: 'demo-customer',
+                            seller_id: window.currentUser.id,
+                            total: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 150,
+                            subtotal: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                            delivery_fee: 150,
+                            status: 'created',
+                            payment_method: 'cash',
+                            payment_status: 'pending',
+                            shipping_address: 'Demo Customer Address, Nairobi',
+                            delivery_instructions: 'Demo instructions',
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        });
+                    }
+                    
+                    // Try to get real orders from database
+                    let dbOrders = [];
+                    try {
+                        dbOrders = await ApiClient.getOrders({ sellerId: window.currentUser.id });
+                    } catch (dbError) {
+                        console.log('Using demo orders due to database error:', dbError);
+                    }
+                    
+                    const allOrders = [...dbOrders, ...demoOrders];
                     const container = document.getElementById('seller-orders-list');
                     
                     if (!container) return;
                     
                     container.innerHTML = '';
                     
-                    if (orders.length === 0) {
+                    if (allOrders.length === 0) {
                         container.innerHTML = `
                             <div style="text-align: center; padding: 40px; color: var(--gray);">
                                 <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 20px;"></i>
                                 <h3>No orders yet</h3>
                                 <p>Orders will appear here when customers purchase your products</p>
+                                <div style="margin-top: 20px; padding: 20px; background: var(--light); border-radius: 8px;">
+                                    <h4>Demo Order</h4>
+                                    <p>Add items to cart as a customer and place an order to see it here.</p>
+                                    <button class="btn btn-primary" onclick="showPage('customer-dashboard')">
+                                        Switch to Customer View
+                                    </button>
+                                </div>
                             </div>
                         `;
                         return;
                     }
                     
-                    for (const order of orders) {
+                    for (const order of allOrders) {
                         // Get order items for each order
-                        const orderItems = await ApiClient.getOrderItems(order.id);
+                        let orderItems = [];
+                        try {
+                            orderItems = await ApiClient.getOrderItems(order.id);
+                        } catch (error) {
+                            // Use cart items as demo order items
+                            if (window.customerCart && window.customerCart.length > 0) {
+                                orderItems = window.customerCart.map(item => ({
+                                    product_name: item.name,
+                                    quantity: item.quantity,
+                                    price: item.price
+                                }));
+                            }
+                        }
                         
                         const orderCard = document.createElement('div');
                         orderCard.className = 'delivery-card';
@@ -3796,6 +3886,7 @@
                                     <h4>Order #${order.order_number}</h4>
                                     <div style="color: var(--gray); font-size: 14px; margin-top: 5px;">
                                         ${UIHelper.formatDate(order.created_at)}
+                                        ${order.id.includes('demo-') ? '<span style="color: var(--warning); margin-left: 10px;">(Demo Order)</span>' : ''}
                                     </div>
                                 </div>
                                 <span class="delivery-status ${statusClass}">${statusText}</span>
@@ -3890,39 +3981,28 @@
                 }
             }
 
-            static editProduct(productId) {
-                // Store the current product being edited
-                window.currentEditingProduct = productId;
-                
-                // In a real implementation, we would fetch the product details from the API
-                // For demo purposes, we'll use mock data
-                const mockProduct = {
-                    id: productId,
-                    title: 'Sample Product',
-                    description: 'This is a sample product description',
-                    price: 1500,
-                    category: 'Food',
-                    stock: 25,
-                    status: 'published'
+            static createDemoOrder() {
+                const demoOrder = {
+                    id: 'demo-order-' + Date.now(),
+                    order_number: 'ORD' + Date.now(),
+                    customer_id: 'demo-customer',
+                    seller_id: window.currentUser.id,
+                    total: 2850,
+                    subtotal: 2700,
+                    delivery_fee: 150,
+                    status: 'created',
+                    payment_method: 'cash',
+                    payment_status: 'pending',
+                    shipping_address: '123 Demo Street, Nairobi',
+                    delivery_instructions: 'Call before delivery',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
                 };
                 
-                // Populate the edit form with product data
-                document.getElementById('edit-product-name').value = mockProduct.title;
-                document.getElementById('edit-product-description').value = mockProduct.description;
-                document.getElementById('edit-product-price').value = mockProduct.price;
-                document.getElementById('edit-product-category').value = mockProduct.category;
-                document.getElementById('edit-product-stock').value = mockProduct.stock;
+                UIHelper.showNotification('Demo order created!', 'success');
                 
-                // Set the status radio button
-                const statusRadios = document.getElementsByName('edit-product-status');
-                for (let radio of statusRadios) {
-                    if (radio.value === mockProduct.status) {
-                        radio.checked = true;
-                    }
-                }
-                
-                // Show the edit modal
-                document.getElementById('edit-product-modal').style.display = 'flex';
+                // Reload orders to show the demo order
+                this.loadOrders();
             }
 
             static async deleteProduct(productId) {
@@ -4028,6 +4108,7 @@
                 try {
                     const productData = {
                         seller_id: window.currentUser.id,
+                        seller_name: window.currentUser.profile.name,
                         title: ValidationHelper.sanitizeInput(name),
                         short_description: ValidationHelper.sanitizeInput(description),
                         full_description: ValidationHelper.sanitizeInput(description),
@@ -4065,63 +4146,6 @@
                     console.error('Error saving product:', error);
                     UIHelper.hideLoading();
                     UIHelper.showNotification('Error saving product', 'error');
-                }
-            }
-
-            static async updateProduct() {
-                const name = document.getElementById('edit-product-name').value;
-                const description = document.getElementById('edit-product-description').value;
-                const price = parseFloat(document.getElementById('edit-product-price').value);
-                const category = document.getElementById('edit-product-category').value;
-                const stock = parseInt(document.getElementById('edit-product-stock').value);
-                const status = document.querySelector('input[name="edit-product-status"]:checked').value;
-                
-                if (!name || !description || !price || !category || isNaN(stock)) {
-                    UIHelper.showNotification('Please fill in all required fields', 'error');
-                    return;
-                }
-                
-                if (price <= 0) {
-                    UIHelper.showNotification('Price must be greater than 0', 'error');
-                    return;
-                }
-                
-                if (stock < 0) {
-                    UIHelper.showNotification('Stock cannot be negative', 'error');
-                    return;
-                }
-                
-                if (!window.currentUser) {
-                    UIHelper.showNotification('Please log in to update products', 'error');
-                    return;
-                }
-                
-                UIHelper.showLoading();
-                
-                try {
-                    const productData = {
-                        title: ValidationHelper.sanitizeInput(name),
-                        short_description: ValidationHelper.sanitizeInput(description),
-                        full_description: ValidationHelper.sanitizeInput(description),
-                        price: price,
-                        category: ValidationHelper.sanitizeInput(category),
-                        stock: stock,
-                        status: status
-                    };
-                    
-                    await ApiClient.updateProduct(window.currentEditingProduct, productData);
-                    
-                    closeEditProductModal();
-                    UIHelper.hideLoading();
-                    UIHelper.showNotification('Product updated successfully!', 'success');
-                    
-                    this.loadProducts();
-                    this.loadSellerOverview();
-                    
-                } catch (error) {
-                    console.error('Error updating product:', error);
-                    UIHelper.hideLoading();
-                    UIHelper.showNotification('Error updating product', 'error');
                 }
             }
         }
@@ -4660,10 +4684,6 @@
             document.getElementById('add-product-modal').style.display = 'none';
         }
 
-        function closeEditProductModal() {
-            document.getElementById('edit-product-modal').style.display = 'none';
-        }
-
         // Auth modal tab switching
         document.getElementById('loginTab').addEventListener('click', function() {
             document.getElementById('login-form').style.display = 'block';
@@ -4732,10 +4752,6 @@
 
         function publishProduct() {
             SellerDashboard.publishProduct();
-        }
-
-        function updateProduct() {
-            SellerDashboard.updateProduct();
         }
 
         // ========== LANGUAGE FUNCTIONS ==========
