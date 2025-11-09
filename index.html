@@ -35,17 +35,6 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-</style>
-
-<script>
-function openAuthModal(mode = 'login') {
-  const modal = document.getElementById('auth-modal');
-  if (!modal) return;
-  modal.style.display = 'flex';
-  document.getElementById('authMode').textContent =
-    mode === 'signup' ? 'Sign Up' : 'Sign In';
-}
-</script>
 
         body {
             background-color: var(--light);
@@ -2032,14 +2021,13 @@ function openAuthModal(mode = 'login') {
             static async signup(email, password, name, role) {
                 try {
                     UIHelper.showLoading();
-                 const { data, error } = await supabase.auth.signUp({
-  email,
-  password,
-  options: {
-    data: { name: name, role: role }
-  }
-});
-
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: { name: name, role: role }
+                        }
+                    });
 
                     if (error) throw error;
 
@@ -3779,49 +3767,30 @@ function openAuthModal(mode = 'login') {
         }
 
         async function login() {
-        <script>
-window.login = async function() {
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-  await AuthManager.login(email, password);
-};
-
-window.signup = async function() {
-  const name = document.getElementById('signup-name').value;
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  const role = document.getElementById('signup-role').value;
-  await AuthManager.signup(email, password, name, role);
-};
-
-window.openAuthModal = openAuthModal;
-window.showPage = showPage;
-window.logout = AuthManager.logout;
-</script>
-
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                UIHelper.showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            await AuthManager.login(email, password);
         }
 
         async function signup() {
-          <script>
-window.login = async function() {
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-  await AuthManager.login(email, password);
-};
-
-window.signup = async function() {
-  const name = document.getElementById('signup-name').value;
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  const role = document.getElementById('signup-role').value;
-  await AuthManager.signup(email, password, name, role);
-};
-
-window.openAuthModal = openAuthModal;
-window.showPage = showPage;
-window.logout = AuthManager.logout;
-</script>
-
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const role = document.getElementById('signup-role').value;
+            
+            if (!name || !email || !password) {
+                UIHelper.showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            await AuthManager.signup(email, password, name, role);
+        }
 
         function logout() {
             AuthManager.logout();
@@ -3937,20 +3906,5 @@ window.logout = AuthManager.logout;
         // Initialize the application when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
-    window.openAuthModal = AuthManager.openModal.bind(AuthManager);
-    <script>
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-  const pageEl = document.getElementById(pageId);
-  if (pageEl) pageEl.classList.add('active');
-  window.scrollTo(0, 0);
-}
-</script>
-
-
 </body>
 </html>
-
-
-
-
