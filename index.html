@@ -1348,11 +1348,8 @@
                     <div id="seller-orders-section" class="seller-section">
                         <div style="margin-bottom: 20px;">
                             <h2>📋 <span id="manage-orders-title">Manage Orders</span></h2>
-                            <button class="btn btn-outline" onclick="SellerDashboard.createDemoOrder()" style="margin-bottom: 20px;">
-                                <i class="fas fa-plus"></i> Create Demo Order (Testing)
-                            </button>
-                            <button class="btn btn-warning" onclick="SellerDashboard.forceLoadOrders()" style="margin-bottom: 20px;">
-                                <i class="fas fa-sync"></i> Force Refresh Orders
+                            <button class="btn btn-outline" onclick="SellerDashboard.refreshOrders()" style="margin-bottom: 20px;">
+                                <i class="fas fa-sync"></i> Refresh Orders
                             </button>
                         </div>
                         
@@ -2812,7 +2809,9 @@
                     const dbOrderData = {
                         order_number: orderData.order_number || 'ORD' + Date.now() + Math.random().toString(36).substr(2, 5),
                         customer_id: orderData.customer_id,
+                        customer_name: orderData.customer_name,
                         seller_id: orderData.seller_id,
+                        seller_name: orderData.seller_name,
                         total: parseFloat(orderData.total) || 0,
                         subtotal: parseFloat(orderData.subtotal) || 0,
                         delivery_fee: parseFloat(orderData.delivery_fee) || 150,
@@ -2843,25 +2842,7 @@
                     
                 } catch (error) {
                     console.error('💥 Error in createOrder:', error);
-                    // Create a detailed demo order
-                    const demoOrder = {
-                        id: 'demo-order-' + Date.now(),
-                        order_number: orderData.order_number || 'DEMO' + Date.now(),
-                        customer_id: orderData.customer_id,
-                        seller_id: orderData.seller_id,
-                        total: orderData.total,
-                        subtotal: orderData.subtotal,
-                        delivery_fee: orderData.delivery_fee,
-                        status: 'created',
-                        payment_method: 'cash',
-                        payment_status: 'pending',
-                        shipping_address: orderData.shipping_address,
-                        delivery_instructions: orderData.delivery_instructions,
-                        created_at: new Date().toISOString(),
-                        updated_at: new Date().toISOString()
-                    };
-                    console.log('🔄 Using demo order:', demoOrder);
-                    return demoOrder;
+                    throw error;
                 }
             }
 
@@ -2889,47 +2870,27 @@
 
                     const { data, error } = await query.order('created_at', { ascending: false });
 
-                    if (error) throw error;
+                    if (error) {
+                        console.error('Database error:', error);
+                        throw error;
+                    }
                     
-                    // Normalize the data - ensure we use total consistently
+                    console.log('📊 Orders fetched:', data ? data.length : 0, 'with filters:', filters);
+                    
+                    // Normalize the data
                     const normalizedData = (data || []).map(order => ({
                         ...order,
-                        total: order.total || 0
+                        total: order.total || 0,
+                        subtotal: order.subtotal || 0,
+                        delivery_fee: order.delivery_fee || 150
                     }));
                     
                     return normalizedData;
                     
                 } catch (error) {
                     console.error('Error fetching orders:', error);
-                    // Return demo data for testing
-                    return this.getDemoOrders(filters);
+                    throw error;
                 }
-            }
-
-            // Add demo data fallback
-            static getDemoOrders(filters = {}) {
-                const demoOrders = [{
-                    id: 'demo-order-1',
-                    order_number: 'DEMO001',
-                    customer_id: 'demo-customer',
-                    seller_id: filters.sellerId || 'demo-seller',
-                    total: 2850,
-                    subtotal: 2700,
-                    delivery_fee: 150,
-                    status: 'created',
-                    payment_method: 'cash',
-                    payment_status: 'pending',
-                    shipping_address: '123 Demo Street, Nairobi',
-                    delivery_instructions: 'Call before delivery',
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                }];
-                
-                if (filters.status && filters.status !== 'all') {
-                    return demoOrders.filter(order => order.status === filters.status);
-                }
-                
-                return demoOrders;
             }
 
             static async updateOrderStatus(orderId, status, updates = {}) {
@@ -2958,11 +2919,11 @@
                 try {
                     const orderItems = items.map(item => ({
                         order_id: orderId,
-                        product_id: item.productId || 'demo-product-' + Date.now(),
+                        product_id: item.productId,
                         product_name: item.name,
                         quantity: item.quantity,
                         price: item.price,
-                        seller_id: item.sellerId || 'demo-seller'
+                        seller_id: item.sellerId
                     }));
 
                     console.log('💾 Saving order items:', orderItems);
@@ -2974,13 +2935,12 @@
 
                     if (error) {
                         console.error('Order items error:', error);
-                        // For demo purposes, return the items anyway
-                        return items;
+                        throw error;
                     }
                     return data || [];
                 } catch (error) {
                     console.error('Error saving order items:', error);
-                    return items;
+                    throw error;
                 }
             }
 
@@ -2996,15 +2956,7 @@
                     return data || [];
                 } catch (error) {
                     console.error('Error fetching order items:', error);
-                    // Return mock data for demo
-                    return [
-                        {
-                            id: 'item-1',
-                            product_name: 'Sample Product',
-                            quantity: 1,
-                            price: 1000
-                        }
-                    ];
+                    throw error;
                 }
             }
 
@@ -3291,71 +3243,49 @@
                 }
             }
 
-            static addToCart(productId) {
-                // For demo purposes - in real implementation, fetch product details from API
-                const mockProducts = {
-                    '1': {
-                        id: '1',
-                        title: 'Fresh Groceries Package',
-                        price: 1500,
-                        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                        sellerName: 'FreshMart Supermarket',
-                        sellerId: 'demo-seller-1',
-                        stock: 25
-                    },
-                    '2': {
-                        id: '2',
-                        title: 'Restaurant Meal Deal',
-                        price: 1200,
-                        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                        sellerName: 'Nairobi Bistro',
-                        sellerId: 'demo-seller-2',
-                        stock: 15
-                    },
-                    '3': {
-                        id: '3',
-                        title: 'Electronics Package',
-                        price: 5000,
-                        image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                        sellerName: 'TechHub Kenya',
-                        sellerId: 'demo-seller-3',
-                        stock: 10
-                    }
-                };
-
-                const product = mockProducts[productId] || {
-                    id: productId,
-                    title: `Product ${productId}`,
-                    price: 1000,
-                    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                    sellerName: 'Demo Seller',
-                    sellerId: 'demo-seller',
-                    stock: 10
-                };
-                
-                const existingItem = this.cart.find(item => item.productId === productId);
-                
-                if (existingItem) {
-                    if (existingItem.quantity >= product.stock) {
-                        UIHelper.showNotification(`Only ${product.stock} items available in stock`, 'warning');
+            static async addToCart(productId) {
+                try {
+                    // Get product details from API
+                    const products = await ApiClient.getProducts();
+                    const product = products.find(p => p.id === productId);
+                    
+                    if (!product) {
+                        UIHelper.showNotification('Product not found', 'error');
                         return;
                     }
-                    existingItem.quantity += 1;
-                } else {
-                    this.cart.push({
-                        productId: product.id,
-                        name: product.title,
-                        price: product.price,
-                        quantity: 1,
-                        image: product.image,
-                        sellerId: product.sellerId,
-                        sellerName: product.sellerName
-                    });
+                    
+                    if (product.stock === 0) {
+                        UIHelper.showNotification('This product is out of stock', 'error');
+                        return;
+                    }
+                    
+                    const existingItem = this.cart.find(item => item.productId === productId);
+                    
+                    if (existingItem) {
+                        if (existingItem.quantity >= product.stock) {
+                            UIHelper.showNotification(`Only ${product.stock} items available in stock`, 'warning');
+                            return;
+                        }
+                        existingItem.quantity += 1;
+                    } else {
+                        this.cart.push({
+                            productId: product.id,
+                            name: product.title,
+                            price: product.price,
+                            quantity: 1,
+                            image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                            sellerId: product.seller_id,
+                            sellerName: product.seller_name
+                        });
+                    }
+                    
+                    this.saveCart();
+                    this.updateCartDisplay();
+                    UIHelper.showNotification(`${product.title} added to cart!`, 'success');
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    UIHelper.showNotification('Error adding product to cart', 'error');
                 }
-                
-                this.saveCart();
-                this.updateCartDisplay();
-                UIHelper.showNotification(`${product.title} added to cart!`, 'success');
             }
 
             static removeFromCart(productId) {
@@ -3540,33 +3470,58 @@
                     console.log('🛒 Cart items:', this.cart);
                     console.log('💰 Totals - Subtotal:', subtotal, 'Delivery:', deliveryFee, 'Total:', total);
                     
-                    // Create order data
-                    const orderData = {
-                        customer_id: window.currentUser.id,
-                        seller_id: this.cart[0]?.sellerId || window.currentUser.id,
-                        total: total,
-                        subtotal: subtotal,
-                        delivery_fee: deliveryFee,
-                        status: 'created',
-                        payment_method: 'cash',
-                        payment_status: 'pending',
-                        shipping_address: deliveryAddress,
-                        delivery_instructions: deliveryInstructions || ''
-                    };
+                    // CRITICAL FIX: Group items by seller and create separate orders
+                    const ordersBySeller = {};
                     
-                    console.log('🚀 Attempting to create order...');
+                    this.cart.forEach(item => {
+                        if (!ordersBySeller[item.sellerId]) {
+                            ordersBySeller[item.sellerId] = {
+                                seller_id: item.sellerId,
+                                seller_name: item.sellerName,
+                                items: [],
+                                subtotal: 0
+                            };
+                        }
+                        ordersBySeller[item.sellerId].items.push(item);
+                        ordersBySeller[item.sellerId].subtotal += item.price * item.quantity;
+                    });
                     
-                    // Create order
-                    const order = await ApiClient.createOrder(orderData);
-                    console.log('📝 Order created:', order);
+                    // Create orders for each seller
+                    const orderPromises = Object.values(ordersBySeller).map(async (sellerOrder) => {
+                        const orderTotal = sellerOrder.subtotal + deliveryFee;
+                        
+                        const orderData = {
+                            customer_id: window.currentUser.id,
+                            customer_name: window.currentUser.profile.name,
+                            seller_id: sellerOrder.seller_id,
+                            seller_name: sellerOrder.seller_name,
+                            total: orderTotal,
+                            subtotal: sellerOrder.subtotal,
+                            delivery_fee: deliveryFee,
+                            status: 'created',
+                            payment_method: 'cash',
+                            payment_status: 'pending',
+                            shipping_address: deliveryAddress,
+                            delivery_instructions: deliveryInstructions || '',
+                            order_number: 'ORD' + Date.now() + Math.random().toString(36).substr(2, 5)
+                        };
+                        
+                        console.log('🚀 Creating order for seller:', sellerOrder.seller_name, orderData);
+                        
+                        // Create order
+                        const order = await ApiClient.createOrder(orderData);
+                        console.log('📝 Order created:', order);
+                        
+                        // Save order items
+                        if (order) {
+                            console.log('💾 Saving order items to database...');
+                            await ApiClient.saveOrderItems(order.id, sellerOrder.items);
+                        }
+                        
+                        return order;
+                    });
                     
-                    // Save order items
-                    if (order && !order.id.includes('demo-order')) {
-                        console.log('💾 Saving order items to database...');
-                        await ApiClient.saveOrderItems(order.id, this.cart);
-                    } else {
-                        console.log('🔄 Using demo order, skipping database order items');
-                    }
+                    const orders = await Promise.all(orderPromises);
                     
                     // Clear cart
                     this.cart = [];
@@ -3576,13 +3531,10 @@
                     this.closeCheckoutModal();
                     UIHelper.hideLoading();
                     
-                    UIHelper.showNotification('Order placed successfully! The seller will review your order.', 'success');
+                    UIHelper.showNotification(`Order placed successfully! ${orders.length > 1 ? `${orders.length} orders` : 'Order'} sent to seller${orders.length > 1 ? 's' : ''}.`, 'success');
                     
-                    // Force reload seller dashboard
+                    // Refresh dashboards
                     setTimeout(() => {
-                        if (window.currentUser && window.currentUser.profile.role === 'seller') {
-                            SellerDashboard.loadOrders();
-                        }
                         this.loadDashboardData();
                         this.loadOrders();
                     }, 1000);
@@ -3596,8 +3548,8 @@
 
             static async viewOrderDetails(orderId) {
                 try {
-                    const order = await ApiClient.getOrders({ customerId: window.currentUser.id })
-                        .then(orders => orders.find(o => o.id === orderId));
+                    const orders = await ApiClient.getOrders({ customerId: window.currentUser.id });
+                    const order = orders.find(o => o.id === orderId);
                     
                     const orderItems = await ApiClient.getOrderItems(orderId);
                     
@@ -3620,12 +3572,12 @@
                     alert(`Order Details for #${order.order_number}\n\nStatus: ${order.status}\nTotal: ${UIHelper.formatPrice(order.total)}\n\n${itemsHTML}`);
                 } catch (error) {
                     console.error('Error fetching order details:', error);
-                    alert(`Order Details for #${orderId}\n\nFull order details would be shown here with items list and timeline.`);
+                    alert(`Order Details\n\nFull order details would be shown here with items list and timeline.`);
                 }
             }
 
             static trackOrder(orderId) {
-                alert(`Tracking Order #${orderId}\n\nLive tracking would be displayed here with a map showing rider location and estimated delivery time.`);
+                alert(`Tracking Order\n\nLive tracking would be displayed here with a map showing rider location and estimated delivery time.`);
             }
 
             static async cancelOrder(orderId) {
@@ -3667,7 +3619,33 @@
                 // Load seller data
                 this.loadSellerOverview();
                 this.loadProducts();
-                this.forceLoadOrders(); // Use forceLoadOrders instead of loadOrders
+                this.loadOrders();
+                
+                // Set up real-time updates for new orders
+                this.setupRealTimeUpdates();
+            }
+
+            static setupRealTimeUpdates() {
+                // Subscribe to order changes for this seller
+                const subscription = supabase
+                    .channel('orders')
+                    .on('postgres_changes', 
+                        { 
+                            event: '*', 
+                            schema: 'public', 
+                            table: 'orders',
+                            filter: `seller_id=eq.${window.currentUser.id}`
+                        }, 
+                        (payload) => {
+                            console.log('🔄 Real-time order update:', payload);
+                            UIHelper.showNotification('New order received!', 'success');
+                            this.loadOrders();
+                            this.loadSellerOverview();
+                        }
+                    )
+                    .subscribe();
+
+                console.log('📡 Real-time updates enabled for seller');
             }
 
             static async loadSellerOverview() {
@@ -3811,42 +3789,20 @@
                 }
             }
 
-            static async forceLoadOrders() {
-                console.log('🔄 Force loading orders...');
+            static async loadOrders() {
+                console.log('🔄 Loading orders for seller:', window.currentUser.id);
                 
-                // Try to get real orders
-                let realOrders = [];
                 try {
-                    realOrders = await ApiClient.getOrders({ sellerId: window.currentUser.id });
-                    console.log('📦 Real orders found:', realOrders.length);
+                    const orders = await ApiClient.getOrders({ sellerId: window.currentUser.id });
+                    console.log('📦 Orders found:', orders.length, orders);
+                    
+                    // Update UI with orders
+                    this.displayOrders(orders);
+                    
                 } catch (error) {
-                    console.log('❌ Error fetching real orders:', error);
+                    console.error('❌ Error loading orders:', error);
+                    UIHelper.showNotification('Error loading orders', 'error');
                 }
-                
-                // Always add a demo order for testing
-                const demoOrder = {
-                    id: 'force-demo-' + Date.now(),
-                    order_number: 'FORD' + Date.now(),
-                    customer_id: 'demo-customer',
-                    seller_id: window.currentUser.id,
-                    total: 2850,
-                    subtotal: 2700,
-                    delivery_fee: 150,
-                    status: 'created',
-                    payment_method: 'cash',
-                    payment_status: 'pending',
-                    shipping_address: '123 Test Street, Nairobi',
-                    delivery_instructions: 'Please call on arrival',
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
-                    is_demo: true
-                };
-                
-                const allOrders = [...realOrders, demoOrder];
-                console.log('📊 All orders to display:', allOrders);
-                
-                // Update UI
-                this.displayOrders(allOrders);
             }
 
             static displayOrders(orders) {
@@ -3861,15 +3817,13 @@
                             <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 20px;"></i>
                             <h3>No orders yet</h3>
                             <p>Orders will appear here when customers purchase your products</p>
-                            <div style="margin-top: 20px;">
-                                <button class="btn btn-primary" onclick="SellerDashboard.createDemoOrder()">
-                                    <i class="fas fa-plus"></i> Create Test Order
-                                </button>
-                            </div>
                         </div>
                     `;
                     return;
                 }
+                
+                // Sort orders by creation date (newest first)
+                orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 
                 // Display the orders
                 orders.forEach(order => {
@@ -3885,20 +3839,21 @@
                                 <h4>Order #${order.order_number}</h4>
                                 <div style="color: var(--gray); font-size: 14px; margin-top: 5px;">
                                     ${UIHelper.formatDate(order.created_at)}
-                                    ${order.is_demo ? '<span style="color: var(--warning); margin-left: 10px;">(Demo Order)</span>' : ''}
+                                    ${order.customer_name ? `<div style="margin-top: 5px;"><strong>Customer:</strong> ${order.customer_name}</div>` : ''}
                                 </div>
                             </div>
                             <span class="delivery-status ${statusClass}">${statusText}</span>
                         </div>
                         
                         <div style="margin: 15px 0;">
-                            <p><strong>Customer:</strong> ${order.customer_id}</p>
+                            <p><strong>Total Amount:</strong> ${UIHelper.formatPrice(order.total)}</p>
+                            <p><strong>Items Value:</strong> ${UIHelper.formatPrice(order.subtotal)}</p>
+                            <p><strong>Delivery Fee:</strong> ${UIHelper.formatPrice(order.delivery_fee)}</p>
                             <p><strong>Delivery Address:</strong> ${order.shipping_address}</p>
-                            <p><strong>Total:</strong> ${UIHelper.formatPrice(order.total)}</p>
                             ${order.delivery_instructions ? `<p><strong>Instructions:</strong> ${order.delivery_instructions}</p>` : ''}
                         </div>
                         
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                             ${order.status === 'created' ? `
                                 <button class="btn btn-primary" onclick="SellerDashboard.updateOrderStatus('${order.id}', 'accepted')">
                                     <i class="fas fa-check"></i> Accept Order
@@ -3932,7 +3887,7 @@
                     }
                     
                     UIHelper.showNotification(message, 'success');
-                    this.forceLoadOrders();
+                    this.loadOrders();
                     this.loadSellerOverview();
                     
                 } catch (error) {
@@ -3943,8 +3898,8 @@
 
             static async viewOrderDetails(orderId) {
                 try {
-                    const order = await ApiClient.getOrders({ sellerId: window.currentUser.id })
-                        .then(orders => orders.find(o => o.id === orderId));
+                    const orders = await ApiClient.getOrders({ sellerId: window.currentUser.id });
+                    const order = orders.find(o => o.id === orderId);
                     
                     const orderItems = await ApiClient.getOrderItems(orderId);
                     
@@ -3964,35 +3919,16 @@
                         `;
                     }
                     
-                    alert(`Order Details for #${order.order_number}\n\nStatus: ${order.status}\nTotal: ${UIHelper.formatPrice(order.total)}\nCustomer: ${order.customer_id}\n\n${itemsHTML}`);
+                    alert(`Order Details for #${order.order_number}\n\nStatus: ${order.status}\nTotal: ${UIHelper.formatPrice(order.total)}\nCustomer: ${order.customer_name}\n\n${itemsHTML}`);
                 } catch (error) {
                     console.error('Error fetching order details:', error);
-                    alert(`Order Details for #${orderId}\n\nFull order details would be shown here with customer information and order timeline.`);
+                    alert(`Order Details\n\nFull order details would be shown here with customer information and order timeline.`);
                 }
             }
 
-            static createDemoOrder() {
-                const demoOrder = {
-                    id: 'demo-order-' + Date.now(),
-                    order_number: 'ORD' + Date.now(),
-                    customer_id: 'demo-customer',
-                    seller_id: window.currentUser.id,
-                    total: 2850,
-                    subtotal: 2700,
-                    delivery_fee: 150,
-                    status: 'created',
-                    payment_method: 'cash',
-                    payment_status: 'pending',
-                    shipping_address: '123 Demo Street, Nairobi',
-                    delivery_instructions: 'Call before delivery',
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                };
-                
-                UIHelper.showNotification('Demo order created!', 'success');
-                
-                // Reload orders to show the demo order
-                this.forceLoadOrders();
+            static refreshOrders() {
+                this.loadOrders();
+                UIHelper.showNotification('Orders refreshed', 'success');
             }
 
             static async deleteProduct(productId) {
@@ -4155,6 +4091,32 @@
                 this.loadAvailableDeliveries();
                 this.loadActiveDeliveries();
                 this.loadRiderEarnings();
+                
+                // Set up real-time updates for new orders
+                this.setupRealTimeUpdates();
+            }
+
+            static setupRealTimeUpdates() {
+                // Subscribe to order changes for available deliveries
+                const subscription = supabase
+                    .channel('orders')
+                    .on('postgres_changes', 
+                        { 
+                            event: '*', 
+                            schema: 'public', 
+                            table: 'orders',
+                            filter: 'status=eq.ready'
+                        }, 
+                        (payload) => {
+                            console.log('🔄 Real-time order update for riders:', payload);
+                            UIHelper.showNotification('New delivery available!', 'info');
+                            this.loadAvailableDeliveries();
+                            this.loadRiderDashboard();
+                        }
+                    )
+                    .subscribe();
+
+                console.log('📡 Real-time updates enabled for rider');
             }
 
             static async loadRiderDashboard() {
@@ -4225,7 +4187,7 @@
                         </div>
                         
                         <div style="margin: 15px 0;">
-                            <p><strong>Customer:</strong> ${currentDelivery.customer_id}</p>
+                            <p><strong>Customer:</strong> ${currentDelivery.customer_name}</p>
                             <p><strong>Delivery Address:</strong> ${currentDelivery.shipping_address}</p>
                             <p><strong>Instructions:</strong> ${currentDelivery.delivery_instructions || 'None'}</p>
                             <p><strong>Earnings:</strong> ${UIHelper.formatPrice(currentDelivery.total * 0.2)}</p>
@@ -4312,11 +4274,11 @@
                             ${itemsHTML}
                             
                             <div style="margin: 15px 0;">
-                                <p><strong>Pickup:</strong> Seller Location</p>
+                                <p><strong>Pickup:</strong> ${order.seller_name}</p>
                                 <p><strong>Delivery:</strong> ${order.shipping_address}</p>
                                 <p><strong>Distance:</strong> ${distance} km</p>
                                 <p><strong>Earnings:</strong> ${UIHelper.formatPrice(earnings)}</p>
-                                <p><strong>Customer:</strong> ${order.customer_id}</p>
+                                <p><strong>Customer:</strong> ${order.customer_name}</p>
                             </div>
                             
                             <div style="margin-top: 15px;">
@@ -4430,7 +4392,7 @@
                             ${itemsHTML}
                             
                             <div style="margin: 15px 0;">
-                                <p><strong>Customer:</strong> ${delivery.customer_id}</p>
+                                <p><strong>Customer:</strong> ${delivery.customer_name}</p>
                                 <p><strong>Delivery Address:</strong> ${delivery.shipping_address}</p>
                                 <p><strong>Instructions:</strong> ${delivery.delivery_instructions || 'None'}</p>
                                 <p><strong>Earnings:</strong> ${UIHelper.formatPrice(delivery.total * 0.2)}</p>
@@ -4506,7 +4468,8 @@
                 
                 try {
                     await ApiClient.updateOrderStatus(orderId, 'assigned', {
-                        rider_id: window.currentUser.id
+                        rider_id: window.currentUser.id,
+                        rider_name: window.currentUser.profile.name
                     });
                     
                     UIHelper.showNotification('Delivery accepted successfully!', 'success');
@@ -4542,8 +4505,8 @@
 
             static async viewDeliveryDetails(deliveryId) {
                 try {
-                    const delivery = await ApiClient.getOrders({ riderId: window.currentUser.id })
-                        .then(deliveries => deliveries.find(d => d.id === deliveryId));
+                    const deliveries = await ApiClient.getOrders({ riderId: window.currentUser.id });
+                    const delivery = deliveries.find(d => d.id === deliveryId);
                     
                     const orderItems = await ApiClient.getOrderItems(deliveryId);
                     
@@ -4562,10 +4525,10 @@
                         `;
                     }
                     
-                    alert(`Delivery Details for #${delivery.order_number}\n\nStatus: ${delivery.status}\nEarnings: ${UIHelper.formatPrice(delivery.total * 0.2)}\nCustomer: ${delivery.customer_id}\nAddress: ${delivery.shipping_address}\n\n${itemsHTML}`);
+                    alert(`Delivery Details for #${delivery.order_number}\n\nStatus: ${delivery.status}\nEarnings: ${UIHelper.formatPrice(delivery.total * 0.2)}\nCustomer: ${delivery.customer_name}\nAddress: ${delivery.shipping_address}\n\n${itemsHTML}`);
                 } catch (error) {
                     console.error('Error fetching delivery details:', error);
-                    alert(`Delivery Details for #${deliveryId}\n\nFull delivery details would be shown here with customer contact information and delivery timeline.`);
+                    alert(`Delivery Details\n\nFull delivery details would be shown here with customer contact information and delivery timeline.`);
                 }
             }
         }
