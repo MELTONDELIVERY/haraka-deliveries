@@ -168,6 +168,11 @@
             color: var(--white);
         }
 
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--dark);
+        }
+
         .btn-sm {
             padding: 8px 16px;
             font-size: 12px;
@@ -1413,6 +1418,13 @@
             <div class="dashboard-content">
                 <div class="container">
                     <h2 style="margin-bottom: 20px;">🚴‍♂️ <span id="rider-dashboard-title">Rider Dashboard</span></h2>
+                    
+                    <!-- EMERGENCY REFRESH BUTTON -->
+                    <div style="margin: 10px 0; text-align: center;">
+                        <button class="btn btn-warning" onclick="RiderDashboard.forceRefreshDeliveries()">
+                            <i class="fas fa-sync-alt"></i> Refresh Available Deliveries
+                        </button>
+                    </div>
                     
                     <div class="dashboard-nav-links">
                         <a class="dashboard-nav-link active" onclick="showRiderSection('dashboard')"><span id="dashboard-nav-3">Dashboard</span></a>
@@ -4133,12 +4145,17 @@
                 document.getElementById('rider-avatar').textContent = user.profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 
                 this.loadRiderDashboard();
-                this.loadAvailableDeliveries();
+                this.forceRefreshDeliveries(); // Use the new method instead
                 this.loadActiveDeliveries();
                 this.loadRiderEarnings();
                 
-                // Set up real-time updates for new orders
-                this.setupRealTimeUpdates();
+                // Set up auto-refresh every 30 seconds as backup
+                setInterval(() => {
+                    if (document.getElementById('rider-dashboard').classList.contains('active')) {
+                        console.log('🔄 Auto-refreshing deliveries...');
+                        this.forceRefreshDeliveries();
+                    }
+                }, 30000);
             }
 
             static setupRealTimeUpdates() {
@@ -4155,7 +4172,7 @@
                         (payload) => {
                             console.log('🔄 Real-time order update for riders:', payload);
                             UIHelper.showNotification('New delivery available!', 'info');
-                            this.loadAvailableDeliveries();
+                            this.forceRefreshDeliveries();
                             this.loadRiderDashboard();
                         }
                     )
@@ -4267,12 +4284,32 @@
                 `;
             }
 
-            static async loadAvailableDeliveries() {
+            // FIXED: Emergency refresh method for rider deliveries
+            static async forceRefreshDeliveries() {
+                console.log('🔄 MANUAL REFRESH: Loading available deliveries...');
                 try {
-                    const orders = await ApiClient.getOrders({ status: 'ready' });
-                    const container = document.getElementById('available-deliveries-list') || document.getElementById('available-deliveries');
+                    // Get all orders with status 'ready'
+                    const { data: orders, error } = await supabase
+                        .from('orders')
+                        .select('*')
+                        .eq('status', 'ready');
+                        
+                    if (error) {
+                        console.error('❌ Error fetching ready orders:', error);
+                        UIHelper.showNotification('Error loading deliveries', 'error');
+                        return;
+                    }
                     
-                    if (!container) return;
+                    console.log('✅ Ready orders found:', orders);
+                    
+                    // Display the orders
+                    const container = document.getElementById('available-deliveries-list') || 
+                                     document.getElementById('available-deliveries');
+                    
+                    if (!container) {
+                        console.error('❌ Container not found');
+                        return;
+                    }
                     
                     container.innerHTML = '';
                     
@@ -4282,19 +4319,18 @@
                                 <p style="text-align: center; color: var(--gray);">No available deliveries at the moment</p>
                             </div>
                         `;
+                        UIHelper.showNotification('No deliveries available', 'info');
                         return;
                     }
                     
+                    // Display each order
                     for (const order of orders) {
-                        // Get order items for each order
                         const orderItems = await ApiClient.getOrderItems(order.id);
+                        const distance = (Math.random() * 10 + 2).toFixed(1);
+                        const earnings = Math.floor(order.total * 0.2);
                         
                         const deliveryCard = document.createElement('div');
                         deliveryCard.className = 'delivery-card';
-                        
-                        // Calculate distance and earnings (mock data)
-                        const distance = (Math.random() * 10 + 2).toFixed(1);
-                        const earnings = Math.floor(order.total * 0.2);
                         
                         let itemsHTML = '';
                         if (orderItems && orderItems.length > 0) {
@@ -4335,9 +4371,18 @@
                         
                         container.appendChild(deliveryCard);
                     }
+                    
+                    UIHelper.showNotification(`Found ${orders.length} available delivery${orders.length !== 1 ? 's' : ''}`, 'success');
+                    
                 } catch (error) {
-                    console.error('Error loading available deliveries:', error);
+                    console.error('💥 Error in forceRefreshDeliveries:', error);
+                    UIHelper.showNotification('Error refreshing deliveries', 'error');
                 }
+            }
+
+            static async loadAvailableDeliveries() {
+                // Use the new forceRefresh method instead
+                await this.forceRefreshDeliveries();
             }
 
             static loadAvailableDeliveriesForDashboard(orders) {
@@ -4518,7 +4563,7 @@
                     });
                     
                     UIHelper.showNotification('Delivery accepted successfully!', 'success');
-                    this.loadAvailableDeliveries();
+                    this.forceRefreshDeliveries();
                     this.loadActiveDeliveries();
                     this.loadRiderDashboard();
                     
