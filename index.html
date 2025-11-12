@@ -5612,7 +5612,7 @@
                                      document.getElementById('available-deliveries');
                     
                     if (!container) {
-                        console.error('❌ Container not found');
+                        console.error('❌ Container not found for available deliveries');
                         return;
                     }
                     
@@ -5621,35 +5621,18 @@
                     if (orders.length === 0) {
                         container.innerHTML = `
                             <div class="delivery-card">
-                                <p style="text-align: center; color: var(--gray);">No available deliveries at the moment</p>
+                                <p style="text-align: center; color: var(--gray);">No deliveries available at the moment</p>
+                                <p style="text-align: center; color: var(--gray); font-size: 14px; margin-top: 10px;">
+                                    Deliveries will appear here when sellers mark orders as ready for pickup
+                                </p>
                             </div>
                         `;
-                        UIHelper.showNotification('No deliveries available', 'info');
                         return;
                     }
                     
-                    // Display each order
-                    for (const order of orders) {
-                        const orderItems = await ApiClient.getOrderItems(order.id);
-                        const distance = (Math.random() * 10 + 2).toFixed(1);
-                        const earnings = Math.floor(order.total * 0.2);
-                        
+                    orders.forEach(order => {
                         const deliveryCard = document.createElement('div');
                         deliveryCard.className = 'delivery-card';
-                        
-                        let itemsHTML = '';
-                        if (orderItems && orderItems.length > 0) {
-                            itemsHTML = `
-                                <div style="margin: 10px 0; padding: 10px; background: var(--light); border-radius: 8px;">
-                                    <strong>Items to Deliver:</strong>
-                                    ${orderItems.map(item => `
-                                        <div style="margin-top: 5px;">
-                                            <span>${item.product_name} × ${item.quantity}</span>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            `;
-                        }
                         
                         deliveryCard.innerHTML = `
                             <div class="delivery-header">
@@ -5657,134 +5640,114 @@
                                 <span class="delivery-status status-ready">Ready for Pickup</span>
                             </div>
                             
-                            ${itemsHTML}
-                            
                             <div style="margin: 15px 0;">
-                                <p><strong>Pickup:</strong> ${order.seller_name}</p>
-                                <p><strong>Delivery:</strong> ${order.shipping_address}</p>
-                                <p><strong>Distance:</strong> ${distance} km</p>
-                                <p><strong>Earnings:</strong> ${UIHelper.formatPrice(earnings)}</p>
+                                <p><strong>Seller:</strong> ${order.seller_name}</p>
                                 <p><strong>Customer:</strong> ${order.customer_name}</p>
+                                <p><strong>Delivery Address:</strong> ${order.shipping_address}</p>
+                                <p><strong>Instructions:</strong> ${order.delivery_instructions || 'None'}</p>
+                                <p><strong>Earnings:</strong> ${UIHelper.formatPrice(order.total * 0.2)}</p>
                             </div>
                             
                             <div style="margin-top: 15px;">
-                                <button class="btn btn-primary btn-block" onclick="RiderDashboard.acceptDelivery('${order.id}')">
+                                <button class="btn btn-primary" onclick="RiderDashboard.acceptDelivery('${order.id}')">
                                     <i class="fas fa-check"></i> Accept Delivery
                                 </button>
                             </div>
                         `;
                         
                         container.appendChild(deliveryCard);
-                    }
-                    
-                    UIHelper.showNotification(`Found ${orders.length} available delivery${orders.length !== 1 ? 's' : ''}`, 'success');
+                    });
                     
                 } catch (error) {
-                    console.error('💥 Error in forceRefreshDeliveries:', error);
-                    UIHelper.showNotification('Error refreshing deliveries', 'error');
+                    console.error('❌ Error in forceRefreshDeliveries:', error);
+                    UIHelper.showNotification('Error loading available deliveries', 'error');
                 }
             }
 
-            static async loadAvailableDeliveries() {
-                // Use the new forceRefresh method instead
-                await this.forceRefreshDeliveries();
+            static async acceptDelivery(orderId) {
+                try {
+                    // Assign the order to the current rider
+                    const { error } = await supabase
+                        .from('orders')
+                        .update({ 
+                            rider_id: window.currentUser.id,
+                            rider_name: window.currentUser.profile.name,
+                            status: 'assigned'
+                        })
+                        .eq('id', orderId);
+
+                    if (error) throw error;
+                    
+                    UIHelper.showNotification('Delivery accepted successfully!', 'success');
+                    
+                    // Refresh the dashboard
+                    this.forceRefreshDeliveries();
+                    this.loadRiderDashboard();
+                    this.loadActiveDeliveries();
+                    
+                } catch (error) {
+                    console.error('Error accepting delivery:', error);
+                    UIHelper.showNotification('Error accepting delivery', 'error');
+                }
             }
 
-            static loadAvailableDeliveriesForDashboard(orders) {
-                const container = document.getElementById('available-deliveries');
-                if (!container || !orders) return;
-                
-                // Show only 2-3 deliveries in dashboard
-                const limitedOrders = orders.slice(0, 3);
-                
-                if (limitedOrders.length === 0) {
-                    container.innerHTML = `
-                        <div class="delivery-card">
-                            <p style="text-align: center; color: var(--gray);">No available deliveries at the moment</p>
-                        </div>
-                    `;
-                    return;
+            static async updateDeliveryStatus(orderId, status) {
+                try {
+                    await ApiClient.updateOrderStatus(orderId, status);
+                    
+                    let message = `Delivery marked as ${status}`;
+                    if (status === 'delivered') {
+                        message = 'Delivery completed successfully!';
+                    }
+                    
+                    UIHelper.showNotification(message, 'success');
+                    
+                    // Refresh the dashboard
+                    this.loadRiderDashboard();
+                    this.loadActiveDeliveries();
+                    this.forceRefreshDeliveries();
+                    
+                } catch (error) {
+                    console.error('Error updating delivery status:', error);
+                    UIHelper.showNotification('Error updating delivery', 'error');
                 }
-                
-                limitedOrders.forEach(order => {
-                    const deliveryCard = document.createElement('div');
-                    deliveryCard.className = 'delivery-card';
-                    deliveryCard.style.marginBottom = '15px';
-                    
-                    const distance = (Math.random() * 10 + 2).toFixed(1);
-                    const earnings = Math.floor(order.total * 0.2);
-                    
-                    deliveryCard.innerHTML = `
-                        <div class="delivery-header">
-                            <h5>Order #${order.order_number}</h5>
-                            <span class="delivery-status status-ready" style="font-size: 10px;">Ready</span>
-                        </div>
-                        <p style="margin: 10px 0; font-size: 14px;">
-                            <strong>${distance} km</strong> • ${UIHelper.formatPrice(earnings)}
-                        </p>
-                        <button class="btn btn-primary btn-sm" onclick="RiderDashboard.acceptDelivery('${order.id}')" style="width: 100%;">
-                            <i class="fas fa-check"></i> Accept
-                        </button>
-                    `;
-                    
-                    container.appendChild(deliveryCard);
-                });
             }
 
             static async loadActiveDeliveries() {
                 if (!window.currentUser) return;
                 
                 try {
-                    const deliveries = await ApiClient.getOrders({ riderId: window.currentUser.id });
-                    const activeDeliveries = deliveries.filter(d => 
-                        ['assigned', 'accepted', 'picked_up', 'in_transit'].includes(d.status)
-                    );
+                    const deliveries = await ApiClient.getOrders({ 
+                        riderId: window.currentUser.id,
+                        status: ['assigned', 'accepted', 'picked_up', 'in_transit']
+                    });
                     
                     const container = document.getElementById('rider-active-deliveries');
                     if (!container) return;
                     
                     container.innerHTML = '';
                     
-                    if (activeDeliveries.length === 0) {
+                    if (deliveries.length === 0) {
                         container.innerHTML = `
                             <div class="delivery-card">
-                                <p style="text-align: center; color: var(--gray);">You don't have any active deliveries</p>
-                        </div>
-                    `;
+                                <p style="text-align: center; color: var(--gray);">No active deliveries</p>
+                            </div>
+                        `;
                         return;
                     }
                     
-                    for (const delivery of activeDeliveries) {
-                        // Get order items for each delivery
-                        const orderItems = await ApiClient.getOrderItems(delivery.id);
-                        
+                    deliveries.forEach(delivery => {
                         const deliveryCard = document.createElement('div');
                         deliveryCard.className = 'delivery-card';
                         
                         const statusClass = `status-${delivery.status}`;
                         const statusText = delivery.status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
                         
-                        let itemsHTML = '';
-                        if (orderItems && orderItems.length > 0) {
-                            itemsHTML = `
-                                <div style="margin: 10px 0; padding: 10px; background: var(--light); border-radius: 8px;">
-                                    <strong>Items to Deliver:</strong>
-                                    ${orderItems.map(item => `
-                                        <div style="margin-top: 5px;">
-                                            <span>${item.product_name} × ${item.quantity}</span>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            `;
-                        }
-                        
                         deliveryCard.innerHTML = `
                             <div class="delivery-header">
                                 <h4>Order #${delivery.order_number}</h4>
                                 <span class="delivery-status ${statusClass}">${statusText}</span>
                             </div>
-                            
-                            ${itemsHTML}
                             
                             <div style="margin: 15px 0;">
                                 <p><strong>Customer:</strong> ${delivery.customer_name}</p>
@@ -5821,7 +5784,8 @@
                         `;
                         
                         container.appendChild(deliveryCard);
-                    }
+                    });
+                    
                 } catch (error) {
                     console.error('Error loading active deliveries:', error);
                 }
@@ -5832,105 +5796,44 @@
                 
                 try {
                     const deliveries = await ApiClient.getOrders({ riderId: window.currentUser.id });
-                    const completedDeliveries = deliveries.filter(d => d.status === 'delivered');
                     
-                    const totalEarnings = completedDeliveries.reduce((sum, d) => sum + (d.total * 0.2), 0);
-                    const weeklyEarnings = completedDeliveries
+                    const totalEarnings = deliveries
+                        .filter(d => d.status === 'delivered')
+                        .reduce((sum, d) => sum + (d.total * 0.2), 0);
+                        
+                    const weeklyEarnings = deliveries
                         .filter(d => {
                             const deliveryDate = new Date(d.updated_at);
                             const oneWeekAgo = new Date();
                             oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-                            return deliveryDate > oneWeekAgo;
+                            return deliveryDate > oneWeekAgo && d.status === 'delivered';
                         })
                         .reduce((sum, d) => sum + (d.total * 0.2), 0);
                         
-                    const todayEarnings = completedDeliveries
-                        .filter(d => new Date(d.updated_at).toDateString() === new Date().toDateString())
+                    const todayEarnings = deliveries
+                        .filter(d => {
+                            const deliveryDate = new Date(d.updated_at);
+                            return deliveryDate.toDateString() === new Date().toDateString() && d.status === 'delivered';
+                        })
                         .reduce((sum, d) => sum + (d.total * 0.2), 0);
 
-                    // Update earnings stats
+                    // Update earnings display
                     document.getElementById('total-earnings').textContent = UIHelper.formatPrice(totalEarnings);
                     document.getElementById('weekly-earnings').textContent = UIHelper.formatPrice(weeklyEarnings);
                     document.getElementById('today-earnings').textContent = UIHelper.formatPrice(todayEarnings);
-                    document.getElementById('total-deliveries').textContent = completedDeliveries.length;
-                    
-                    // Update available balance
+                    document.getElementById('total-deliveries').textContent = deliveries.filter(d => d.status === 'delivered').length;
                     document.getElementById('available-balance').textContent = UIHelper.formatPrice(totalEarnings);
+                    
                 } catch (error) {
                     console.error('Error loading rider earnings:', error);
                 }
             }
 
-            static async acceptDelivery(orderId) {
-                if (!window.currentUser) return;
-                
-                try {
-                    await ApiClient.updateOrderStatus(orderId, 'assigned', {
-                        rider_id: window.currentUser.id,
-                        rider_name: window.currentUser.profile.name
-                    });
-                    
-                    UIHelper.showNotification('Delivery accepted successfully!', 'success');
-                    this.forceRefreshDeliveries();
-                    this.loadActiveDeliveries();
-                    this.loadRiderDashboard();
-                    
-                } catch (error) {
-                    console.error('Error accepting delivery:', error);
-                    UIHelper.showNotification('Error accepting delivery', 'error');
-                }
+            static viewDeliveryDetails(deliveryId) {
+                alert(`Delivery Details\n\nFull delivery details would be shown here with customer information, order items, and delivery timeline.`);
             }
 
-            static async updateDeliveryStatus(orderId, status) {
-                try {
-                    await ApiClient.updateOrderStatus(orderId, status);
-                    
-                    let message = `Delivery marked as ${status.replace('_', ' ')}`;
-                    if (status === 'delivered') {
-                        message = 'Delivery completed successfully!';
-                    }
-                    
-                    UIHelper.showNotification(message, 'success');
-                    this.loadActiveDeliveries();
-                    this.loadRiderDashboard();
-                    this.loadRiderEarnings();
-                    
-                } catch (error) {
-                    console.error('Error updating delivery status:', error);
-                    UIHelper.showNotification('Error updating delivery', 'error');
-                }
-            }
-
-            static async viewDeliveryDetails(deliveryId) {
-                try {
-                    const deliveries = await ApiClient.getOrders({ riderId: window.currentUser.id });
-                    const delivery = deliveries.find(d => d.id === deliveryId);
-                    
-                    const orderItems = await ApiClient.getOrderItems(deliveryId);
-                    
-                    let itemsHTML = '';
-                    if (orderItems && orderItems.length > 0) {
-                        itemsHTML = `
-                            <h4>Delivery Items:</h4>
-                            ${orderItems.map(item => `
-                                <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--light-gray);">
-                                    <div>
-                                        <strong>${item.product_name}</strong>
-                                        <div>Quantity: ${item.quantity}</div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        `;
-                    }
-                    
-                    alert(`Delivery Details for #${delivery.order_number}\n\nStatus: ${delivery.status}\nEarnings: ${UIHelper.formatPrice(delivery.total * 0.2)}\nCustomer: ${delivery.customer_name}\nAddress: ${delivery.shipping_address}\n\n${itemsHTML}`);
-                } catch (error) {
-                    console.error('Error fetching delivery details:', error);
-                    alert(`Delivery Details\n\nFull delivery details would be shown here with customer contact information and delivery timeline.`);
-                }
-            }
-
-            static async requestWithdrawal() {
+            static requestWithdrawal() {
                 const amount = parseFloat(document.getElementById('withdraw-amount').value);
                 const method = document.getElementById('withdraw-method').value;
                 
@@ -5939,25 +5842,18 @@
                     return;
                 }
                 
-                // In a real app, you would check if the rider has enough balance
-                // For demo, we'll just simulate the withdrawal request
+                const availableBalance = parseFloat(document.getElementById('available-balance').textContent.replace('KSh ', '').replace(',', ''));
                 
-                UIHelper.showLoading();
-                
-                try {
-                    // Simulate API call
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    
-                    UIHelper.hideLoading();
-                    UIHelper.showNotification('Withdrawal request submitted successfully', 'success');
-                    
-                    // Reset form
-                    document.getElementById('withdraw-amount').value = '';
-                } catch (error) {
-                    UIHelper.hideLoading();
-                    console.error('Error requesting withdrawal:', error);
-                    UIHelper.showNotification('Error processing withdrawal request', 'error');
+                if (amount > availableBalance) {
+                    UIHelper.showNotification('Amount exceeds available balance', 'error');
+                    return;
                 }
+                
+                // In a real app, this would process the withdrawal
+                UIHelper.showNotification(`Withdrawal request for ${UIHelper.formatPrice(amount)} via ${method} submitted successfully`, 'success');
+                
+                // Reset form
+                document.getElementById('withdraw-amount').value = '';
             }
         }
 
@@ -5972,11 +5868,9 @@
                 document.getElementById('admin-name').textContent = user.profile.name;
                 document.getElementById('admin-avatar').textContent = user.profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 
-                // Load admin data
                 this.loadAdminOverview();
                 this.loadUsers();
-                this.loadOrders();
-                this.loadPlatformSettings();
+                this.loadAdminOrders();
             }
 
             static async loadAdminOverview() {
@@ -5984,19 +5878,17 @@
                     const users = await ApiClient.getUsers();
                     const orders = await ApiClient.getOrders();
                     
-                    // Calculate stats
-                    const totalRevenue = orders
+                    // Calculate platform revenue (10% commission on all orders)
+                    const platformRevenue = orders
                         .filter(order => order.status === 'delivered')
-                        .reduce((sum, order) => sum + order.total, 0);
-                    
-                    const activeRiders = users.filter(user => user.role === 'rider' && user.status === 'active').length;
-                    
+                        .reduce((sum, order) => sum + (order.total * 0.1), 0);
+
                     // Update stats
                     document.getElementById('total-users').textContent = users.length;
                     document.getElementById('total-orders-admin').textContent = orders.length;
-                    document.getElementById('total-revenue-admin').textContent = UIHelper.formatPrice(totalRevenue);
-                    document.getElementById('active-riders').textContent = activeRiders;
-                    document.getElementById('active-sessions').textContent = Math.floor(Math.random() * 100) + 50; // Mock data
+                    document.getElementById('total-revenue-admin').textContent = UIHelper.formatPrice(platformRevenue);
+                    document.getElementById('active-riders').textContent = users.filter(u => u.role === 'rider').length;
+                    document.getElementById('active-sessions').textContent = Math.floor(Math.random() * 50) + 10;
                     
                 } catch (error) {
                     console.error('Error loading admin overview:', error);
@@ -6005,16 +5897,7 @@
 
             static async loadUsers() {
                 try {
-                    const search = document.getElementById('user-search').value;
-                    const role = document.getElementById('user-role-filter').value;
-                    const status = document.getElementById('user-status-filter').value;
-                    
-                    const filters = {};
-                    if (search) filters.search = search;
-                    if (role !== 'all') filters.role = role;
-                    // Note: status filter would be implemented in a real app
-                    
-                    const users = await ApiClient.getUsers(filters);
+                    const users = await ApiClient.getUsers();
                     const container = document.getElementById('admin-users-list');
                     
                     if (!container) return;
@@ -6022,72 +5905,45 @@
                     container.innerHTML = '';
                     
                     if (users.length === 0) {
-                        container.innerHTML = `
-                            <div style="text-align: center; padding: 40px; color: var(--gray);">
-                                <i class="fas fa-users" style="font-size: 48px; margin-bottom: 20px;"></i>
-                                <h3>No users found</h3>
-                                <p>Try adjusting your search filters</p>
-                            </div>
-                        `;
+                        container.innerHTML = '<p style="color: var(--gray); text-align: center;">No users found</p>';
                         return;
                     }
                     
                     users.forEach(user => {
                         const userCard = document.createElement('div');
                         userCard.className = 'delivery-card';
+                        userCard.style.marginBottom = '10px';
                         
                         userCard.innerHTML = `
-                            <div class="delivery-header">
-                                <div>
-                                    <h4>${user.name}</h4>
-                                    <div style="color: var(--gray); font-size: 14px; margin-top: 5px;">
-                                        ${user.email} • ${user.role} • ${user.status || 'active'}
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div class="user-avatar">${user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}</div>
+                                    <div>
+                                        <h4>${user.name || 'Unknown User'}</h4>
+                                        <div style="color: var(--gray); font-size: 14px;">${user.email}</div>
+                                        <div style="color: var(--gray); font-size: 12px;">Role: ${user.role}</div>
                                     </div>
                                 </div>
-                                <span class="delivery-status ${user.status === 'suspended' ? 'status-cancelled' : 'status-delivered'}">
-                                    ${user.status === 'suspended' ? 'Suspended' : 'Active'}
-                                </span>
-                            </div>
-                            
-                            <div style="margin: 15px 0;">
-                                <p><strong>Joined:</strong> ${UIHelper.formatDate(user.created_at)}</p>
-                                <p><strong>Last Active:</strong> ${UIHelper.formatDate(user.updated_at || user.created_at)}</p>
-                            </div>
-                            
-                            <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                ${user.status !== 'suspended' ? `
-                                    <button class="btn btn-danger btn-sm" onclick="AdminDashboard.suspendUser('${user.id}')">
-                                        <i class="fas fa-ban"></i> Suspend
+                                <div style="display: flex; gap: 10px;">
+                                    <span class="delivery-status status-ready">${user.role}</span>
+                                    <button class="btn btn-sm btn-outline" onclick="AdminDashboard.viewUserDetails('${user.id}')">
+                                        <i class="fas fa-eye"></i> View
                                     </button>
-                                ` : `
-                                    <button class="btn btn-success btn-sm" onclick="AdminDashboard.activateUser('${user.id}')">
-                                        <i class="fas fa-check"></i> Activate
-                                    </button>
-                                `}
-                                <button class="btn btn-outline btn-sm" onclick="AdminDashboard.viewUserDetails('${user.id}')">
-                                    <i class="fas fa-eye"></i> Details
-                                </button>
+                                </div>
                             </div>
                         `;
                         
                         container.appendChild(userCard);
                     });
+                    
                 } catch (error) {
                     console.error('Error loading users:', error);
-                    UIHelper.showNotification('Error loading users', 'error');
                 }
             }
 
-            static async loadOrders() {
+            static async loadAdminOrders() {
                 try {
-                    const search = document.getElementById('order-search').value;
-                    const status = document.getElementById('order-status-filter-admin').value;
-                    
-                    const filters = {};
-                    if (status !== 'all') filters.status = status;
-                    // Note: search filter would be implemented in a real app
-                    
-                    const orders = await ApiClient.getOrders(filters);
+                    const orders = await ApiClient.getOrders();
                     const container = document.getElementById('admin-orders-list');
                     
                     if (!container) return;
@@ -6095,175 +5951,58 @@
                     container.innerHTML = '';
                     
                     if (orders.length === 0) {
-                        container.innerHTML = `
-                            <div style="text-align: center; padding: 40px; color: var(--gray);">
-                                <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 20px;"></i>
-                                <h3>No orders found</h3>
-                                <p>Try adjusting your search filters</p>
-                            </div>
-                        `;
+                        container.innerHTML = '<p style="color: var(--gray); text-align: center;">No orders found</p>';
                         return;
                     }
                     
                     orders.forEach(order => {
                         const orderCard = document.createElement('div');
                         orderCard.className = 'delivery-card';
+                        orderCard.style.marginBottom = '10px';
                         
                         const statusClass = `status-${order.status}`;
                         const statusText = order.status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
                         
                         orderCard.innerHTML = `
-                            <div class="delivery-header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
                                     <h4>Order #${order.order_number}</h4>
-                                    <div style="color: var(--gray); font-size: 14px; margin-top: 5px;">
-                                        ${UIHelper.formatDate(order.created_at)}
-                                        ${order.customer_name ? `<div style="margin-top: 5px;"><strong>Customer:</strong> ${order.customer_name}</div>` : ''}
-                                        ${order.seller_name ? `<div><strong>Seller:</strong> ${order.seller_name}</div>` : ''}
+                                    <div style="color: var(--gray); font-size: 14px;">
+                                        Customer: ${order.customer_name} | Seller: ${order.seller_name}
+                                        ${order.rider_name ? ` | Rider: ${order.rider_name}` : ''}
                                     </div>
+                                    <div style="color: var(--gray); font-size: 12px;">${UIHelper.formatDate(order.created_at)}</div>
                                 </div>
-                                <span class="delivery-status ${statusClass}">${statusText}</span>
-                            </div>
-                            
-                            <div style="margin: 15px 0;">
-                                <p><strong>Total Amount:</strong> ${UIHelper.formatPrice(order.total)}</p>
-                                <p><strong>Payment Method:</strong> ${order.payment_method}</p>
-                                <p><strong>Payment Status:</strong> ${order.payment_status}</p>
-                            </div>
-                            
-                            <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                <button class="btn btn-outline btn-sm" onclick="AdminDashboard.viewOrderDetails('${order.id}')">
-                                    <i class="fas fa-eye"></i> Details
-                                </button>
-                                ${order.status !== 'cancelled' && order.status !== 'delivered' ? `
-                                    <button class="btn btn-danger btn-sm" onclick="AdminDashboard.cancelOrder('${order.id}')">
-                                        <i class="fas fa-times"></i> Cancel
-                                    </button>
-                                ` : ''}
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <span class="delivery-status ${statusClass}">${statusText}</span>
+                                    <div style="font-weight: bold;">${UIHelper.formatPrice(order.total)}</div>
+                                </div>
                             </div>
                         `;
                         
                         container.appendChild(orderCard);
                     });
-                } catch (error) {
-                    console.error('Error loading orders:', error);
-                    UIHelper.showNotification('Error loading orders', 'error');
-                }
-            }
-
-            static async suspendUser(userId) {
-                if (!confirm('Are you sure you want to suspend this user?')) return;
-                
-                try {
-                    await ApiClient.updateUserStatus(userId, 'suspended');
-                    UIHelper.showNotification('User suspended successfully', 'success');
-                    this.loadUsers();
-                } catch (error) {
-                    console.error('Error suspending user:', error);
-                    UIHelper.showNotification('Error suspending user', 'error');
-                }
-            }
-
-            static async activateUser(userId) {
-                try {
-                    await ApiClient.updateUserStatus(userId, 'active');
-                    UIHelper.showNotification('User activated successfully', 'success');
-                    this.loadUsers();
-                } catch (error) {
-                    console.error('Error activating user:', error);
-                    UIHelper.showNotification('Error activating user', 'error');
-                }
-            }
-
-            static async viewUserDetails(userId) {
-                try {
-                    const users = await ApiClient.getUsers();
-                    const user = users.find(u => u.id === userId);
                     
-                    alert(`User Details\n\nName: ${user.name}\nEmail: ${user.email}\nRole: ${user.role}\nStatus: ${user.status || 'active'}\nJoined: ${UIHelper.formatDate(user.created_at)}`);
                 } catch (error) {
-                    console.error('Error fetching user details:', error);
-                    alert(`User Details\n\nFull user details would be shown here with activity history and statistics.`);
+                    console.error('Error loading admin orders:', error);
                 }
             }
 
-            static async viewOrderDetails(orderId) {
-                try {
-                    const orders = await ApiClient.getOrders();
-                    const order = orders.find(o => o.id === orderId);
-                    
-                    const orderItems = await ApiClient.getOrderItems(orderId);
-                    
-                    let itemsHTML = '';
-                    if (orderItems && orderItems.length > 0) {
-                        itemsHTML = `
-                            <h4>Order Items:</h4>
-                            ${orderItems.map(item => `
-                                <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--light-gray);">
-                                    <div>
-                                        <strong>${item.product_name}</strong>
-                                        <div>Quantity: ${item.quantity}</div>
-                                    </div>
-                                    <div>${UIHelper.formatPrice(item.price * item.quantity)}</div>
-                                </div>
-                            `).join('')}
-                        `;
-                    }
-                    
-                    alert(`Order Details for #${order.order_number}\n\nStatus: ${order.status}\nTotal: ${UIHelper.formatPrice(order.total)}\nCustomer: ${order.customer_name}\nSeller: ${order.seller_name}\n\n${itemsHTML}`);
-                } catch (error) {
-                    console.error('Error fetching order details:', error);
-                    alert(`Order Details\n\nFull order details would be shown here with customer information and order timeline.`);
-                }
-            }
-
-            static async cancelOrder(orderId) {
-                if (!confirm('Are you sure you want to cancel this order?')) return;
-                
-                try {
-                    await ApiClient.updateOrderStatus(orderId, 'cancelled');
-                    UIHelper.showNotification('Order cancelled successfully', 'success');
-                    this.loadOrders();
-                } catch (error) {
-                    console.error('Error cancelling order:', error);
-                    UIHelper.showNotification('Error cancelling order', 'error');
-                }
-            }
-
-            static loadPlatformSettings() {
-                // In a real app, this would fetch from the database
-                // For demo, we'll use localStorage
-                const platformSettings = JSON.parse(localStorage.getItem('platformSettings') || '{}');
-                
-                document.getElementById('seller-commission').value = platformSettings.sellerCommission || 15;
-                document.getElementById('rider-commission').value = platformSettings.riderCommission || 20;
-                document.getElementById('base-delivery-fee').value = platformSettings.baseDeliveryFee || 150;
-                document.getElementById('distance-rate').value = platformSettings.distanceRate || 20;
-                document.getElementById('platform-name').value = platformSettings.platformName || 'IPATE Deliveries';
-                document.getElementById('support-email').value = platformSettings.supportEmail || 'support@ipatedeliveries.com';
-                document.getElementById('support-phone').value = platformSettings.supportPhone || '+254 748 894 671';
+            static viewUserDetails(userId) {
+                alert(`User Details\n\nFull user information would be displayed here with activity history and account details.`);
             }
 
             static savePlatformSettings() {
-                const sellerCommission = parseInt(document.getElementById('seller-commission').value);
-                const riderCommission = parseInt(document.getElementById('rider-commission').value);
-                const baseDeliveryFee = parseInt(document.getElementById('base-delivery-fee').value);
-                const distanceRate = parseInt(document.getElementById('distance-rate').value);
+                const sellerCommission = document.getElementById('seller-commission').value;
+                const riderCommission = document.getElementById('rider-commission').value;
+                const baseDeliveryFee = document.getElementById('base-delivery-fee').value;
+                const distanceRate = document.getElementById('distance-rate').value;
                 const platformName = document.getElementById('platform-name').value;
                 const supportEmail = document.getElementById('support-email').value;
                 const supportPhone = document.getElementById('support-phone').value;
                 
-                if (!platformName) {
-                    UIHelper.showNotification('Please enter a platform name', 'error');
-                    return;
-                }
-                
-                if (!ValidationHelper.validateEmail(supportEmail)) {
-                    UIHelper.showNotification('Please enter a valid support email', 'error');
-                    return;
-                }
-                
-                const platformSettings = {
+                // In a real app, this would save to the database
+                const settings = {
                     sellerCommission,
                     riderCommission,
                     baseDeliveryFee,
@@ -6273,12 +6012,12 @@
                     supportPhone
                 };
                 
-                localStorage.setItem('platformSettings', JSON.stringify(platformSettings));
+                localStorage.setItem('platformSettings', JSON.stringify(settings));
                 UIHelper.showNotification('Platform settings saved successfully', 'success');
             }
         }
 
-        // ========== PAGE MANAGEMENT ==========
+        // ========== GLOBAL FUNCTIONS ==========
         function showPage(pageId) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
@@ -6289,19 +6028,24 @@
             document.getElementById(pageId).classList.add('active');
             
             // Update navigation
-            updateNavigation();
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
         function showCustomerSection(sectionId) {
-            // Hide all customer sections
+            // Hide all sections
             document.querySelectorAll('.customer-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // Show the selected section
-            document.getElementById('customer-' + sectionId + '-section').classList.add('active');
+            document.getElementById(`customer-${sectionId}-section`).classList.add('active');
             
-            // Update navigation links
+            // Update navigation
             document.querySelectorAll('#customer-dashboard .dashboard-nav-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -6309,15 +6053,15 @@
         }
 
         function showSellerSection(sectionId) {
-            // Hide all seller sections
+            // Hide all sections
             document.querySelectorAll('.seller-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // Show the selected section
-            document.getElementById('seller-' + sectionId + '-section').classList.add('active');
+            document.getElementById(`seller-${sectionId}-section`).classList.add('active');
             
-            // Update navigation links
+            // Update navigation
             document.querySelectorAll('#seller-dashboard .dashboard-nav-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -6325,15 +6069,15 @@
         }
 
         function showRiderSection(sectionId) {
-            // Hide all rider sections
+            // Hide all sections
             document.querySelectorAll('.rider-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // Show the selected section
-            document.getElementById('rider-' + sectionId + '-section').classList.add('active');
+            document.getElementById(`rider-${sectionId}-section`).classList.add('active');
             
-            // Update navigation links
+            // Update navigation
             document.querySelectorAll('#rider-dashboard .dashboard-nav-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -6341,32 +6085,21 @@
         }
 
         function showAdminSection(sectionId) {
-            // Hide all admin sections
+            // Hide all sections
             document.querySelectorAll('.admin-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // Show the selected section
-            document.getElementById('admin-' + sectionId + '-section').classList.add('active');
+            document.getElementById(`admin-${sectionId}-section`).classList.add('active');
             
-            // Update navigation links
+            // Update navigation
             document.querySelectorAll('#admin-dashboard .dashboard-nav-link').forEach(link => {
                 link.classList.remove('active');
             });
             event.target.classList.add('active');
         }
 
-        function updateNavigation() {
-            // Update header based on current page
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
-            }
-        }
-
-        // ========== MODAL MANAGEMENT ==========
         function openAuthModal() {
             document.getElementById('auth-modal').style.display = 'flex';
             // Show login form by default
@@ -6399,8 +6132,8 @@
         }
 
         function openForgotPasswordModal() {
-            document.getElementById('forgot-password-modal').style.display = 'flex';
             closeAuthModal();
+            document.getElementById('forgot-password-modal').style.display = 'flex';
         }
 
         function closeForgotPasswordModal() {
@@ -6423,10 +6156,6 @@
             document.getElementById('add-address-modal').style.display = 'none';
         }
 
-        function closeRatingModal() {
-            document.getElementById('rating-modal').style.display = 'none';
-        }
-
         function openBulkImportModal() {
             document.getElementById('bulk-import-modal').style.display = 'flex';
         }
@@ -6435,86 +6164,34 @@
             document.getElementById('bulk-import-modal').style.display = 'none';
         }
 
-        // Auth modal tab switching
-        document.getElementById('loginTab').addEventListener('click', function() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('signup-form').style.display = 'none';
-            this.style.borderBottomColor = 'var(--primary)';
-            this.style.color = 'var(--primary)';
-            document.getElementById('registerTab').style.borderBottomColor = 'transparent';
-            document.getElementById('registerTab').style.color = 'var(--dark)';
-        });
-
-        document.getElementById('registerTab').addEventListener('click', function() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'block';
-            this.style.borderBottomColor = 'var(--primary)';
-            this.style.color = 'var(--primary)';
-            document.getElementById('loginTab').style.borderBottomColor = 'transparent';
-            document.getElementById('loginTab').style.color = 'var(--dark)';
-        });
-
-        // Payment method selection
-        document.getElementById('withdraw-method').addEventListener('change', function() {
-            const method = this.value;
-            document.getElementById('mpesa-details').style.display = method === 'mpesa' ? 'block' : 'none';
-            document.getElementById('bank-details').style.display = method === 'bank' ? 'block' : 'none';
-        });
-
-        // Rating stars
-        document.querySelectorAll('.rating-star').forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = parseInt(this.dataset.rating);
-                
-                // Update stars
-                document.querySelectorAll('.rating-star').forEach(s => {
-                    if (parseInt(s.dataset.rating) <= rating) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-                
-                // Store rating
-                window.currentRating = rating;
-            });
-        });
-
-        // ========== AUTH FUNCTIONS ==========
-        async function login() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            try {
-                await AuthManager.login(email, password);
-            } catch (error) {
-                console.error('Login failed:', error);
-            }
+        function closeRatingModal() {
+            document.getElementById('rating-modal').style.display = 'none';
         }
 
-        async function signup() {
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            AuthManager.login(email, password);
+        }
+
+        function signup() {
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const role = document.getElementById('signup-role').value;
-            
-            try {
-                await AuthManager.signup(email, password, name, role);
-            } catch (error) {
-                console.error('Signup failed:', error);
-            }
+            AuthManager.signup(email, password, name, role);
         }
 
-        async function logout() {
-            await AuthManager.logout();
+        function logout() {
+            AuthManager.logout();
         }
 
-        async function sendPasswordReset() {
+        function sendPasswordReset() {
             const email = document.getElementById('reset-email').value;
-            await AuthManager.sendPasswordReset(email);
+            AuthManager.sendPasswordReset(email);
         }
 
-        async function changePassword() {
+        function changePassword() {
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
@@ -6524,10 +6201,25 @@
                 return;
             }
             
-            await AuthManager.changePassword(currentPassword, newPassword);
+            AuthManager.changePassword(currentPassword, newPassword);
         }
 
-        // ========== PAYMENT FUNCTIONS ==========
+        function updateProfile() {
+            CustomerDashboard.updateProfile();
+        }
+
+        function saveAddress() {
+            CustomerDashboard.saveAddress();
+        }
+
+        function clearCart() {
+            CustomerDashboard.clearCart();
+        }
+
+        function placeOrderWithCash() {
+            CustomerDashboard.placeOrderWithCash();
+        }
+
         function selectPaymentMethod(method) {
             PaymentSystem.selectPaymentMethod(method);
         }
@@ -6540,26 +6232,19 @@
             PaymentSystem.processCardPayment();
         }
 
-        function placeOrderWithCash() {
-            CustomerDashboard.placeOrderWithCash();
+        function selectImportMethod(method) {
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.closest('.payment-method').classList.add('selected');
         }
 
-        // ========== ORDER FUNCTIONS ==========
-        function placeOrder() {
-            CustomerDashboard.placeOrder();
-        }
-
-        function clearCart() {
-            CustomerDashboard.clearCart();
-        }
-
-        // ========== PRODUCT FUNCTIONS ==========
         function handleImageUpload(event) {
             SellerDashboard.handleImageUpload(event);
         }
 
         function handleProfileImageUpload(event) {
-            // In a real app, this would upload the image
+            // Similar to product image upload but for profile
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -6568,6 +6253,11 @@
                     preview.innerHTML = `
                         <div class="image-preview">
                             <img src="${e.target.result}" alt="Profile Preview">
+                            <div class="image-preview-actions">
+                                <button class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                     `;
                 };
@@ -6576,7 +6266,7 @@
         }
 
         function handleStoreLogoUpload(event) {
-            // In a real app, this would upload the image
+            // Similar to profile image upload but for store logo
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -6585,6 +6275,11 @@
                     preview.innerHTML = `
                         <div class="image-preview">
                             <img src="${e.target.result}" alt="Store Logo Preview">
+                            <div class="image-preview-actions">
+                                <button class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                     `;
                 };
@@ -6598,12 +6293,6 @@
             
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                
-                if (!file.type.match('image.*')) {
-                    UIHelper.showNotification('Please select only image files', 'error');
-                    continue;
-                }
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imagePreview = document.createElement('div');
@@ -6625,32 +6314,9 @@
         function handleImportFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                const container = document.getElementById('import-file-upload');
-                container.innerHTML = `
-                    <i class="fas fa-file" style="font-size: 36px; color: var(--primary); margin-bottom: 10px;"></i>
-                    <p>${file.name}</p>
-                    <p style="font-size: 12px; color: var(--gray);">${(file.size / 1024).toFixed(2)} KB</p>
-                `;
+                // In a real app, this would process the file
+                UIHelper.showNotification(`File "${file.name}" selected for import`, 'success');
             }
-        }
-
-        function selectImportMethod(method) {
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            event.target.closest('.payment-method').classList.add('selected');
-        }
-
-        function processBulkImport() {
-            UIHelper.showLoading();
-            
-            // Simulate import process
-            setTimeout(() => {
-                UIHelper.hideLoading();
-                UIHelper.showNotification('Products imported successfully', 'success');
-                closeBulkImportModal();
-                SellerDashboard.loadProducts();
-            }, 3000);
         }
 
         function saveProductAsDraft() {
@@ -6665,122 +6331,120 @@
             SellerDashboard.saveStoreSettings();
         }
 
-        function saveAddress() {
-            CustomerDashboard.saveAddress();
+        function processBulkImport() {
+            // In a real app, this would process the bulk import
+            UIHelper.showNotification('Bulk import processing would start here', 'info');
+            closeBulkImportModal();
         }
 
         function submitRating() {
+            const rating = document.querySelectorAll('.rating-star.active').length;
             const comment = document.getElementById('rating-comment').value;
             
-            if (!window.currentRating) {
+            if (rating === 0) {
                 UIHelper.showNotification('Please select a rating', 'error');
                 return;
             }
             
             // In a real app, this would save the rating to the database
-            UIHelper.showNotification('Thank you for your review!', 'success');
+            UIHelper.showNotification(`Thank you for your ${rating}-star rating!`, 'success');
             closeRatingModal();
+        }
+
+        function setLanguage(lang) {
+            LanguageManager.setLanguage(lang);
+        }
+
+        function requestWithdrawal() {
+            RiderDashboard.requestWithdrawal();
         }
 
         function savePlatformSettings() {
             AdminDashboard.savePlatformSettings();
         }
 
-        // ========== LANGUAGE FUNCTIONS ==========
-        function setLanguage(lang) {
-            LanguageManager.setLanguage(lang);
-        }
-
-        // ========== INITIALIZATION ==========
+        // Initialize rating stars
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize components
-            ErrorHandler.init();
+            const stars = document.querySelectorAll('.rating-star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Update star display
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Auth modal tab switching
+            document.getElementById('loginTab').addEventListener('click', function() {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('signup-form').style.display = 'none';
+                this.style.borderBottomColor = 'var(--primary)';
+                this.style.color = 'var(--primary)';
+                document.getElementById('registerTab').style.borderBottomColor = 'transparent';
+                document.getElementById('registerTab').style.color = 'var(--dark)';
+            });
+            
+            document.getElementById('registerTab').addEventListener('click', function() {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('signup-form').style.display = 'block';
+                this.style.borderBottomColor = 'var(--primary)';
+                this.style.color = 'var(--primary)';
+                document.getElementById('loginTab').style.borderBottomColor = 'transparent';
+                document.getElementById('loginTab').style.color = 'var(--dark)';
+            });
+            
+            // Withdrawal method toggle
+            document.getElementById('withdraw-method').addEventListener('change', function() {
+                const method = this.value;
+                document.getElementById('mpesa-details').style.display = method === 'mpesa' ? 'block' : 'none';
+                document.getElementById('bank-details').style.display = method === 'bank' ? 'block' : 'none';
+            });
+            
+            // Initialize the application
+            DatabaseSetup.initializeDatabase();
+            AuthManager.initAuth();
             LanguageManager.init();
             NotificationManager.init();
-            PerformanceHelper.lazyLoadImages();
+            ErrorHandler.init();
             
-            // Initialize database
-            DatabaseSetup.initializeDatabase();
-            
-            // Initialize authentication
-            AuthManager.initAuth();
-            
-            // Set up event listeners
-            window.addEventListener('scroll', updateNavigation);
-            
-            // Product search and filter
+            // Hide loading spinner after initialization
+            setTimeout(() => {
+                UIHelper.hideLoading();
+            }, 2000);
+        });
+
+        // Product search and filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
             const searchProducts = document.getElementById('searchProducts');
+            const categoryFilter = document.getElementById('categoryFilter');
+            
             if (searchProducts) {
                 searchProducts.addEventListener('input', PerformanceHelper.debounce(() => {
                     CustomerDashboard.loadProducts();
                 }, 500));
             }
             
-            const categoryFilter = document.getElementById('categoryFilter');
             if (categoryFilter) {
                 categoryFilter.addEventListener('change', () => {
                     CustomerDashboard.loadProducts();
                 });
             }
             
+            // Order status filter
             const orderStatusFilter = document.getElementById('orderStatusFilter');
             if (orderStatusFilter) {
                 orderStatusFilter.addEventListener('change', () => {
                     CustomerDashboard.filterOrders();
                 });
             }
-            
-            // Admin user search and filter
-            const userSearch = document.getElementById('user-search');
-            if (userSearch) {
-                userSearch.addEventListener('input', PerformanceHelper.debounce(() => {
-                    AdminDashboard.loadUsers();
-                }, 500));
-            }
-            
-            const userRoleFilter = document.getElementById('user-role-filter');
-            if (userRoleFilter) {
-                userRoleFilter.addEventListener('change', () => {
-                    AdminDashboard.loadUsers();
-                });
-            }
-            
-            const userStatusFilter = document.getElementById('user-status-filter');
-            if (userStatusFilter) {
-                userStatusFilter.addEventListener('change', () => {
-                    AdminDashboard.loadUsers();
-                });
-            }
-            
-            // Admin order search and filter
-            const orderSearch = document.getElementById('order-search');
-            if (orderSearch) {
-                orderSearch.addEventListener('input', PerformanceHelper.debounce(() => {
-                    AdminDashboard.loadOrders();
-                }, 500));
-            }
-            
-            const orderStatusFilterAdmin = document.getElementById('order-status-filter-admin');
-            if (orderStatusFilterAdmin) {
-                orderStatusFilterAdmin.addEventListener('change', () => {
-                    AdminDashboard.loadOrders();
-                });
-            }
-            
-            console.log('✅ IPATE Deliveries initialized successfully');
         });
-
-        // Temporary debug function - call this in browser console
-        async function debugRiderDeliveries() {
-            const { data: orders, error } = await supabase
-                .from('orders')
-                .select('*')
-                .eq('status', 'ready')
-                .is('rider_id', null);
-            
-            console.log('🔍 DEBUG - Available deliveries:', orders);
-            return orders;
-        }
     </script>
 </body>
 </html>
